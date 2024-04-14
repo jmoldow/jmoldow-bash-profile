@@ -24,6 +24,8 @@
 	log = true
 [fetch]
   prune = true
+[init]
+	defaultBranch = main
 [push]
   default = simple
 [rebase]
