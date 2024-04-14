@@ -12,8 +12,10 @@ export HISTFILE=~/.bash_history
 
 export HOMEBREW_NO_AUTO_UPDATE=1
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
+if [ $(which brew) ]; then
+  if [ -f $(brew --prefix 2>/dev/null)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+  fi
 fi
 # curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash > ~/git-completion.bash
 source ~/git-completion.bash
@@ -40,7 +42,7 @@ java8
 # export JAVA_OPTS="-XX:+UseG1GC -Xmx4g -Xss4m"  # -XX:MaxMetaspaceSize=768m"
 export JAVA_OPTS="-XX:+UseG1GC -Xmx6g -Xss8m"  # -XX:MaxMetaspaceSize=768m"
 
-export PATH=$PATH:$(ls /Users/jmoldow/.pyvenv/pyenv/pyenv*/bin | grep bin | sort -g -r | xargs | sed "s/ //g")
+export PATH=$PATH:$(ls /Users/jmoldow/.pyvenv/pyenv/pyenv*/bin 2>/dev/null | grep bin | sort -g -r | xargs | sed "s/ //g")
 
 #export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
@@ -65,7 +67,9 @@ _gradle() {
  
 alias gradle=_gradle
 
-source <(kubectl completion bash)
+if [ $(which kubectl) ]; then
+  source <(kubectl completion bash)
+fi
 
 #export PS1="\u@\h \W \$(kprompt) \[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
 
