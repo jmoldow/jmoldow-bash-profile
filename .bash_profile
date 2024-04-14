@@ -18,13 +18,19 @@ if [ $(which brew) ]; then
   fi
 fi
 # curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash > ~/git-completion.bash
+# curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > ~/git-prompt.sh
 source ~/git-completion.bash
+source ~/git-prompt.sh
 command -v __git_ps1 > /dev/null
 if [ 0 -eq 0 ]; then
-   export GIT_PS1_SHOWDIRTYSTATE=
+   export GIT_PS1_SHOWDIRTYSTATE="yes"
    export GIT_PS1_SHOWUPSTREAM="auto"
+   export GIT_PS1_SHOWSTASHSTATE="yes"
+   export GIT_PS1_SHOWUNTRACKEDFILES="yes"
+   export GIT_PS1_SHOWCONFLICTSTATE="yes"
+   export GIT_PS1_SHOWCOLORHINTS="yes"
    # Tweak this as per your needs
-   export PS1='[\u@\h \W]$ '
+   export PS1="$(echo "$PS1" | sed -E -e 's#\\\\w#\\\\W#g' -e 's#\\\$ #$(__git_ps1 " (%s)")\$ #g')"
 fi
 
 export WORKON_HOME=~/.virtualenvs
