@@ -87,3 +87,7 @@ export PATH=/usr/local/opt/curl/bin:$PATH
 find_quote_spaces() {
   find . -type f | sed -E 's/(.*)/"\1"/g' | sed -E "s/ /\\ /g"
 }
+
+find_quote_spaces_all() {
+  find . | sed -E 's/(.*)/"\1"/g' | sed -E "s/ /\\ /g"
+}
