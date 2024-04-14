@@ -30,7 +30,7 @@ if [ 0 -eq 0 ]; then
    export GIT_PS1_SHOWCONFLICTSTATE="yes"
    export GIT_PS1_SHOWCOLORHINTS="yes"
    # Tweak this as per your needs
-   export PS1="$(echo "$PS1" | sed -E -e 's#\\\\w#\\\\W#g' -e 's#\\\$ #$(__git_ps1 " (%s)")\$ #g')"
+   export PS1="$(echo "$PS1" | sed -E -e 's#\\w#\\W#g' -e 's#\\\$ #$(__git_ps1 " (%s)")\$ #g')"
 fi
 
 export WORKON_HOME=~/.virtualenvs
