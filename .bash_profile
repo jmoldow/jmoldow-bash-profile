@@ -1,6 +1,8 @@
 #export LESS="-RSMsi"
 #export LESS="-RM"
 
+export XDG_CONFIG_HOME=~/.config
+
 # <https://www.reddit.com/r/commandline/comments/4m0s58/how_and_why_to_log_your_entire_bash_history/d3rqo3a>
 #export PROMPT_COMMAND='history -a'
 export HISTSIZE=9999999999999
