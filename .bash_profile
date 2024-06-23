@@ -85,7 +85,7 @@ export PATH="$PATH:/usr/local/opt/mysql-client@5.7/bin:"
 export PATH=/usr/local/opt/curl/bin:$PATH
 
 find_quote_spaces() {
-  find . -type f | sed -E 's/(.*)/"\1"/g' | sed -E "s/ /\\ /g"
+  find "$@" | sed -E -e 's#(.*)#"\1"#g' -e "s# #\\ #g"
 }
 
 find_quote_spaces_all() {
