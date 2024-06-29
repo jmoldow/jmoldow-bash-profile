@@ -15,6 +15,8 @@ export INPUTRC=$XDG_CONFIG_HOME/readline/inputrc
 
 export COLUMNS
 
+alias diff='diff --color=always -U9'
+
 export HOMEBREW_NO_AUTO_UPDATE=1
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 if [ $(which brew) ]; then
