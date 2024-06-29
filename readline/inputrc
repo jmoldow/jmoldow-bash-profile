@@ -2,6 +2,27 @@
 # See readline(3readline) and `info rluserman' for more information.
 $include  /etc/inputrc
 
+set blink-matching-paren On
+set colored-completion-prefix On
+set colored-stats On
+set show-mode-in-prompt On
+set emacs-mode-string "(emacs) "
+set vi-cmd-mode-string "(vi-cmd) "
+set vi-ins-mode-string "(vi-ins) "
+set expand-tilde On
+set history-preserve-point On
+set mark-modified-lines Off
+set mark-directories On
+set mark-symlinked-directories On
+set menu-complete-display-prefix On
+set revert-all-at-newline On
+set skip-completed-text On
+set visible-stats On
+
+# <https://www.topbug.net/blog/2017/07/31/inputrc-for-humans/>
+"\C-p":history-search-backward
+"\C-n":history-search-forward
+
 # Copied/modified from /usr/share/doc/readline-doc/examples/Inputrc
 #   Copyright (C) 1989-2009 Free Software Foundation, Inc.
 #
@@ -91,12 +112,25 @@ $endif
 #   along with Readline.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+# To allow the use of 8bit-characters like the german umlauts, uncomment
+# the line below. However this makes the meta key not work as a meta key,
+# which is annoying to those which don't need to type in 8-bit characters.
+
+# set convert-meta off
+
+# try to enable the application keypad when it is called.  Some systems
+# need this to enable the arrow keys.
+# set enable-keypad on
+
+# see /usr/share/doc/bash/inputrc.arrows for other codes of arrow keys
+
 # do not bell on tab-completion
 # set bell-style none
 set bell-style visible
 
 # make autocompletion case insensitive and display suggestions
 set completion-ignore-case On
+set completion-map-case On
 set show-all-if-ambiguous On
 set show-all-if-unmodified On
 
@@ -127,20 +161,5 @@ set show-all-if-unmodified On
 
 # some defaults / modifications for the emacs mode
 $if mode=emacs
-
-# mappings for Ctrl-left-arrow and Ctrl-right-arrow for word moving
-"\e[1;5C": forward-word
-"\e[1;5D": backward-word
-"\e[5C": forward-word
-"\e[5D": backward-word
-"\e\e[C": forward-word
-"\e\e[D": backward-word
-
-$if term=rxvt
-"\e[7~": beginning-of-line
-"\e[8~": end-of-line
-"\eOc": forward-word
-"\eOd": backward-word
-$endif
 
 $endif
