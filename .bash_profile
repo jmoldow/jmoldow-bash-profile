@@ -11,7 +11,9 @@ export HISTTIMEFORMAT='%F %T '
 #export HISTCONTROL="erasedups:ignoreboth"
 export HISTIGNORE="ls:ll:pwd:exit:su:clear:reboot:history:bg:fg"
 export HISTFILE=~/.bash_history
-export INPUTRC=~/.config/readline/inputrc
+export INPUTRC=$XDG_CONFIG_HOME/readline/inputrc
+
+export COLUMNS
 
 export HOMEBREW_NO_AUTO_UPDATE=1
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
