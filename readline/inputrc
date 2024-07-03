@@ -20,6 +20,8 @@ set revert-all-at-newline On
 set skip-completed-text On
 set visible-stats On
 
+"\C-L":clear-screen
+
 # <https://www.topbug.net/blog/2017/07/31/inputrc-for-humans/>
 "\C-p":history-search-backward
 "\C-n":history-search-forward
