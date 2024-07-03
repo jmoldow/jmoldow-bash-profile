@@ -5,6 +5,7 @@ $include  /etc/inputrc
 set blink-matching-paren On
 set colored-completion-prefix On
 set colored-stats On
+set editing-mode vi
 set show-mode-in-prompt On
 set emacs-mode-string "(emacs) "
 set vi-cmd-mode-string "(vi-cmd) "

@@ -2,6 +2,9 @@
 #export LESS="-RM"
 
 export XDG_CONFIG_HOME=~/.config
+export XDG_CACHE_HOME=~/.cache
+export XDG_DATA_HOME=~/.local/share
+export XDG_STATE_HOME=~/.local/state
 
 # <https://www.reddit.com/r/commandline/comments/4m0s58/how_and_why_to_log_your_entire_bash_history/d3rqo3a>
 #export PROMPT_COMMAND='history -a'
@@ -10,12 +13,17 @@ export HISTFILESIZE=999999999
 export HISTTIMEFORMAT='%F %T '
 #export HISTCONTROL="erasedups:ignoreboth"
 export HISTIGNORE="ls:ll:pwd:exit:su:clear:reboot:history:bg:fg"
-export HISTFILE=~/.bash_history
+export HISTFILE=$XDG_CACHE_HOME/bash_history
 export INPUTRC=$XDG_CONFIG_HOME/readline/inputrc
 
 export COLUMNS
 
+alias less='less -IRS'
 alias diff='diff --color=always -U9'
+
+export GOENV=$XDG_CONFIG_HOME/go/env
+export GOPATH=$(go env GOPATH || echo "$XDG_CACHE_HOME/go-path-build/go")
+export PATH=$PATH:$(go env GOBIN):$GOPATH/bin:$GOPATH:$HOME/go/bin:$HOME/go:$(go env GOTOOLDIR):$(go env GOROOT)/bin:$(go env GOROOT)
 
 export HOMEBREW_NO_AUTO_UPDATE=1
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
@@ -40,7 +48,7 @@ if [ 0 -eq 0 ]; then
    export PS1="$(echo "$PS1" | sed -E -e 's#\\w#\\W#g' -e 's#\\\$ #$(__git_ps1 " (%s)")\$ #g')"
 fi
 
-export WORKON_HOME=~/.virtualenvs
+export WORKON_HOME=$XDG_CACHE_HOME/virtualenvs
 #source virtualenvwrapper.sh
 
 # export JAVA_HOME=`/usr/libexec/java_home -v 1.7.0_80`
@@ -55,7 +63,7 @@ java8
 # export JAVA_OPTS="-XX:+UseG1GC -Xmx4g -Xss4m"  # -XX:MaxMetaspaceSize=768m"
 export JAVA_OPTS="-XX:+UseG1GC -Xmx6g -Xss8m"  # -XX:MaxMetaspaceSize=768m"
 
-export PATH=$PATH:$(ls /Users/jmoldow/.pyvenv/pyenv/pyenv*/bin 2>/dev/null | grep bin | sort -g -r | xargs | sed "s/ //g")
+(ls $XDG_CACHE_HOME/pyvenv/pyenv/pyenv*/bin 2>/dev/null | grep -q bin) && export PATH=$PATH:$(ls $XDG_CACHE_HOME/pyvenv/pyenv/pyenv*/bin 2>/dev/null | grep bin | sort -g -r | xargs | sed "s/ //g")
 
 #export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
@@ -88,7 +96,7 @@ fi
 
 export MANPATH="$MANPATH:/usr/local/opt/erlang/lib/erlang/man:"
 
-export PATH="$PATH:/usr/local/opt/mysql-client@5.7/bin:"
+export PATH="$PATH:/usr/local/opt/mysql-client@5.7/bin"
 export PATH=/usr/local/opt/curl/bin:$PATH
 
 find_quote_spaces() {
