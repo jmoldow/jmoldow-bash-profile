@@ -1,6 +1,6 @@
 GO111MODULE=on
-GOBIN=/home/oem/.cache/go-bin-install
+GOBIN=/home/oem/.local/state/go-bin-install
 GOCACHE=/home/oem/.cache/go-build
 GOMODCACHE=/home/oem/.cache/go-mod-build/go/pkg/mod
-GOPATH=/home/oem/.cache/go-path-build/go
+GOPATH=/home/oem/.local/state/go-path-build/go
 GOTMPDIR=/home/oem/.cache/go-tmp-build

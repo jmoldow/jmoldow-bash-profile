@@ -13,7 +13,7 @@ export HISTFILESIZE=999999999
 export HISTTIMEFORMAT='%F %T '
 #export HISTCONTROL="erasedups:ignoreboth"
 export HISTIGNORE="ls:ll:pwd:exit:su:clear:reboot:history:bg:fg"
-export HISTFILE=$XDG_CACHE_HOME/bash_history
+export HISTFILE=$XDG_DATA_HOME/bash_history
 export INPUTRC=$XDG_CONFIG_HOME/readline/inputrc
 
 export COLUMNS
@@ -22,7 +22,7 @@ alias less='less -IRS'
 alias diff='diff --color=always -U9'
 
 export GOENV=$XDG_CONFIG_HOME/go/env
-export GOPATH=$(go env GOPATH || echo "$XDG_CACHE_HOME/go-path-build/go")
+export GOPATH=$(go env GOPATH || echo "$XDG_STATE_HOME/go-path-build/go")
 export PATH=$PATH:$(go env GOBIN):$GOPATH/bin:$GOPATH:$HOME/go/bin:$HOME/go:$(go env GOTOOLDIR):$(go env GOROOT)/bin:$(go env GOROOT)
 
 export HOMEBREW_NO_AUTO_UPDATE=1
@@ -48,7 +48,7 @@ if [ 0 -eq 0 ]; then
    export PS1="$(echo "$PS1" | sed -E -e 's#\\w#\\W#g' -e 's#\\\$ #$(__git_ps1 " (%s)")\$ #g')"
 fi
 
-export WORKON_HOME=$XDG_CACHE_HOME/virtualenvs
+export WORKON_HOME=$XDG_STATE_HOME/virtualenvs
 #source virtualenvwrapper.sh
 
 # export JAVA_HOME=`/usr/libexec/java_home -v 1.7.0_80`
@@ -63,7 +63,7 @@ java8
 # export JAVA_OPTS="-XX:+UseG1GC -Xmx4g -Xss4m"  # -XX:MaxMetaspaceSize=768m"
 export JAVA_OPTS="-XX:+UseG1GC -Xmx6g -Xss8m"  # -XX:MaxMetaspaceSize=768m"
 
-(ls $XDG_CACHE_HOME/pyvenv/pyenv/pyenv*/bin 2>/dev/null | grep -q bin) && export PATH=$PATH:$(ls $XDG_CACHE_HOME/pyvenv/pyenv/pyenv*/bin 2>/dev/null | grep bin | sort -g -r | xargs | sed "s/ //g")
+(ls $XDG_STATE_HOME/pyvenv/pyenv/pyenv*/bin 2>/dev/null | grep -q bin) && export PATH=$PATH:$(ls $XDG_STATE_HOME/pyvenv/pyenv/pyenv*/bin 2>/dev/null | grep bin | sort -g -r | xargs | sed "s/ //g")
 
 #export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
