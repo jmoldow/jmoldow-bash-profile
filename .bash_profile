@@ -21,6 +21,10 @@ export COLUMNS
 alias less='less -IRS'
 alias diff='diff --color=always -U9'
 
+# "Fix" for <https://github.com/jqlang/jq/issues/2001> until jq 1.7 is released to Debian.
+export JQ='env --split-string --ignore-environment TZ=UTC jq'
+alias jq="$JQ"
+
 export GOENV=$XDG_CONFIG_HOME/go/env
 export GOPATH=$(go env GOPATH || echo "$XDG_STATE_HOME/go-path-build/go")
 export PATH=$PATH:$(go env GOBIN):$GOPATH/bin:$GOPATH:$HOME/go/bin:$HOME/go:$(go env GOTOOLDIR):$(go env GOROOT)/bin:$(go env GOROOT)
@@ -85,7 +89,7 @@ _gradle() {
     false
   fi
 }
- 
+
 alias gradle=_gradle
 
 if [ $(which kubectl) ]; then
