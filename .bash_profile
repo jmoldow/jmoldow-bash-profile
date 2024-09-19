@@ -40,6 +40,7 @@ fi
 # curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > ~/git-prompt.sh
 source ~/git-completion.bash
 source ~/git-prompt.sh
+source $(git --exec-path)/git-sh-prompt
 command -v __git_ps1 > /dev/null
 if [ 0 -eq 0 ]; then
    export GIT_PS1_SHOWDIRTYSTATE="yes"
@@ -94,6 +95,10 @@ alias gradle=_gradle
 
 if [ $(which kubectl) ]; then
   source <(kubectl completion bash)
+fi
+
+if [ $(which k9s) ]; then
+  source <(k9s completion bash)
 fi
 
 #export PS1="\u@\h \W \$(kprompt) \[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
