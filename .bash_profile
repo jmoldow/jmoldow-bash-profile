@@ -25,9 +25,11 @@ alias diff='diff --color=always -U9'
 export JQ='env --split-string --ignore-environment TZ=UTC jq'
 alias jq="$JQ"
 
-export GOENV=$XDG_CONFIG_HOME/go/env
-export GOPATH=$(go env GOPATH || echo "$XDG_STATE_HOME/go-path-build/go")
-export PATH=$PATH:$(go env GOBIN):$GOPATH/bin:$GOPATH:$HOME/go/bin:$HOME/go:$(go env GOTOOLDIR):$(go env GOROOT)/bin:$(go env GOROOT)
+if [ $(which go) ]; then
+  export GOENV=$XDG_CONFIG_HOME/go/env
+  export GOPATH=$(go env GOPATH || echo "$XDG_STATE_HOME/go-path-build/go")
+  export PATH=$PATH:$(go env GOBIN):$GOPATH/bin:$GOPATH:$HOME/go/bin:$HOME/go:$(go env GOTOOLDIR):$(go env GOROOT)/bin:$(go env GOROOT)
+fi
 
 export HOMEBREW_NO_AUTO_UPDATE=1
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
@@ -40,7 +42,9 @@ fi
 # curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > ~/git-prompt.sh
 source ~/git-completion.bash
 source ~/git-prompt.sh
-source $(git --exec-path)/git-sh-prompt
+[[ -r "/Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh" ]] && source /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh
+[[ -r "/usr/share/git-core/git-prompt.sh" ]] && source /usr/share/git-core/git-prompt.sh
+[[ -r "$(git --exec-path)/git-sh-prompt" ]] && source $(git --exec-path)/git-sh-prompt
 command -v __git_ps1 > /dev/null
 if [ 0 -eq 0 ]; then
    export GIT_PS1_SHOWDIRTYSTATE="yes"
