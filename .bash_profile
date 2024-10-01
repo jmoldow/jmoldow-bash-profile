@@ -137,10 +137,23 @@ if [ $(which k9s) ]; then
 fi
 
 if [ $(which kubectx) ]; then
-  function kubectx-dev {
-    if ! (kubectx --current | grep -q dev); then
-      kubectx | grep dev | head -n1 | xargs -r kubectx
+  function kubectx-env {
+    env=$1
+    if ! (kubectx --current | grep -q $env); then
+      kubectx | grep $env | head -n1 | xargs -r kubectx
+      kubectx --current | grep -q $env
+    else
+      true
     fi
+  }
+  function kubectx-dev {
+    kubectx-env dev
+  }
+  function kubectx-prod {
+    kubectx-env prod || kubectx-env prd
+  }
+  function kubectx-staging {
+    kubectx-env staging || kubectx-env stage || kubectx-env stg
   }
 fi
 
