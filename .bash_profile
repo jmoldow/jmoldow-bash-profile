@@ -136,6 +136,14 @@ if [ $(which k9s) ]; then
   source <(k9s completion bash)
 fi
 
+if [ $(which kubectx) ]; then
+  function kubectx-dev {
+    if ! (kubectx --current | grep -q dev); then
+      kubectx | grep dev | head -n1 | xargs -r kubectx
+    fi
+  }
+fi
+
 #export PS1="\u@\h \W \$(kprompt) \[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
 
 export MANPATH="$MANPATH:/usr/local/opt/erlang/lib/erlang/man:"
