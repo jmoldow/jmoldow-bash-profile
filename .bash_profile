@@ -16,6 +16,8 @@ export HISTIGNORE="ls:ll:pwd:exit:su:clear:reboot:history:bg:fg"
 export HISTFILE=$XDG_DATA_HOME/bash_history
 export INPUTRC=$XDG_CONFIG_HOME/readline/inputrc
 
+export TERM=xterm-256color
+export EDITOR=vim
 export COLUMNS
 
 alias less='less -IRS'
@@ -32,10 +34,27 @@ if [ $(which go) ]; then
 fi
 
 export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_ANALYTICS=1
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+if [ -d "/opt/homebrew" ]; then
+  export PATH="$PATH:/opt/homebrew/bin:/opt/homebrew/sbin"
+fi
 if [ $(which brew) ]; then
+  eval "$(brew shellenv)"
+  #brew analytics off
+  if [ -f $(brew --prefix 2>/dev/null)/completions/bash/brew ]; then
+    . $(brew --prefix 2>/dev/null)/completions/bash/brew
+  fi
   if [ -f $(brew --prefix 2>/dev/null)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion
+  fi
+  if [ -d "$(brew --prefix 2>/dev/null)/etc/bash_completion.d" ]; then
+    while IFS= read -r -d '' file; do
+      source $file ;
+    done < <(find "$(brew --prefix 2>/dev/null)/etc/bash_completion.d" \( -type f -or -type l \) -print0)
+  fi
+  if [ $(which pyenv) ]; then
+    alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
   fi
 fi
 # curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash > ~/git-completion.bash
@@ -80,7 +99,19 @@ export JAVA_OPTS="-XX:+UseG1GC -Xmx6g -Xss8m"  # -XX:MaxMetaspaceSize=768m"
 
 ssh-add ~/.ssh/id_rsa ~/.ssh/github_rsa 2>/dev/null
 
-alias pyenv-init='eval "$(pyenv init -)"'
+if [ $(which pyenv) ]; then
+  export PYENV_ROOT="$XDG_STATE_HOME/pyvenv/pyenv"
+  export PYENV_INIT_SOURCE_CODE="$(cat << EOF
+$(pyenv init -)
+$(pyenv virtualenv-init -)
+EOF
+)"
+  alias pyenv-init="eval $PYENV_INIT_SOURCE_CODE"
+  [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+  #source $(pyenv root)/completions/pyenv.bash
+  eval "$PYENV_INIT_SOURCE_CODE"
+  #pyenv-init
+fi
 
 _gradle() {
   if [ -f gradlew ]; then
