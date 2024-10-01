@@ -167,6 +167,9 @@ export PATH=/usr/local/opt/curl/bin:$PATH
 if [ $(which aws) ]; then
   if [ -f ~/.aws/config ]; then
     export AWS_PROFILE=$(grep --color=never -E "^[[]profile .*dev" ~/.aws/config | head -n1 | sed -E -e "s/^.*profile //g" -e "s/[]]//g")
+    function aws-sso-login {
+      aws sso login --profile $AWS_PROFILE
+    }
   fi
 fi
 
