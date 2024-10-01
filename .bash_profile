@@ -143,6 +143,12 @@ export MANPATH="$MANPATH:/usr/local/opt/erlang/lib/erlang/man:"
 export PATH="$PATH:/usr/local/opt/mysql-client@5.7/bin"
 export PATH=/usr/local/opt/curl/bin:$PATH
 
+if [ $(which aws) ]; then
+  if [ -f ~/.aws/config ]; then
+    export AWS_PROFILE=$(grep --color=never -E "^[[]profile .*dev" ~/.aws/config | head -n1 | sed -E -e "s/^.*profile //g" -e "s/[]]//g")
+  fi
+fi
+
 find_quote_spaces() {
   find "$@" | sed -E -e 's#(.*)#"\1"#g' -e "s# #\\ #g"
 }
