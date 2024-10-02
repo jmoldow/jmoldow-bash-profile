@@ -13,14 +13,9 @@ if [[ "x${_XJORDANX_RUNNING_BASHRC:-}" != "x" ]]; then
 fi
 export _XJORDANX_RUNNING_BASHRC=yes
 this_entrypoint="bashrc $(uuidgen)"
-echo
-echo "THIS ===> $this_entrypoint"
-echo
 if [[ "x${_XJORDANX_ENTRYPOINT:-}" = "x" ]]; then
   export _XJORDANX_ENTRYPOINT=$this_entrypoint
 fi
-
-echo RCONE $_XJORDANX_ENTRYPOINT
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -144,8 +139,6 @@ fi
 if [ -f ~/.bash_profile ]; then
     . ~/.bash_profile
 fi
-
-echo RCTWO $_XJORDANX_ENTRYPOINT
 
 if [[ "${_XJORDANX_ENTRYPOINT}" = "${this_entrypoint}" ]]; then
   unset _XJORDANX_RUNNING_BASHRC

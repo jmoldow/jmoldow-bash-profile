@@ -3,14 +3,9 @@ if [[ "x${_XJORDANX_RUNNING_BASH_PROFILE:-}" != "x" ]]; then
 fi
 export _XJORDANX_RUNNING_BASH_PROFILE=yes
 this_entrypoint="bash_profile $(uuidgen)"
-echo
-echo "THIS ===> $this_entrypoint"
-echo
 if [[ "x${_XJORDANX_ENTRYPOINT:-}" = "x" ]]; then
   export _XJORDANX_ENTRYPOINT=$this_entrypoint
 fi
-
-echo ONE $_XJORDANX_ENTRYPOINT
 
 #export LESS="-RSMsi"
 #export LESS="-RM"
@@ -44,8 +39,6 @@ alias jq="$JQ"
 if [ -f ~/.bashrc ]; then
     . ~/.bashrc
 fi
-
-echo TWO $_XJORDANX_ENTRYPOINT
 
 if [ $(which go) ]; then
   export GOENV=$XDG_CONFIG_HOME/go/env
@@ -227,7 +220,6 @@ if [ -f ~/.bash_profile_gitignore ]; then
     . ~/.bash_profile_gitignore
 fi
 
-echo THREE $_XJORDANX_ENTRYPOINT
 if [[ "${_XJORDANX_ENTRYPOINT}" = "${this_entrypoint}" ]]; then
   unset _XJORDANX_RUNNING_BASHRC
   unset _XJORDANX_RUNNING_BASH_PROFILE
