@@ -2,7 +2,7 @@ if [[ "x${_XJORDANX_RUNNING_BASH_PROFILE:-}" != "x" ]]; then
   return;
 fi
 export _XJORDANX_RUNNING_BASH_PROFILE=yes
-this_entrypoint="bash_profile $(uuidgen)"
+this_entrypoint="bash_profile $(uuidgen)"  # uuidgen requires 'uuid-runtime' package on Debian
 if [[ "x${_XJORDANX_ENTRYPOINT:-}" = "x" ]]; then
   export _XJORDANX_ENTRYPOINT=$this_entrypoint
 fi
@@ -121,8 +121,8 @@ export JAVA_OPTS="-XX:+UseG1GC -Xmx6g -Xss8m"  # -XX:MaxMetaspaceSize=768m"
 
 # pyenv/pyenv* is a personal strategy of creating versioned virtualenvs for each pyenv version, so that pip installing
 # stuff doesn't impact the "global" pyenv version.
-(find $XDG_STATE_HOME/pyvenv/pyenv -type d -name 'bin' | grep -q "pyenv/pyenv") && export PATH=$PATH:$(ls $XDG_STATE_HOME/pyvenv/pyenv/pyenv*/bin 2>/dev/null | grep bin | sort -g -r | xargs | sed "s/ /:/g")
-(find $XDG_STATE_HOME/pyvenv/pyenv -type d -name 'bin' | grep -q versions) && export PATH=$PATH:$(find $XDG_STATE_HOME/pyvenv/pyenv -type d -name 'bin' | grep versions | sort --version-sort --reverse | xargs | sed "s/ /:/g")
+[[ -d "$XDG_STATE_HOME/pyvenv/pyenv" ]] && (find $XDG_STATE_HOME/pyvenv/pyenv -type d -name 'bin' | grep -q "pyenv/pyenv") && export PATH=$PATH:$(ls $XDG_STATE_HOME/pyvenv/pyenv/pyenv*/bin 2>/dev/null | grep bin | sort -g -r | xargs | sed "s/ /:/g")
+[[ -d "$XDG_STATE_HOME/pyvenv/pyenv" ]] && (find $XDG_STATE_HOME/pyvenv/pyenv -type d -name 'bin' | grep -q versions) && export PATH=$PATH:$(find $XDG_STATE_HOME/pyvenv/pyenv -type d -name 'bin' | grep versions | sort --version-sort --reverse | xargs | sed "s/ /:/g")
 
 #export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 

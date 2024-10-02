@@ -12,7 +12,7 @@ if [[ "x${_XJORDANX_RUNNING_BASHRC:-}" != "x" ]]; then
   return;
 fi
 export _XJORDANX_RUNNING_BASHRC=yes
-this_entrypoint="bashrc $(uuidgen)"
+this_entrypoint="bashrc $(uuidgen)"   # uuidgen requires 'uuid-runtime' package on Debian
 if [[ "x${_XJORDANX_ENTRYPOINT:-}" = "x" ]]; then
   export _XJORDANX_ENTRYPOINT=$this_entrypoint
 fi
