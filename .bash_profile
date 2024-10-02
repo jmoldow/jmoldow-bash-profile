@@ -1,6 +1,16 @@
-if [[ "x${_XJORDANX_RAN_BASH_PROFILE}" != "x" ]]; then
+if [[ "x${_XJORDANX_RUNNING_BASH_PROFILE:-}" != "x" ]]; then
   return;
 fi
+export _XJORDANX_RUNNING_BASH_PROFILE=yes
+this_entrypoint="bash_profile $(uuidgen)"
+echo
+echo "THIS ===> $this_entrypoint"
+echo
+if [[ "x${_XJORDANX_ENTRYPOINT:-}" = "x" ]]; then
+  export _XJORDANX_ENTRYPOINT=$this_entrypoint
+fi
+
+echo ONE $_XJORDANX_ENTRYPOINT
 
 #export LESS="-RSMsi"
 #export LESS="-RM"
@@ -35,10 +45,7 @@ if [ -f ~/.bashrc ]; then
     . ~/.bashrc
 fi
 
-if [[ "x${_XJORDANX_RAN_BASH_PROFILE}" != "x" ]]; then
-  return;
-fi
-export _XJORDANX_RAN_BASH_PROFILE=yes
+echo TWO $_XJORDANX_ENTRYPOINT
 
 if [ $(which go) ]; then
   export GOENV=$XDG_CONFIG_HOME/go/env
@@ -121,14 +128,14 @@ export JAVA_OPTS="-XX:+UseG1GC -Xmx6g -Xss8m"  # -XX:MaxMetaspaceSize=768m"
 
 # pyenv/pyenv* is a personal strategy of creating versioned virtualenvs for each pyenv version, so that pip installing
 # stuff doesn't impact the "global" pyenv version.
-(ls $XDG_STATE_HOME/pyvenv/pyenv/pyenv*/bin 2>/dev/null | grep -q bin) && export PATH=$PATH:$(ls $XDG_STATE_HOME/pyvenv/pyenv/pyenv*/bin 2>/dev/null | grep bin | sort -g -r | xargs | sed "s/ /:/g")
+(find $XDG_STATE_HOME/pyvenv/pyenv -type d -name 'bin' | grep -q "pyenv/pyenv") && export PATH=$PATH:$(ls $XDG_STATE_HOME/pyvenv/pyenv/pyenv*/bin 2>/dev/null | grep bin | sort -g -r | xargs | sed "s/ /:/g")
 (find $XDG_STATE_HOME/pyvenv/pyenv -type d -name 'bin' | grep -q versions) && export PATH=$PATH:$(find $XDG_STATE_HOME/pyvenv/pyenv -type d -name 'bin' | grep versions | sort --version-sort --reverse | xargs | sed "s/ /:/g")
 
 #export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 #[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-ssh-add ~/.ssh/id_rsa ~/.ssh/github_rsa 2>/dev/null
+find ~/.ssh \( -name 'id_*' -or -name '*rsa*' -or -name '*dsa*' -or -name '*ed25519*' \) -and \( -not -name '*.*' \) -and \( -not -name '*pub*' \) | xargs ssh-add &>/dev/null
 
 if [ $(which pyenv) ]; then
   export PYENV_ROOT="$XDG_STATE_HOME/pyvenv/pyenv"
@@ -190,7 +197,7 @@ fi
 
 #export PS1="\u@\h \W \$(kprompt) \[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
 
-export MANPATH="$MANPATH:/usr/local/opt/erlang/lib/erlang/man:"
+export MANPATH="${MANPATH:-}:/usr/local/opt/erlang/lib/erlang/man:"
 
 export PATH="$PATH:/usr/local/opt/mysql-client@5.7/bin"
 export PATH=/usr/local/opt/curl/bin:$PATH
@@ -211,3 +218,10 @@ find_quote_spaces() {
 find_quote_spaces_all() {
   find . | sed -E 's/(.*)/"\1"/g' | sed -E "s/ /\\ /g"
 }
+
+echo THREE $_XJORDANX_ENTRYPOINT
+if [[ "${_XJORDANX_ENTRYPOINT}" = "${this_entrypoint}" ]]; then
+  unset _XJORDANX_RUNNING_BASHRC
+  unset _XJORDANX_RUNNING_BASH_PROFILE
+  unset _XJORDANX_ENTRYPOINT
+fi

@@ -8,10 +8,19 @@ case $- in
       *) return;;
 esac
 
-if [[ "x${_XJORDANX_RAN_BASHRC}" != "x" ]]; then
+if [[ "x${_XJORDANX_RUNNING_BASHRC:-}" != "x" ]]; then
   return;
 fi
-export _XJORDANX_RAN_BASHRC=yes
+export _XJORDANX_RUNNING_BASHRC=yes
+this_entrypoint="bashrc $(uuidgen)"
+echo
+echo "THIS ===> $this_entrypoint"
+echo
+if [[ "x${_XJORDANX_ENTRYPOINT:-}" = "x" ]]; then
+  export _XJORDANX_ENTRYPOINT=$this_entrypoint
+fi
+
+echo RCONE $_XJORDANX_ENTRYPOINT
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -31,6 +40,10 @@ shopt -s checkwinsize
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
 shopt -s globstar
+
+set -u -o history -o ignoreeof -o pipefail -o vi
+
+shopt -s checkjobs expand_aliases failglob huponexit lastpipe lithist progcomp_alias xpg_echo
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -78,7 +91,12 @@ xterm*|rxvt*)
 esac
 
 # enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
+# GNU dircolors is provided as gdircolors by brew's coreutils package.
+# <https://unix.stackexchange.com/questions/91937/mac-os-x-dircolors-not-found#comment978405_91978>
+if (! (type dircolors &>/dev/null)) && (type gdircolors &>/dev/null); then
+    alias dircolors='gdircolors'
+fi
+if [ -x /usr/bin/dircolors ] || (type dircolors &>/dev/null); then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=always -F -h -v'
     alias dir='dir --color=always'
@@ -88,6 +106,9 @@ if [ -x /usr/bin/dircolors ]; then
     alias fgrep='fgrep --color=always'
     alias egrep='egrep --color=always'
 fi
+
+export COLORTERM=yes
+export CLICOLOR=yes
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -122,4 +143,12 @@ fi
 
 if [ -f ~/.bash_profile ]; then
     . ~/.bash_profile
+fi
+
+echo RCTWO $_XJORDANX_ENTRYPOINT
+
+if [[ "${_XJORDANX_ENTRYPOINT}" = "${this_entrypoint}" ]]; then
+  unset _XJORDANX_RUNNING_BASHRC
+  unset _XJORDANX_RUNNING_BASH_PROFILE
+  unset _XJORDANX_ENTRYPOINT
 fi
