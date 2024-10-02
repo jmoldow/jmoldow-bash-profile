@@ -219,6 +219,14 @@ find_quote_spaces_all() {
   find . | sed -E 's/(.*)/"\1"/g' | sed -E "s/ /\\ /g"
 }
 
+# Any commands that shouldn't be committed, because they are hyper-specific to a particular non-personal environment and
+# cannot be generalized. e.g.
+#     export PATH="/opt/homebrew/opt/kubernetes-cli@1.29/bin:$PATH"
+# because a particular non-personal project is using that specific old version of kubernetes.
+if [ -f ~/.bash_profile_gitignore ]; then
+    . ~/.bash_profile_gitignore
+fi
+
 echo THREE $_XJORDANX_ENTRYPOINT
 if [[ "${_XJORDANX_ENTRYPOINT}" = "${this_entrypoint}" ]]; then
   unset _XJORDANX_RUNNING_BASHRC
