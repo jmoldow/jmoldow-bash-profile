@@ -106,7 +106,10 @@ java8
 # export JAVA_OPTS="-XX:+UseG1GC -Xmx4g -Xss4m"  # -XX:MaxMetaspaceSize=768m"
 export JAVA_OPTS="-XX:+UseG1GC -Xmx6g -Xss8m"  # -XX:MaxMetaspaceSize=768m"
 
-(ls $XDG_STATE_HOME/pyvenv/pyenv/pyenv*/bin 2>/dev/null | grep -q bin) && export PATH=$PATH:$(ls $XDG_STATE_HOME/pyvenv/pyenv/pyenv*/bin 2>/dev/null | grep bin | sort -g -r | xargs | sed "s/ //g")
+# pyenv/pyenv* is a personal strategy of creating versioned virtualenvs for each pyenv version, so that pip installing
+# stuff doesn't impact the "global" pyenv version.
+(ls $XDG_STATE_HOME/pyvenv/pyenv/pyenv*/bin 2>/dev/null | grep -q bin) && export PATH=$PATH:$(ls $XDG_STATE_HOME/pyvenv/pyenv/pyenv*/bin 2>/dev/null | grep bin | sort -g -r | xargs | sed "s/ /:/g")
+(find $XDG_STATE_HOME/pyvenv/pyenv -type d -name 'bin' | grep -q versions) && export PATH=$PATH:$(find $XDG_STATE_HOME/pyvenv/pyenv -type d -name 'bin' | grep versions | sort --version-sort --reverse | xargs | sed "s/ /:/g")
 
 #export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
@@ -124,7 +127,7 @@ EOF
   alias pyenv-init="eval $PYENV_INIT_SOURCE_CODE"
   [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
   #source $(pyenv root)/completions/pyenv.bash
-  eval "$PYENV_INIT_SOURCE_CODE"
+  #eval "$PYENV_INIT_SOURCE_CODE"
   #pyenv-init
 fi
 
