@@ -1,3 +1,7 @@
+if [[ "x${_XJORDANX_RAN_BASH_PROFILE}" != "x" ]]; then
+  return;
+fi
+
 #export LESS="-RSMsi"
 #export LESS="-RM"
 
@@ -26,6 +30,15 @@ alias diff='diff --color=always -U9'
 # "Fix" for <https://github.com/jqlang/jq/issues/2001> until jq 1.7 is released to Debian.
 export JQ='env --split-string --ignore-environment TZ=UTC jq'
 alias jq="$JQ"
+
+if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+fi
+
+if [[ "x${_XJORDANX_RAN_BASH_PROFILE}" != "x" ]]; then
+  return;
+fi
+export _XJORDANX_RAN_BASH_PROFILE=yes
 
 if [ $(which go) ]; then
   export GOENV=$XDG_CONFIG_HOME/go/env
@@ -102,7 +115,7 @@ export JAVA_17_HOME="/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
 alias java8='export JAVA_HOME=$JAVA_8_HOME'
 alias java11='export JAVA_HOME=$JAVA_11_HOME'
 alias java17='export JAVA_HOME=$JAVA_17_HOME'
-java8
+#java8
 # export JAVA_OPTS="-XX:+UseG1GC -Xmx4g -Xss4m"  # -XX:MaxMetaspaceSize=768m"
 export JAVA_OPTS="-XX:+UseG1GC -Xmx6g -Xss8m"  # -XX:MaxMetaspaceSize=768m"
 
