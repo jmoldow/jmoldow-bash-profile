@@ -33,29 +33,44 @@ if [ $(which go) ]; then
   export PATH=$PATH:$(go env GOBIN):$GOPATH/bin:$GOPATH:$HOME/go/bin:$HOME/go:$(go env GOTOOLDIR):$(go env GOROOT)/bin:$(go env GOROOT)
 fi
 
-export HOMEBREW_NO_AUTO_UPDATE=1
-export HOMEBREW_NO_ANALYTICS=1
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_ANALYTICS=1  # $ brew analytics off
 if [ -d "/opt/homebrew" ]; then
   export PATH="$PATH:/opt/homebrew/bin:/opt/homebrew/sbin"
 fi
 if [ $(which brew) ]; then
-  eval "$(brew shellenv)"
-  #brew analytics off
-  if [ -f $(brew --prefix 2>/dev/null)/completions/bash/brew ]; then
-    . $(brew --prefix 2>/dev/null)/completions/bash/brew
-  fi
-  if [ -f $(brew --prefix 2>/dev/null)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
-  fi
-  if [ -d "$(brew --prefix 2>/dev/null)/etc/bash_completion.d" ]; then
-    while IFS= read -r -d '' file; do
-      source $file ;
-    done < <(find "$(brew --prefix 2>/dev/null)/etc/bash_completion.d" \( -type f -or -type l \) -print0)
-  fi
   if [ $(which pyenv) ]; then
     alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
   fi
+  eval "$(brew shellenv)"
+  export PATH="$(brew --prefix)/bin:$(brew --prefix)/sbin:$PATH"
+  # BEGIN <https://docs.brew.sh/Shell-Completion#configuring-completions-in-bash>
+  if type brew &>/dev/null
+  then
+    HOMEBREW_PREFIX="$(brew --prefix)"
+    if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]
+    then
+      source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+    else
+      for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*
+      do
+        [[ -r "${COMPLETION}" ]] && source "${COMPLETION}"
+      done
+    fi
+  fi
+  # END <https://docs.brew.sh/Shell-Completion#configuring-completions-in-bash>
+  eval "$(brew shellenv)"
+  if [ -d "$(brew --prefix)/etc/bash_completion.d" ]; then
+    while IFS= read -r -d '' file; do
+      source $file ;
+    done < <(find "$(brew --prefix)" -name "bash_completion.d" -print0 | xargs -0 -J % find % "$(brew --prefix)/etc/bash_completion.d" \( -type f -or -type l \) -print0)
+  fi
+  [[ -r "$(brew --prefix)/completions/bash/brew" ]] && . "$(brew --prefix)/completions/bash/brew"
+  [[ -r "$(brew --prefix)/etc/bash_completion" ]] && . "$(brew --prefix)/etc/bash_completion"
+  [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+  [[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && . "$(brew --prefix)/etc/profile.d/bash_completion.sh"
 fi
 # curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash > ~/git-completion.bash
 # curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > ~/git-prompt.sh
