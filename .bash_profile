@@ -14,6 +14,7 @@ export XDG_CONFIG_HOME=~/.config
 export XDG_CACHE_HOME=~/.cache
 export XDG_DATA_HOME=~/.local/share
 export XDG_STATE_HOME=~/.local/state
+export PATH="~/.local/bin:$PATH"
 
 # <https://www.reddit.com/r/commandline/comments/4m0s58/how_and_why_to_log_your_entire_bash_history/d3rqo3a>
 #export PROMPT_COMMAND='history -a'
@@ -188,6 +189,27 @@ if [ $(which kubectx) ]; then
   }
 fi
 
+# BEGIN bash completion support for Pants
+# Generated from ``pants --no-verify-config complete``
+function _pants_completions() {
+    local current_word
+    current_word=${COMP_WORDS[COMP_CWORD]}
+
+    # Check if we're completing a relative (.), absolute (/), or homedir (~) path. If so, fallback to readline (default) completion.
+    # This short-circuits the call to the complete goal, which can take a couple hundred milliseconds to complete
+    if [[ $current_word =~ "^(\.|/|~\/)" ]]; then
+        COMPREPLY=()
+    else
+        # Call the pants complete goal with all of the arguments that we've received so far.
+        COMPREPLY=( $(pants complete -- "${COMP_WORDS[@]}") )
+    fi
+
+    return 0
+}
+
+complete -o default -F _pants_completions pants
+# END bash completion support for Pants
+
 #export PS1="\u@\h \W \$(kprompt) \[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
 
 export MANPATH="${MANPATH:-}:/usr/local/opt/erlang/lib/erlang/man:"
@@ -219,6 +241,10 @@ find_quote_spaces_all() {
 if [ -f ~/.bash_profile_gitignore ]; then
     . ~/.bash_profile_gitignore
 fi
+
+# <https://direnv.net/docs/hook.html>
+# "Make sure it appears even after rvm, git-prompt and other shell extensions that manipulate the prompt."
+(type direnv &>/dev/null) && eval "$(direnv hook bash)"
 
 if [[ "${_XJORDANX_ENTRYPOINT}" = "${this_entrypoint}" ]]; then
   unset _XJORDANX_RUNNING_BASHRC
