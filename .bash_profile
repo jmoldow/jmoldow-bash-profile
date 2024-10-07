@@ -79,7 +79,7 @@ if [ $(which brew) ]; then
   if [ -d "$(brew --prefix)/etc/bash_completion.d" ]; then
     while IFS= read -r -d '' file; do
       source $file ;
-    done < <(find "$(brew --prefix)" -name "bash_completion.d" -print0 | xargs -0 -J % find % "$(brew --prefix)/etc/bash_completion.d" \( -type f -or -type l \) -print0)
+    done < <(find -L "$(brew --prefix)" -maxdepth 6 -name "bash_completion.d" -print0 | xargs -0 -J % find -L % -type f -print0)
   fi
   [[ -r "$(brew --prefix)/completions/bash/brew" ]] && . "$(brew --prefix)/completions/bash/brew"
   [[ -r "$(brew --prefix)/etc/bash_completion" ]] && . "$(brew --prefix)/etc/bash_completion"
@@ -122,8 +122,8 @@ export JAVA_OPTS="-XX:+UseG1GC -Xmx6g -Xss8m"  # -XX:MaxMetaspaceSize=768m"
 
 # pyenv/pyenv* is a personal strategy of creating versioned virtualenvs for each pyenv version, so that pip installing
 # stuff doesn't impact the "global" pyenv version.
-[[ -d "$XDG_STATE_HOME/pyvenv/pyenv" ]] && (find $XDG_STATE_HOME/pyvenv/pyenv -type d -name 'bin' | grep -q "pyenv/pyenv") && export PATH=$PATH:$(ls $XDG_STATE_HOME/pyvenv/pyenv/pyenv*/bin 2>/dev/null | grep bin | sort -g -r | xargs | sed "s/ /:/g")
-[[ -d "$XDG_STATE_HOME/pyvenv/pyenv" ]] && (find $XDG_STATE_HOME/pyvenv/pyenv -type d -name 'bin' | grep -q versions) && export PATH=$PATH:$(find $XDG_STATE_HOME/pyvenv/pyenv -type d -name 'bin' | grep versions | sort --version-sort --reverse | xargs | sed "s/ /:/g")
+[[ -d "$XDG_STATE_HOME/pyvenv/pyenv" ]] && (find $XDG_STATE_HOME/pyvenv/pyenv -maxdepth 2 -type d -name 'bin' | grep -q "pyenv/pyenv") && export PATH=$PATH:$(ls $XDG_STATE_HOME/pyvenv/pyenv/pyenv*/bin 2>/dev/null | grep bin | sort -g -r | xargs | sed "s/ /:/g")
+[[ -d "$XDG_STATE_HOME/pyvenv/pyenv" ]] && (find $XDG_STATE_HOME/pyvenv/pyenv/versions -depth 2 -type d -name 'bin' | grep -q versions) && export PATH=$PATH:$(find $XDG_STATE_HOME/pyvenv/pyenv/versions -depth 2 -type d -name 'bin' | sort --version-sort --reverse | xargs | sed "s/ /:/g")
 
 #export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
