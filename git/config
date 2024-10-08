@@ -32,9 +32,13 @@
   autostash = true
   autosquash = true
 [alias]
-  log-all = log --all --oneline --graph --decorate=full
+  log-all   = log --oneline --graph --decorate=full --all
   log-graph = log --oneline --graph --decorate=full
   ignore = update-index --assume-unchanged
+  amend        = commit --amend --reset-author -e
+  commit-amend = commit --amend --reset-author -e
+  wip-amend    = commit --amend --reset-author -e --no-verify
+  wip          = commit                           --no-verify -m wip
 [gc]
   auto = 500
   pruneexpire = 1.weeks.ago
