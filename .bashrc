@@ -140,7 +140,6 @@ if [ -f ~/.bash_profile ]; then
 fi
 
 if [[ "${_XJORDANX_ENTRYPOINT:-}" = "bashrc" ]]; then
-  echo "unset bashrc"
   export -n _XJORDANX_RUNNING_BASHRC _XJORDANX_RUNNING_BASH_PROFILE _XJORDANX_ENTRYPOINT this_entrypoint
   unset _XJORDANX_RUNNING_BASHRC _XJORDANX_RUNNING_BASH_PROFILE _XJORDANX_ENTRYPOINT this_entrypoint
   export -n _XJORDANX_RUNNING_BASHRC _XJORDANX_RUNNING_BASH_PROFILE _XJORDANX_ENTRYPOINT this_entrypoint

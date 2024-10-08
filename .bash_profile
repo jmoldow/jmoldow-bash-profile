@@ -250,7 +250,6 @@ fi
 (type direnv &>/dev/null) && eval "$(direnv hook bash)"
 
 if [[ "${_XJORDANX_ENTRYPOINT:-}" = "bash_profile" ]]; then
-  echo "unset bash_profile"
   export -n _XJORDANX_RUNNING_BASHRC _XJORDANX_RUNNING_BASH_PROFILE _XJORDANX_ENTRYPOINT this_entrypoint
   unset _XJORDANX_RUNNING_BASHRC _XJORDANX_RUNNING_BASH_PROFILE _XJORDANX_ENTRYPOINT this_entrypoint
   export -n _XJORDANX_RUNNING_BASHRC _XJORDANX_RUNNING_BASH_PROFILE _XJORDANX_ENTRYPOINT this_entrypoint
