@@ -11,10 +11,9 @@ esac
 if [[ "x${_XJORDANX_RUNNING_BASHRC:-}" != "x" ]]; then
   return;
 fi
-export _XJORDANX_RUNNING_BASHRC=yes
-this_entrypoint="bashrc $(uuidgen)"   # uuidgen requires 'uuid-runtime' package on Debian
+_XJORDANX_RUNNING_BASHRC=yes
 if [[ "x${_XJORDANX_ENTRYPOINT:-}" = "x" ]]; then
-  export _XJORDANX_ENTRYPOINT=$this_entrypoint
+  _XJORDANX_ENTRYPOINT="bashrc"
 fi
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -36,7 +35,7 @@ shopt -s checkwinsize
 # match all files and zero or more directories and subdirectories.
 shopt -s globstar
 
-set -u -o history -o ignoreeof -o pipefail -o vi
+set -u -o ignoreeof -o pipefail -o vi
 
 shopt -s checkjobs expand_aliases failglob huponexit lastpipe lithist progcomp_alias xpg_echo
 
@@ -140,8 +139,9 @@ if [ -f ~/.bash_profile ]; then
     . ~/.bash_profile
 fi
 
-if [[ "${_XJORDANX_ENTRYPOINT}" = "${this_entrypoint}" ]]; then
-  unset _XJORDANX_RUNNING_BASHRC
-  unset _XJORDANX_RUNNING_BASH_PROFILE
-  unset _XJORDANX_ENTRYPOINT
+if [[ "${_XJORDANX_ENTRYPOINT:-}" = "bashrc" ]]; then
+  echo "unset bashrc"
+  export -n _XJORDANX_RUNNING_BASHRC _XJORDANX_RUNNING_BASH_PROFILE _XJORDANX_ENTRYPOINT this_entrypoint
+  unset _XJORDANX_RUNNING_BASHRC _XJORDANX_RUNNING_BASH_PROFILE _XJORDANX_ENTRYPOINT this_entrypoint
+  export -n _XJORDANX_RUNNING_BASHRC _XJORDANX_RUNNING_BASH_PROFILE _XJORDANX_ENTRYPOINT this_entrypoint
 fi

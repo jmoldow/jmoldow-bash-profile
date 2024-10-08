@@ -1,10 +1,9 @@
 if [[ "x${_XJORDANX_RUNNING_BASH_PROFILE:-}" != "x" ]]; then
   return;
 fi
-export _XJORDANX_RUNNING_BASH_PROFILE=yes
-this_entrypoint="bash_profile $(uuidgen)"  # uuidgen requires 'uuid-runtime' package on Debian
+_XJORDANX_RUNNING_BASH_PROFILE=yes
 if [[ "x${_XJORDANX_ENTRYPOINT:-}" = "x" ]]; then
-  export _XJORDANX_ENTRYPOINT=$this_entrypoint
+  _XJORDANX_ENTRYPOINT="bash_profile"
 fi
 
 #export LESS="-RSMsi"
@@ -14,7 +13,8 @@ export XDG_CONFIG_HOME=~/.config
 export XDG_CACHE_HOME=~/.cache
 export XDG_DATA_HOME=~/.local/share
 export XDG_STATE_HOME=~/.local/state
-export PATH="~/.local/bin:$PATH"
+export LOCAL_BIN_HOME=~/.local/bin
+export PATH="${LOCAL_BIN_HOME}:$PATH"
 
 # <https://www.reddit.com/r/commandline/comments/4m0s58/how_and_why_to_log_your_entire_bash_history/d3rqo3a>
 #export PROMPT_COMMAND='history -a'
@@ -168,6 +168,9 @@ if [ $(which k9s) ]; then
   source <(k9s completion bash)
 fi
 
+export KREW_ROOT="${XDG_DATA_HOME}/krew"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
 if [ $(which kubectx) ]; then
   function kubectx-env {
     env=$1
@@ -246,8 +249,9 @@ fi
 # "Make sure it appears even after rvm, git-prompt and other shell extensions that manipulate the prompt."
 (type direnv &>/dev/null) && eval "$(direnv hook bash)"
 
-if [[ "${_XJORDANX_ENTRYPOINT}" = "${this_entrypoint}" ]]; then
-  unset _XJORDANX_RUNNING_BASHRC
-  unset _XJORDANX_RUNNING_BASH_PROFILE
-  unset _XJORDANX_ENTRYPOINT
+if [[ "${_XJORDANX_ENTRYPOINT:-}" = "bash_profile" ]]; then
+  echo "unset bash_profile"
+  export -n _XJORDANX_RUNNING_BASHRC _XJORDANX_RUNNING_BASH_PROFILE _XJORDANX_ENTRYPOINT this_entrypoint
+  unset _XJORDANX_RUNNING_BASHRC _XJORDANX_RUNNING_BASH_PROFILE _XJORDANX_ENTRYPOINT this_entrypoint
+  export -n _XJORDANX_RUNNING_BASHRC _XJORDANX_RUNNING_BASH_PROFILE _XJORDANX_ENTRYPOINT this_entrypoint
 fi
