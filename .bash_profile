@@ -79,7 +79,10 @@ if [ $(which brew) ]; then
   if [ -d "$(brew --prefix)/etc/bash_completion.d" ]; then
     while IFS= read -r -d '' file; do
       source $file ;
-    done < <(find -L "$(brew --prefix)" -maxdepth 6 -name "bash_completion.d" -print0 | xargs -0 -J % find -L % -type f -print0)
+    done < <(find -H -L "$(brew --prefix)" -maxdepth 6 -name "bash_completion.d" -print0 | xargs -0 -J % find -H -L % -type f | xargs -n1 readlink -f | sort -u | tr "\n" "\0")
+    while IFS= read -r -d '' file; do
+      source $file ;
+    done < <(find -H -L "$(brew --prefix)" -maxdepth 6 -name "completions" -print0 | xargs -0 -J % find -H -L % -type f \( -name '*.bash' -or -name '*.sh' \) | xargs -n 1 readlink -f | sort -u | tr "\n" "\0")
   fi
   [[ -r "$(brew --prefix)/completions/bash/brew" ]] && . "$(brew --prefix)/completions/bash/brew"
   [[ -r "$(brew --prefix)/etc/bash_completion" ]] && . "$(brew --prefix)/etc/bash_completion"
@@ -133,14 +136,17 @@ find ~/.ssh \( -name 'id_*' -or -name '*rsa*' -or -name '*dsa*' -or -name '*ed25
 
 if [ $(which pyenv) ]; then
   export PYENV_ROOT="$XDG_STATE_HOME/pyvenv/pyenv"
+  [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+  eval $(pyenv init --detect-shell bash)
   export PYENV_INIT_SOURCE_CODE="$(cat << EOF
-$(pyenv init -)
-$(pyenv virtualenv-init -)
+$(pyenv init --detect-shell bash)
+$(pyenv init - --no-push-path bash)
+$(pyenv virtualenv-init - bash)
 EOF
 )"
   alias pyenv-init="eval $PYENV_INIT_SOURCE_CODE"
-  [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-  #source $(pyenv root)/completions/pyenv.bash
+  # eval `pyenv init - bash` will install bash completions
+  # eval `pyenv init -` does not necessarily install completions
   #eval "$PYENV_INIT_SOURCE_CODE"
   #pyenv-init
 fi
@@ -162,6 +168,9 @@ alias gradle=_gradle
 
 if [ $(which kubectl) ]; then
   source <(kubectl completion bash)
+  alias kube=kubectl
+  alias k=kubectl
+  alias k8s=kubectl
 fi
 
 if [ $(which k9s) ]; then
