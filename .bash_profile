@@ -216,15 +216,33 @@ if [ $(which kubectx) ]; then
       true
     fi
   }
+  alias kx-env=kubectx-env
+  alias ctx-env=kubectx-env
   function kubectx-dev {
     kubectx-env dev
   }
+  alias kx-dev=kubectx-dev
+  alias ctx-dev=kubectx-dev
   function kubectx-prod {
     kubectx-env prod || kubectx-env prd
   }
+  alias kx-prod=kubectx-prod
+  alias ctx-prod=kubectx-prod
   function kubectx-staging {
     kubectx-env staging || kubectx-env stage || kubectx-env stg
   }
+  alias kx-staging=kubectx-staging
+  alias ctx-staging=kubectx-staging
+  function kubectx-sandbox {
+    kubectx-env sandbox || kubectx-env sand
+  }
+  alias kx-sandbox=kubectx-sandbox
+  alias ctx-sandbox=kubectx-sandbox
+  function kubectx-ci {
+    kubectx-env ci
+  }
+  alias kx-ci=kubectx-ci
+  alias ctx-ci=kubectx-ci
 fi
 
 # BEGIN bash completion support for Pants
