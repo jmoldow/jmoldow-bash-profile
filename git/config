@@ -13,6 +13,9 @@
 	pager = less -R
 	fsmonitor = false
 	untrackedcache = false
+	commentChar = auto
+[commit]
+	cleanup = scissors
 [grep]
 	lineNumber = true
 [log]
