@@ -34,7 +34,12 @@ alias less='less -IRS'
 alias diff='diff --color=always -U9'
 
 # "Fix" for <https://github.com/jqlang/jq/issues/2001> until jq 1.7 is released to Debian.
-export JQ='env --split-string --ignore-environment TZ=UTC jq'
+if (env --split-string --ignore-environment TZ=UTC true 2>&1 || true) | grep -q -E "env: illegal option -- s" ;
+then
+  export JQ='env  -S             -i                  TZ=UTC jq'
+else
+  export JQ='env --split-string --ignore-environment TZ=UTC jq'
+fi
 alias jq="$JQ"
 
 if [ -f ~/.bashrc ]; then
