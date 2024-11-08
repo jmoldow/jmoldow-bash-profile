@@ -189,7 +189,9 @@ if [ $(which kubectx) ]; then
   function kubectx-env {
     env=$1
     if ! (kubectx --current | grep -q $env); then
+      current_namespace=$(kubens --current)
       kubectx | grep $env | head -n1 | xargs -r kubectx
+      kubens $current_namespace || true
       kubectx --current | grep -q $env
     else
       true
