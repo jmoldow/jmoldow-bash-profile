@@ -32,8 +32,16 @@
   autostash = true
   autosquash = true
 [alias]
-  log-all   = log --oneline --graph --decorate=full --all
-  log-graph = log --oneline --graph --decorate=full
+  clean-nffdx   = clean -nffdx
+  log-decorate  = log --decorate=full
+  log-graph     = log-decorate --oneline --graph
+  log-all       = log-graph --all
+  log-jordan            = log-decorate --author=jordan --author=Jordan --author=jmoldow --author=Moldow
+  log-jordan-graph      = log-jordan --oneline --graph
+  log-jordan-all        = log-jordan        --all
+  log-jordan-graph-all  = log-jordan-graph  --all
+  log-all-jordan    = log-jordan-graph-all
+  log-graph-jordan  = log-jordan-graph
   ignore = update-index --assume-unchanged
   amend        = commit --amend --reset-author -e
   commit-amend = commit --amend --reset-author -e
