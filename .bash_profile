@@ -112,6 +112,8 @@ if [ 0 -eq 0 ]; then
    # Tweak this as per your needs
    export PS1="$(echo "$PS1" | sed -E -e 's#\\w#\\W#g' -e 's#\\\$ #$(__git_ps1 " (%s)")\$ #g')"
 fi
+alias g=git
+eval $(complete -p git | sed -E -e "s/ git$/ g/g")
 
 export WORKON_HOME=$XDG_STATE_HOME/virtualenvs
 #source virtualenvwrapper.sh
