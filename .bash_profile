@@ -178,6 +178,23 @@ if [ $(which kubectl) ]; then
   alias kube=kubectl
   alias k=kubectl
   alias k8s=kubectl
+  for c in kube k k8s; do
+    eval $(complete -p kubectl | sed -E -e "s/ kubectl$/ ${c}/g")
+  done
+  if [ $(which kubectx) ]; then
+    alias kx=kubectx
+    alias ctx=kubectx
+    for c in kx ctx; do
+      eval $(complete -p kubectx | sed -E -e "s/ kubectx$/ ${c}/g")
+    done
+  fi
+  if [ $(which kubens) ]; then
+    alias kn=kubens
+    alias ns=kubens
+    for c in kn ns; do
+      eval $(complete -p kubens | sed -E -e "s/ kubens$/ ${c}/g")
+    done
+  fi
 fi
 
 if [ $(which k9s) ]; then
