@@ -18,6 +18,7 @@
 	cleanup = scissors
 [grep]
 	lineNumber = true
+  extendedRegexp = true
 [log]
 	decorate = full
 [pager]
