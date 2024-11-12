@@ -113,7 +113,26 @@ if [ 0 -eq 0 ]; then
    export PS1="$(echo "$PS1" | sed -E -e 's#\\w#\\W#g' -e 's#\\\$ #$(__git_ps1 " (%s)")\$ #g')"
 fi
 alias g=git
-eval $(complete -p git | sed -E -e "s/ git$/ g/g")
+eval "$(complete -p git | sed -E -e "s/ git$/ g/g")"
+
+if [ $(which delta) ]; then
+  alias delta="delta --pager='less -FRXISM'"
+  alias diff="delta"
+  eval "$(delta --generate-completion bash)"
+fi
+if [ $(which rg) ]; then
+  eval "$(command rg --generate=complete-bash)"
+  if [ $(which delta) ]; then
+    function rg {
+      command rg --json -C 2 "$@" | delta
+    }
+  fi
+  alias ripgrep=rg
+  alias rgrep=rg
+  for c in ripgrep rgrep; do
+    eval "$(command rg --generate=complete-bash | sed -E -e "s/ rg$/ ${c}/g" -e "s/_rg/_${c}/g" -e "s/rg)/${c})/g" -e "s/rg[(]/${c}[(]/g" -e "s/'rg'/'${c}'/g" -e "s/\"rg\"/\"${c}\"/g")"
+  done
+fi
 
 export WORKON_HOME=$XDG_STATE_HOME/virtualenvs
 #source virtualenvwrapper.sh
