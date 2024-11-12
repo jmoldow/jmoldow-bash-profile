@@ -6,9 +6,6 @@ if [[ "x${_XJORDANX_ENTRYPOINT:-}" = "x" ]]; then
   _XJORDANX_ENTRYPOINT="bash_profile"
 fi
 
-#export LESS="-RSMsi"
-#export LESS="-RM"
-
 export XDG_CONFIG_HOME=~/.config
 export XDG_CACHE_HOME=~/.cache
 export XDG_DATA_HOME=~/.local/share
@@ -30,8 +27,11 @@ export TERM=xterm-256color
 export EDITOR=vim
 export COLUMNS
 
-alias less='less -IRS'
-alias diff='diff --color=always -U9'
+#export LESS="-RSMsi"
+#export LESS="-RM"
+export LESS='FRXIS'
+alias less='less -FRXIS'
+alias diff='diff --color=always -U3'
 
 # "Fix" for <https://github.com/jqlang/jq/issues/2001> until jq 1.7 is released to Debian.
 if (env --split-string --ignore-environment TZ=UTC true 2>&1 || true) | grep -q -E "env: illegal option -- s" ;
