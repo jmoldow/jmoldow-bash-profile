@@ -11,10 +11,12 @@
   pager = true
 [core]
 	editor = /usr/bin/vim
-	pager = less -R
+	pager = "delta --pager='less -FRXISM'"
 	fsmonitor = false
 	untrackedcache = false
 	commentChar = auto
+[interactive]
+  diffFilter = "delta --color-only --pager='less -FRXISM'"
 [commit]
 	cleanup = scissors
 [grep]
@@ -54,6 +56,44 @@
 [rebase]
   autostash = true
   autosquash = true
+[merge]
+  tool = vimdiff
+  conflictStyle = zdiff3
+  branchdesc = true
+  autoStash = true
+[diff]
+  tool = vimdiff
+  statGraphWidth = 999
+  mnemonicPrefix = true
+  renames = copies
+  colorMoved = dimmed-zebra
+  colorMovedWS = ignore-space-at-eol,ignore-space-change,ignore-all-space
+[delta]
+  features = line-numbers decorations
+  hyperlinks = true
+  keep-plus-minus-markers = true
+  inspect-raw-lines = true
+  paging = always
+  line-numbers = true
+  true-color = always
+  syntax-theme = Dracula
+  plus-style = syntax "#003800"
+  minus-style = syntax "#3f0001"
+  navigate = true    # use n and N to move between diff sections
+
+  # delta detects terminal colors automatically; set one of these to disable auto-detection
+  # dark = true
+  # light = true
+[delta "decorations"]
+  commit-decoration-style = bold yellow box ul
+  file-style = bold yellow ul
+  file-decoration-style = none
+  hunk-header-decoration-style = cyan box ul
+[delta "line-numbers"]
+  line-numbers-left-style = cyan
+  line-numbers-right-style = cyan
+  line-numbers-minus-style = 124
+  line-numbers-plus-style = 28
 [alias]
   clean-nffdx   = clean -nffdx
   log-decorate  = log --decorate=full
