@@ -1,56 +1,56 @@
 [user]
-	name = Jordan Moldow
-	email = jmoldow@alum.mit.edu
+  name = Jordan Moldow
+  email = jmoldow@alum.mit.edu
 [color]
   diff = always
   grep = auto
-	status = auto
-	branch = auto
+  status = auto
+  branch = auto
   interactive = auto
   ui = auto
   pager = true
 [core]
-	editor = /usr/bin/vim
-	pager = "delta --pager='less -FRXISM'"
-	fsmonitor = false
-	untrackedcache = false
-	commentChar = auto
+  editor = /usr/bin/vim
+  pager = "delta --pager='less -FRXISM'"
+  fsmonitor = false
+  untrackedcache = false
+  commentChar = auto
 [interactive]
   diffFilter = "delta --color-only --pager='less -FRXISM'"
 [commit]
-	cleanup = scissors
+  cleanup = scissors
 [grep]
-	lineNumber = true
+  lineNumber = true
   extendedRegexp = true
 [log]
-	decorate = full
+  decorate = full
 [pager]
-	status = true
-	diff = true
-	grep = true
-	log = true
-	show = true
-	branch = true
-	describe = true
-	notes = true
-	range-diff = true
-	shortlog = true
-	stash = true
-	submodule = true
-	tag = true
-	config = true
-	reflog = true
-	remote = true
-	replace = true
-	blame = true
-	difftool = true
-	help = true
-	show-branch = true
-	whatchanged = true
+  status = true
+  diff = true
+  grep = true
+  log = true
+  show = true
+  branch = true
+  describe = true
+  notes = true
+  range-diff = true
+  shortlog = true
+  stash = true
+  submodule = true
+  tag = true
+  config = true
+  reflog = true
+  remote = true
+  replace = true
+  blame = true
+  difftool = true
+  help = true
+  show-branch = true
+  whatchanged = true
 [fetch]
   prune = true
 [init]
-	defaultBranch = main
+  defaultBranch = main
 [push]
   default = simple
 [rebase]
@@ -126,7 +126,7 @@
 [diff "jmoldowtxt"]
   wordRegex = "[-a-zA-Z0-9']+|[^ a-zA-Z]"
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
