@@ -101,8 +101,8 @@ if [ -x /usr/bin/dircolors ] || (type dircolors &>/dev/null); then
     alias egrep='egrep --color=always'
 fi
 
-export COLORTERM=yes
-export CLICOLOR=yes
+export COLORTERM=truecolor
+export CLICOLOR=truecolor
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
