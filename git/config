@@ -8,6 +8,7 @@
 	branch = auto
   interactive = auto
   ui = auto
+  pager = true
 [core]
 	editor = /usr/bin/vim
 	pager = less -R
@@ -26,6 +27,24 @@
 	diff = true
 	grep = true
 	log = true
+	show = true
+	branch = true
+	describe = true
+	notes = true
+	range-diff = true
+	shortlog = true
+	stash = true
+	submodule = true
+	tag = true
+	config = true
+	reflog = true
+	remote = true
+	replace = true
+	blame = true
+	difftool = true
+	help = true
+	show-branch = true
+	whatchanged = true
 [fetch]
   prune = true
 [init]
