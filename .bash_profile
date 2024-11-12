@@ -144,7 +144,7 @@ find ~/.ssh \( -name 'id_*' -or -name '*rsa*' -or -name '*dsa*' -or -name '*ed25
 if [ $(which pyenv) ]; then
   export PYENV_ROOT="$XDG_STATE_HOME/pyvenv/pyenv"
   [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-  eval $(pyenv init --detect-shell bash)
+  eval "$(pyenv init --detect-shell bash)"
   export PYENV_INIT_SOURCE_CODE="$(cat << EOF
 $(pyenv init --detect-shell bash)
 $(pyenv init - --no-push-path bash)
@@ -179,20 +179,20 @@ if [ $(which kubectl) ]; then
   alias k=kubectl
   alias k8s=kubectl
   for c in kube k k8s; do
-    eval $(complete -p kubectl | sed -E -e "s/ kubectl$/ ${c}/g")
+    eval "$(complete -p kubectl | sed -E -e "s/ kubectl$/ ${c}/g")"
   done
   if [ $(which kubectx) ]; then
     alias kx=kubectx
     alias ctx=kubectx
     for c in kx ctx; do
-      eval $(complete -p kubectx | sed -E -e "s/ kubectx$/ ${c}/g")
+      eval "$(complete -p kubectx | sed -E -e "s/ kubectx$/ ${c}/g")"
     done
   fi
   if [ $(which kubens) ]; then
     alias kn=kubens
     alias ns=kubens
     for c in kn ns; do
-      eval $(complete -p kubens | sed -E -e "s/ kubens$/ ${c}/g")
+      eval "$(complete -p kubens | sed -E -e "s/ kubens$/ ${c}/g")"
     done
   fi
 fi
@@ -208,7 +208,7 @@ if [ $(which kubectx) ]; then
   function kubectx-env {
     env=$1
     if ! (kubectx --current | grep -q $env); then
-      current_namespace=$(kubens --current)
+      current_namespace="$(kubens --current)"
       kubectx | grep $env | head -n1 | xargs -r kubectx
       kubens $current_namespace || true
       kubectx --current | grep -q $env
@@ -275,7 +275,7 @@ export PATH=/usr/local/opt/curl/bin:$PATH
 
 if [ $(which aws) ]; then
   if [ -f ~/.aws/config ]; then
-    export AWS_PROFILE=$(grep --color=never -E "^[[]profile .*dev" ~/.aws/config | head -n1 | sed -E -e "s/^.*profile //g" -e "s/[]]//g")
+    export AWS_PROFILE="$(grep --color=never -E "^[[]profile .*dev" ~/.aws/config | head -n1 | sed -E -e "s/^.*profile //g" -e "s/[]]//g")"
     function aws-sso-login {
       aws sso login --profile $AWS_PROFILE
     }
