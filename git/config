@@ -16,7 +16,7 @@
   untrackedcache = false
   commentChar = auto
 [interactive]
-  diffFilter = "delta --color-only --pager='less -FRXISM'"
+  diffFilter = "delta --color-only"
 [commit]
   cleanup = scissors
 [grep]
@@ -46,7 +46,6 @@
   difftool = true
   help = true
   show-branch = true
-  whatchanged = true
 [fetch]
   prune = true
 [init]
