@@ -29,8 +29,8 @@ export COLUMNS
 
 #export LESS="-RSMsi"
 #export LESS="-RM"
-export LESS='FRXIS'
-alias less='less -FRXIS'
+export LESS='RISM'
+alias less='less -RISM'
 alias diff='diff --color=always -U3'
 
 # "Fix" for <https://github.com/jqlang/jq/issues/2001> until jq 1.7 is released to Debian.
@@ -116,7 +116,7 @@ alias g=git
 eval "$(complete -p git | sed -E -e "s/ git$/ g/g")"
 
 if [ $(which delta) ]; then
-  alias delta="delta --pager='less -FRXISM'"
+  alias delta="delta --pager='less -RISM'"
   alias diff="delta"
   eval "$(delta --generate-completion bash)"
 fi
@@ -132,6 +132,13 @@ if [ $(which rg) ]; then
   for c in ripgrep rgrep; do
     eval "$(command rg --generate=complete-bash | sed -E -e "s/ rg$/ ${c}/g" -e "s/_rg/_${c}/g" -e "s/rg)/${c})/g" -e "s/rg[(]/${c}[(]/g" -e "s/'rg'/'${c}'/g" -e "s/\"rg\"/\"${c}\"/g")"
   done
+fi
+if [ $(which difft) ]; then
+  export DFT_COLOR=always
+  function difft {
+    command difft "$@" | less
+  }
+  alias diff=difft
 fi
 
 export WORKON_HOME=$XDG_STATE_HOME/virtualenvs
