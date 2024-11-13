@@ -67,6 +67,7 @@
   renames = copies
   colorMoved = dimmed-zebra
   colorMovedWS = ignore-space-at-eol,ignore-space-change,ignore-all-space
+  wordRegex = [[:alnum:]_]+|\\S+
 [delta]
   features = line-numbers decorations
   hyperlinks = true
