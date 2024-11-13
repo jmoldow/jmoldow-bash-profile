@@ -61,7 +61,7 @@
   branchdesc = true
   autoStash = true
 [diff]
-  tool = vimdiff
+  tool = difftastic
   statGraphWidth = 999
   mnemonicPrefix = true
   renames = copies
@@ -96,7 +96,7 @@
   line-numbers-plus-style = 28
 [alias]
   clean-nffdx   = clean -nffdx
-  log-decorate  = log --decorate=full
+  log-decorate  = log --decorate=full --ext-diff
   log-graph     = log-decorate --oneline --graph
   log-all       = log-graph --all
   log-jordan            = log-decorate --author=jordan --author=Jordan --author=jmoldow --author=Moldow
@@ -110,6 +110,15 @@
   commit-amend = commit --amend --reset-author -e
   wip-amend    = commit --amend --reset-author -e --no-verify
   wip          = commit                           --no-verify -m wip
+  dlog        = -c diff.external=difft -c "core.pager='less -FRXISM'" log-decorate  -p  --ext-diff
+  dshow       = -c diff.external=difft -c "core.pager='less -FRXISM'" show              --ext-diff
+  ddiff       = -c diff.external=difft -c "core.pager='less -FRXISM'" diff              --ext-diff
+  range-diff  = -c diff.external=difft -c "core.pager='less -FRXISM'" range-diff        --ext-diff
+  stash       = -c diff.external=difft -c "core.pager='less -FRXISM'" stash             --ext-diff
+  reflog      = -c diff.external=difft -c "core.pager='less -FRXISM'" reflog        -p  --ext-diff
+  dl = dlog
+  ds = dshow
+  dft = ddiff
 [gc]
   auto = 500
   pruneexpire = 1.weeks.ago
@@ -119,6 +128,8 @@
   aggressiveWindow = 100
 [feature]
   manyFiles = false
+[difftool]
+  prompt = false
 
 [diff "scala"]
   xfuncname = "^(\\\\(sub)*section\\{.*)$"
@@ -130,3 +141,7 @@
   smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
   required = true
+
+[difftool "difftastic"]
+  # See `man git-difftool` for a description of MERGED, LOCAL and REMOTE.
+  cmd = difft "$MERGED" "$LOCAL" "abcdef1" "100644" "$REMOTE" "abcdef2" "100644"
