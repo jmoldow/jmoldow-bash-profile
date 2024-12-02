@@ -115,6 +115,64 @@ fi
 alias g=git
 eval "$(complete -p git | sed -E -e "s/ git$/ g/g")"
 
+function git-rebase-onto-merge-base() {
+  A="$1"
+  B="$2"
+  shift 2
+  git rebase --onto "${A}...${B}" "${B}" "$@"
+}
+alias   g-rebase-onto-merge-base=git-rebase-onto-merge-base
+alias git-rebase-onto-merge-base-HEAD="git-rebase-onto-merge-base HEAD"
+alias   g-rebase-onto-merge-base-HEAD="git-rebase-onto-merge-base-HEAD"
+alias git-rebase-onto-merge-base-origin-HEAD="git-rebase-onto-merge-base origin/HEAD"
+alias   g-rebase-onto-merge-base-origin-HEAD="git-rebase-onto-merge-base-origin-HEAD"
+alias git-rebase-onto-merge-base-main-local="git-rebase-onto-merge-base main"
+alias   g-rebase-onto-merge-base-main-local="git-rebase-onto-merge-base-main-local"
+alias git-rebase-onto-merge-base-main=git-rebase-onto-merge-base-origin-HEAD
+alias   g-rebase-onto-merge-base-main=git-rebase-onto-merge-base-origin-HEAD
+
+function git-rebase-onto-onto-upstream-merge-base() {
+  H="$1"
+  A="$2"
+  B="$3"
+  shift 3
+  git rebase --onto "${H}" $(git merge-base "${A} ${B}") "${B}" "$@"
+}
+alias   g-rebase-onto-onto-upstream-merge-base=git-rebase-onto-onto-upstream-merge-base
+alias git-rebase-onto-onto-upstream-merge-base-HEAD="git-rebase-onto-onto-upstream-merge-base HEAD"
+alias   g-rebase-onto-onto-upstream-merge-base-HEAD="git-rebase-onto-onto-upstream-merge-base-HEAD"
+alias git-rebase-onto-onto-upstream-merge-base-origin-HEAD="git-rebase-onto-onto-upstream-merge-base origin/HEAD"
+alias   g-rebase-onto-onto-upstream-merge-base-origin-HEAD="git-rebase-onto-onto-upstream-merge-base-origin-HEAD"
+alias git-rebase-onto-onto-upstream-merge-base-main-local="git-rebase-onto-onto-upstream-merge-base main"
+alias   g-rebase-onto-onto-upstream-merge-base-main-local="git-rebase-onto-onto-upstream-merge-base-main-local"
+alias git-rebase-onto-onto-upstream-merge-base-main=git-rebase-onto-onto-upstream-merge-base-origin-HEAD
+alias   g-rebase-onto-onto-upstream-merge-base-main=git-rebase-onto-onto-upstream-merge-base-origin-HEAD
+
+function git-diff-tool-merge-base() {
+  difftool="$1"
+  A="$2"
+  B="$3"
+  shift 3
+  git "${difftool}" "${A}...${B}" "$@"
+}
+alias   g-diff-tool-merge-base=git-diff-tool-merge-base
+alias git-diff-merge-base="git-diff-tool-merge-base diff"
+alias git-ddiff-merge-base="git-diff-tool-merge-base ddiff"
+alias git-dft-merge-base="git-diff-tool-merge-base dft"
+
+for tool in diff ddiff dft; do
+  alias   "g-${tool}-merge-base"="git-${tool}-merge-base"
+
+  alias "git-${tool}-merge-base-HEAD"="git-${tool}-merge-base HEAD"
+  alias   "g-${tool}-merge-base-HEAD"="git-${tool}-merge-base-HEAD"
+  alias "git-${tool}-merge-base-origin-HEAD"="git-${tool}-merge-base origin/HEAD"
+  alias   "g-${tool}-merge-base-origin-HEAD"="git-${tool}-merge-base-origin-HEAD"
+  alias "git-${tool}-merge-base-main-local"="git-${tool}-merge-base main"
+  alias   "g-${tool}-merge-base-main-local"="git-${tool}-merge-base-main-local"
+  alias "git-${tool}-merge-base-origin-HEAD"="git-${tool}-merge-base origin/HEAD"
+  alias   "g-${tool}-merge-base-origin-HEAD"="git-${tool}-merge-base-origin-HEAD"
+done
+
 if [ $(which delta) ]; then
   alias delta="delta --pager='less -RISM'"
   alias diff="delta"
