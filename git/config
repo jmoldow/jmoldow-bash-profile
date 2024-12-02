@@ -114,10 +114,10 @@
   wip          = commit                           --no-verify -m wip
   dlog        = -c diff.external=difft -c "core.pager='less -FRXISM'" log-decorate  -p  --ext-diff
   dshow       = -c diff.external=difft -c "core.pager='less -FRXISM'" show              --ext-diff
-  ddiff       = -c diff.external=difft -c "core.pager='less -FRXISM'" diff              --ext-diff
-  range-diff  = -c diff.external=difft -c "core.pager='less -FRXISM'" range-diff        --ext-diff
-  stash       = -c diff.external=difft -c "core.pager='less -FRXISM'" stash             --ext-diff
-  reflog      = -c diff.external=difft -c "core.pager='less -FRXISM'" reflog        -p  --ext-diff
+  ddiff       = -c "diff.external='difft --exit-code'" -c diff.trustExitCode=true -c "core.pager='less -FRXISM'" diff              --ext-diff
+  drange-diff  = -c diff.external=difft -c "core.pager='less -FRXISM'" range-diff        --ext-diff
+  dstash       = -c diff.external=difft -c "core.pager='less -FRXISM'" stash             --ext-diff
+  dreflog      = -c diff.external=difft -c "core.pager='less -FRXISM'" reflog        -p  --ext-diff
   dl = dlog
   ds = dshow
   dft = ddiff
