@@ -173,6 +173,18 @@ for tool in diff ddiff dft; do
   alias   "g-${tool}-merge-base-origin-HEAD"="git-${tool}-merge-base-origin-HEAD"
 done
 
+export gcnffdx="-nffdx"
+export gcnffdx_force_execute="-ffdx"
+export gldecorate="--decorate=full"
+export glnot_HEAD="--not HEAD"
+export glnot_origin_HEAD="--not origin/HEAD"
+export glnot_main_local="--not main"
+export glnot_main="$glnot_origin_HEAD"
+export glgraph="--oneline --graph"
+export gljordan="--author=jmoldow --author=Moldow --author=jormol"
+export gcamend="--amend --reset-author -e"
+export gcdifft="-c diff.external=difft -c \"core.pager='less -FRXISM'\""
+
 if [ $(which delta) ]; then
   alias delta="delta --pager='less -RISM'"
   alias diff="delta"
