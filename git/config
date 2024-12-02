@@ -118,6 +118,8 @@
   log-all-jordan    = log-jordan-graph-all
   log-graph-jordan  = log-jordan-graph
   ignore = update-index --assume-unchanged
+  commit-e     = commit                        -e -m
+  commit-m     =                                  -m
   amend        = commit --amend --reset-author -e
   commit-amend = commit --amend --reset-author -e
   wip-amend    = commit --amend --reset-author -e --no-verify
