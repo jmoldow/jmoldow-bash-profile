@@ -227,6 +227,14 @@ if [ $(which k9s) ]; then
   source <(k9s completion bash)
 fi
 
+if [ $(which helm) ]; then
+  source <(helm completion bash)
+fi
+
+if [ $(which kustomize) ]; then
+  source <(kustomize completion bash)
+fi
+
 export KREW_ROOT="${XDG_DATA_HOME}/krew"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
