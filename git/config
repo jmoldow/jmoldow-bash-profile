@@ -118,12 +118,13 @@
   log-all-jordan    = log-jordan-graph-all
   log-graph-jordan  = log-jordan-graph
   ignore = update-index --assume-unchanged
-  commit-e     = commit                        -e -m
-  commit-m     =                                  -m
-  amend        = commit --amend --reset-author -e
-  commit-amend = commit --amend --reset-author -e
-  wip-amend    = commit --amend --reset-author -e --no-verify
-  wip          = commit                           --no-verify -m wip
+  commit-e = commit -e
+  commit-squash = commit-e --squash=HEAD
+  amend        = commit-e --amend --reset-author
+  commit-amend = commit-e --amend --reset-author
+  wip-amend    = commit-e --amend --reset-author --no-verify
+  wip          = commit-e -m "wip"               --no-verify
+  wip-squash   = commit-e --squash=HEAD          --no-verify
   dlog        = -c diff.external=difft -c "core.pager='less -FRXISM'" log-decorate  -p  --ext-diff
   dshow       = -c diff.external=difft -c "core.pager='less -FRXISM'" show              --ext-diff
   ddiff       = -c "diff.external='difft --exit-code'" -c diff.trustExitCode=true -c "core.pager='less -FRXISM'" diff              --ext-diff
