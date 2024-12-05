@@ -112,8 +112,28 @@ if [ 0 -eq 0 ]; then
    # Tweak this as per your needs
    export PS1="$(echo "$PS1" | sed -E -e 's#\\w#\\W#g' -e 's#\\\$ #$(__git_ps1 " (%s)")\$ #g')"
 fi
+alias git-root-show="git rev-parse --show-toplevel"
+alias g-root-show=git-root-show
 alias g=git
-eval "$(complete -p git | sed -E -e "s/ git$/ g/g")"
+function git-root() {
+  git -C "$(git-root-show)" "$@"
+}
+alias g-root=git-root
+function git-root-relative() {
+  git "$@" "$(git-root-show)"
+}
+alias g-root=git-root-relative
+function git-local() {
+  git "$@" .
+}
+alias g-local=git-local
+for c in g git-root g-root git-root-relative g-root-relative git-local g-local; do
+  eval "$(complete -p git | sed -E -e "s/ git$/ ${c}/g")"
+done
+
+function git-log-jordan-graph-all-plus-origin-head() {
+  git log-jordan-graph-all-not-origin-head --color=never | grep --color=never "refs/heads" | grep --color=never -oE " [a-z0-9]{10} " | xargs git log-graph "$@"
+}
 
 function git-rebase-onto-merge-base() {
   A="$1"
