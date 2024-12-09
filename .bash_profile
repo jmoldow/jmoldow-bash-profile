@@ -114,15 +114,13 @@ if [ 0 -eq 0 ]; then
    # Tweak this as per your needs
    export PS1="$(echo "$PS1" | sed -E -e 's#\\w#\\W#g' -e 's#\\\$ #$(__git_ps1 " (%s)")\$ #g')"
 fi
-alias git-root-show="git rev-parse --show-toplevel"
-alias g-root-show=git-root-show
 alias g=git
 function git-root-from-toplevel() {
-  git -C "$(git-root-show)" "$@"
+  git -C "$(git root-show)" "$@"
 }
 alias g-root-from-toplevel=git-root-from-toplevel
 function git-root() {
-  git "$@" "$(git-root-show)"
+  git "$@" "$(git root-show)"
 }
 alias g-root=git-root
 alias git-root-relative=git-root

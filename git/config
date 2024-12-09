@@ -160,6 +160,8 @@
   dft-origin-HEAD = dft origin/HEAD
   dft-main-local  = dft main
   dft-main = dft-origin-HEAD
+  branch-current = branch --show-current
+  root-show = rev-parse --show-toplevel
 [gc]
   auto = 500
   pruneexpire = 1.weeks.ago
