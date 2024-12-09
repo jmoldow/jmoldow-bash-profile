@@ -155,12 +155,28 @@ alias   g-rebase-onto-merge-base-main-local="git-rebase-onto-merge-base-main-loc
 alias git-rebase-onto-merge-base-main=git-rebase-onto-merge-base-origin-HEAD
 alias   g-rebase-onto-merge-base-main=git-rebase-onto-merge-base-origin-HEAD
 
-function git-rebase-onto-onto-upstream-merge-base() {
+function git-rebase-onto-onto-upstream-merge-base-3() {
   H="$1"
   A="$2"
   B="$3"
   shift 3
-  git rebase --onto "${H}" $(git merge-base "${A} ${B}") "${B}" "$@"
+  git rebase --onto "${H}" $(git merge-base "${A}" "${B}") "${B}" "$@"
+}
+alias   g-rebase-onto-onto-upstream-merge-base-3=git-rebase-onto-onto-upstream-merge-base-3
+alias git-rebase-onto-onto-upstream-merge-base-HEAD-3="git-rebase-onto-onto-upstream-merge-base-3 HEAD"
+alias   g-rebase-onto-onto-upstream-merge-base-HEAD-3="git-rebase-onto-onto-upstream-merge-base-HEAD-3"
+alias git-rebase-onto-onto-upstream-merge-base-origin-HEAD-3="git-rebase-onto-onto-upstream-merge-base-3 origin/HEAD"
+alias   g-rebase-onto-onto-upstream-merge-base-origin-HEAD-3="git-rebase-onto-onto-upstream-merge-base-origin-HEAD-3"
+alias git-rebase-onto-onto-upstream-merge-base-main-local-3="git-rebase-onto-onto-upstream-merge-base-3 main"
+alias   g-rebase-onto-onto-upstream-merge-base-main-local-3="git-rebase-onto-onto-upstream-merge-base-main-local-3"
+alias git-rebase-onto-onto-upstream-merge-base-main-3=git-rebase-onto-onto-upstream-merge-base-origin-HEAD-3
+alias   g-rebase-onto-onto-upstream-merge-base-main-3=git-rebase-onto-onto-upstream-merge-base-origin-HEAD-3
+
+function git-rebase-onto-onto-upstream-merge-base() {
+  H="$1"
+  B="$2"
+  shift 2
+  git-rebase-onto-onto-upstream-merge-base-3 "${H}" "${H}" "${B}" "$@"
 }
 alias   g-rebase-onto-onto-upstream-merge-base=git-rebase-onto-onto-upstream-merge-base
 alias git-rebase-onto-onto-upstream-merge-base-HEAD="git-rebase-onto-onto-upstream-merge-base HEAD"
