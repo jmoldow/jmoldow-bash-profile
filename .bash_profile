@@ -137,21 +137,26 @@ function git-log-jordan-graph-all-plus-origin-head() {
   git log-jordan-graph-all-not-origin-head --color=never | grep --color=never "refs/heads" | grep --color=never -oE " [a-z0-9]{10} " | xargs git log-graph "$@"
 }
 
-function git-rebase-onto-merge-base() {
-  A="$1"
-  B="$2"
+function git-rebase-onto-merge-base-branch() {
+  # Rebase A..B onto $(git merge-base A B).
+  # If B was forked directly from A, then B' should have the same fork point as B. This can be useful for
+  # squashing/linearizing the branch.
+  # If B was forked from C which was forked from A, then B' could potentially be detached from C and have a new fork
+  # point.
+  A="$1"  # The base branch that B was forked from.
+  B="$2"  # The branch to be rebased, which was forked from A.
   shift 2
-  git rebase --onto "${A}...${B}" "${B}" "$@"
+  git rebase --onto "${A}...${B}" "${A}" "${B}" "$@"
 }
-alias   g-rebase-onto-merge-base=git-rebase-onto-merge-base
-alias git-rebase-onto-merge-base-HEAD="git-rebase-onto-merge-base HEAD"
-alias   g-rebase-onto-merge-base-HEAD="git-rebase-onto-merge-base-HEAD"
-alias git-rebase-onto-merge-base-origin-HEAD="git-rebase-onto-merge-base origin/HEAD"
-alias   g-rebase-onto-merge-base-origin-HEAD="git-rebase-onto-merge-base-origin-HEAD"
-alias git-rebase-onto-merge-base-main-local="git-rebase-onto-merge-base main"
-alias   g-rebase-onto-merge-base-main-local="git-rebase-onto-merge-base-main-local"
-alias git-rebase-onto-merge-base-main=git-rebase-onto-merge-base-origin-HEAD
-alias   g-rebase-onto-merge-base-main=git-rebase-onto-merge-base-origin-HEAD
+alias   g-rebase-onto-merge-base-branch=git-rebase-onto-merge-base-branch
+alias git-rebase-onto-merge-base-origin-HEAD-branch="git-rebase-onto-merge-base-branch origin/HEAD"
+alias   g-rebase-onto-merge-base-origin-HEAD-branch="git-rebase-onto-merge-base-origin-HEAD-branch"
+alias git-rebase-onto-merge-base-main-branch=git-rebase-onto-merge-base-origin-HEAD-branch
+alias   g-rebase-onto-merge-base-main-branch=git-rebase-onto-merge-base-origin-HEAD-branch
+#alias git-rebase-onto-merge-base-main-local-branch="git-rebase-onto-merge-base-branch main"
+#alias   g-rebase-onto-merge-base-main-local-branch="git-rebase-onto-merge-base-main-local-branch"
+#alias git-rebase-onto-merge-base-HEAD-branch="git-rebase-onto-merge-base-branch HEAD"
+#alias   g-rebase-onto-merge-base-HEAD-branch="git-rebase-onto-merge-base-HEAD-branch"
 
 function git-rebase-onto-onto-upstream-merge-base-3() {
   H="$1"
