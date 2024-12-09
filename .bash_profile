@@ -117,19 +117,21 @@ fi
 alias git-root-show="git rev-parse --show-toplevel"
 alias g-root-show=git-root-show
 alias g=git
-function git-root() {
+function git-root-from-toplevel() {
   git -C "$(git-root-show)" "$@"
 }
-alias g-root=git-root
-function git-root-relative() {
+alias g-root-from-toplevel=git-root-from-toplevel
+function git-root() {
   git "$@" "$(git-root-show)"
 }
-alias g-root=git-root-relative
+alias g-root=git-root
+alias git-root-relative=git-root
+alias g-root-relative=git-root
 function git-local() {
   git "$@" .
 }
 alias g-local=git-local
-for c in g git-root g-root git-root-relative g-root-relative git-local g-local; do
+for c in g git-root-from-toplevel g-root-from-toplevel git-root g-root git-root-relative g-root-relative git-local g-local; do
   eval "$(complete -p git | sed -E -e "s/ git$/ ${c}/g")"
 done
 
