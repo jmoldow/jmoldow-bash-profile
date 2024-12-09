@@ -158,6 +158,27 @@ alias   g-rebase-onto-merge-base-main-branch=git-rebase-onto-merge-base-origin-H
 #alias git-rebase-onto-merge-base-HEAD-branch="git-rebase-onto-merge-base-branch HEAD"
 #alias   g-rebase-onto-merge-base-HEAD-branch="git-rebase-onto-merge-base-HEAD-branch"
 
+function git-branch-current() {
+  current=$(git branch-current)
+  if [[ -z "$current" ]]; then
+    current="HEAD"
+  fi
+  echo $current
+}
+alias g-branch-current=git-branch-current
+
+function git-rebase-onto-merge-base-branch-current() {
+  # Rebase A..$(git branch-current) onto $(git merge-base A $(git branch-current)).
+  A="$1"  # The base branch that B was forked from.
+  shift 1
+  git-rebase-onto-merge-base-branch "${A}" "$(git-branch-current)" "$@"
+}
+alias   g-rebase-onto-merge-base-branch-current=git-rebase-onto-merge-base-branch-current
+alias git-rebase-onto-merge-base-origin-HEAD-branch-current="git-rebase-onto-merge-base-branch-current origin/HEAD"
+alias   g-rebase-onto-merge-base-origin-HEAD-branch-current="git-rebase-onto-merge-base-origin-HEAD-branch-current"
+alias git-rebase-onto-merge-base-main-branch-current=git-rebase-onto-merge-base-origin-HEAD-branch-current
+alias   g-rebase-onto-merge-base-main-branch-current=git-rebase-onto-merge-base-origin-HEAD-branch-current
+
 function git-rebase-onto-onto-upstream-merge-base-3() {
   H="$1"
   A="$2"
