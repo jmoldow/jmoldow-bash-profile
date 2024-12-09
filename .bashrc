@@ -35,9 +35,9 @@ shopt -s checkwinsize
 # match all files and zero or more directories and subdirectories.
 shopt -s globstar
 
-set -u -o ignoreeof -o pipefail -o vi
+set -u +H -o ignoreeof -o pipefail -o vi
 
-shopt -s checkjobs expand_aliases failglob huponexit lastpipe lithist progcomp_alias xpg_echo
+shopt -s checkjobs expand_aliases failglob huponexit lastpipe cmdhist lithist progcomp_alias xpg_echo
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"

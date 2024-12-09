@@ -13,6 +13,8 @@ export XDG_STATE_HOME=~/.local/state
 export LOCAL_BIN_HOME=~/.local/bin
 export PATH="${LOCAL_BIN_HOME}:$PATH"
 
+# append to the history file, don't overwrite it
+shopt -s histappend
 # <https://www.reddit.com/r/commandline/comments/4m0s58/how_and_why_to_log_your_entire_bash_history/d3rqo3a>
 #export PROMPT_COMMAND='history -a'
 export HISTSIZE=9999999999999
