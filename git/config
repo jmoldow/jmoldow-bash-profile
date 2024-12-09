@@ -120,11 +120,13 @@
   ignore = update-index --assume-unchanged
   commit-e = commit -e
   commit-squash = commit-e --squash=HEAD
-  amend        = commit-e --amend --reset-author
-  commit-amend = commit-e --amend --reset-author
-  wip-amend    = commit-e --amend --reset-author --no-verify
-  wip          = commit-e -m "wip"               --no-verify
-  wip-squash   = commit-e --squash=HEAD          --no-verify
+  commit-fixup  = commit-e  --fixup=HEAD
+  amend         = commit-e --amend --reset-author
+  commit-amend  = commit-e --amend --reset-author
+  wip-amend     = commit-e --amend --reset-author --no-verify
+  wip           = commit-e -m "wip"               --no-verify
+  wip-squash    = commit-e --squash=HEAD          --no-verify
+  wip-fixup     = commit-e  --fixup=HEAD          --no-verify
   dlog        = -c diff.external=difft -c "core.pager='less -FRXISM'" log-decorate  -p  --ext-diff
   dshow       = -c diff.external=difft -c "core.pager='less -FRXISM'" show              --ext-diff
   ddiff       = -c "diff.external='difft --exit-code'" -c diff.trustExitCode=true -c "core.pager='less -FRXISM'" diff              --ext-diff
