@@ -134,7 +134,7 @@ for c in g git-root-from-toplevel g-root-from-toplevel git-root g-root git-root-
 done
 
 function git-log-jordan-graph-all-plus-origin-head() {
-  git log-jordan-graph-all-not-origin-head --color=never | grep --color=never "refs/heads" | grep --color=never -oE " [a-z0-9]{10} " | xargs git log-graph "$@"
+  git log-jordan-all-not-origin-head --color=never --format="format:%h" --branches HEAD | xargs git log-graph "$@" | grep -A9 -E "HEAD|\/origin\/|\/heads\/|\/remotes\/|^[^*]*$|^[^*].*[*]" | less
 }
 
 function git-rebase-onto-merge-base-branch() {
