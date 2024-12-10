@@ -162,6 +162,7 @@
   dft-main = dft-origin-HEAD
   branch-current = branch --show-current
   root-show = rev-parse --show-toplevel
+  pager-show = config core.pager
 [gc]
   auto = 500
   pruneexpire = 1.weeks.ago
