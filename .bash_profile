@@ -447,6 +447,51 @@ if [ $(which argocd) ]; then
   source <(argocd completion bash)
 fi
 
+if [ $(which docker) ]; then
+  function docker-run() {
+    docker run -ti \
+      $(env | command grep --color=never -E '^((XDG_CONFIG_HOME|COLORTERM|LESS|LOGNAME|HOME|LANG|COLUMNS|CLICOLOR|TERM|USER|INPUTRC|EMAIL)|([A-Z][A-Z]+))[=][a-zA-Z0-9_/.~@-]{0,99}$' | command grep --color=never -vE "SHELL|EDITOR|PWD|DIR|FILE|HIST|TMP|OLD|PATH|COLUMNS|^GO|SHLVL" | xargs -I% echo "--env" % | xargs) \
+      -v /var/run/docker.sock:/var/run/docker.sock \
+      $(echo "$(pwd)/" | grep -q -oE "^$HOME/*$" || echo -v "$(pwd)":"$(pwd)" -v "$(pwd)":"/pwd" -w "$(pwd)") \
+      -v "$HOME/.config":"$HOME/.config" \
+      -v "$HOME/.config":"/root/.config" \
+      -v "$XDG_CONFIG_HOME":"$XDG_CONFIG_HOME" \
+      -v "$HOME/jmoldow-bash-profile:$HOME/jmoldow-bash-profile" \
+      -v "$HOME/jmoldow-bash-profile:/root/jmoldow-bash-profile" \
+      -v "$HOME/jmoldow:$HOME/jmoldow" \
+      -v "$HOME/jmoldow:/root/jmoldow" \
+      -v "$HOME/git/jmoldow:$HOME/git/jmoldow" \
+      -v "$HOME/git/jmoldow:/root/git/jmoldow" \
+      $@
+  }
+  function docker-run-rm() {
+    docker-run --rm $@
+  }
+  function docker-dive() {
+    #dive_image="wagoodman/dive:latest"
+    dive_image="ghcr.io/joschi/dive:latest"
+    docker pull "$dive_image" || true
+    docker-run-rm ${CI:+--env "CI=${CI}"} \
+      "$dive_image" --config "$XDG_CONFIG_HOME/dive.yaml" --ci-config "$XDG_CONFIG_HOME/dive-ci.yaml"  $@
+  }
+  eval "$(complete -p docker | sed -E -e "s/ docker$/ docker-dive/g")"
+  function docker-dive-image-archive() {
+    image="$1"
+    shift 1
+    docker image pull "$image" || true
+    filename="image-saved-for-dive.tar"
+    docker image save -o "$filename" "$image"
+    docker-dive "/pwd/${filename}" --source docker-archive $@
+  }
+  alias dive=docker-dive-image-archive
+  function docker-dive-build() {
+    docker-dive build $@
+  }
+  function docker-dive-build-here() {
+    docker-dive-build $@ .
+  }
+fi
+
 # BEGIN bash completion support for Pants
 # Generated from ``pants --no-verify-config complete``
 function _pants_completions() {
