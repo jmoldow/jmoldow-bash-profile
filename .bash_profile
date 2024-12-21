@@ -251,7 +251,6 @@ export gcdifft="-c diff.external=difft -c \"core.pager='less -FRXISM'\""
 
 if [ $(which delta) ]; then
   alias delta="delta --pager='less -RISM'"
-  alias diff="delta"
   eval "$(delta --generate-completion bash)"
 fi
 if [ $(which rg) ]; then
@@ -272,7 +271,6 @@ if [ $(which difft) ]; then
   function difft {
     command difft "$@" | less
   }
-  alias diff=difft
 fi
 
 export WORKON_HOME=$XDG_STATE_HOME/virtualenvs
