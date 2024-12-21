@@ -11,7 +11,7 @@
   pager = true
 [core]
   editor = /usr/bin/vim
-  pager = "delta --pager='less -FRXISM'"
+  pager = "less -FRXISM"
   fsmonitor = false
   untrackedcache = false
   commentChar = auto
@@ -25,15 +25,15 @@
 [log]
   decorate = full
 [pager]
-  status = true
-  diff = true
+  status = "delta --pager='less -FRXISM'"
+  diff = "delta --pager='less -FRXISM'"
   grep = true
-  log = true
-  show = true
+  log = "delta --pager='less -FRXISM'"
+  show = "delta --pager='less -FRXISM'"
   branch = true
   describe = true
   notes = true
-  range-diff = true
+  range-diff = "delta --pager='less -FRXISM'"
   shortlog = true
   add = false
   stash = false
@@ -41,13 +41,13 @@
   submodule = true
   tag = true
   config = true
-  reflog = true
+  reflog = "delta --pager='less -FRXISM'"
   remote = true
   replace = true
   blame = true
   difftool = true
   help = true
-  show-branch = true
+  show-branch = "delta --pager='less -FRXISM'"
 [fetch]
   prune = true
 [init]
