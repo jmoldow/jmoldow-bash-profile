@@ -371,6 +371,16 @@ export KREW_ROOT="${XDG_DATA_HOME}/krew"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 if [ $(which kubectx) ]; then
+  function kubectx-current() {
+    kubectx --current
+  }
+  alias  kx-current=kubectx-current
+  alias ctx-current=kubectx-current
+  function kubens-current() {
+    kubens --current
+  }
+  alias kn-current=kubens-current
+  alias ns-current=kubens-current
   function kubectx-env {
     env=$1
     if ! (kubectx --current | grep -q $env); then
