@@ -383,39 +383,45 @@ if [ $(which kubectx) ]; then
   alias ns-current=kubens-current
   function kubectx-env {
     env=$1
+    current_namespace="$(kubens --current)"
+    namespace="${2:-${current_namespace}}"
     if ! (kubectx --current | grep -q $env); then
-      current_namespace="$(kubens --current)"
       kubectx | grep $env | head -n1 | xargs -r kubectx
-      kubens $current_namespace || true
+      kubens $namespace || true
       kubectx --current | grep -q $env
     else
-      true
+      if [[ "$(kubens --current)" != "$namespace" ]] ; then
+        kubens $namespace || true
+      else
+        kubectx --current
+        kubens --current
+      fi
     fi
   }
   alias kx-env=kubectx-env
   alias ctx-env=kubectx-env
   function kubectx-dev {
-    kubectx-env dev
+    kubectx-env dev "$@"
   }
   alias kx-dev=kubectx-dev
   alias ctx-dev=kubectx-dev
   function kubectx-prod {
-    kubectx-env prod || kubectx-env prd
+    kubectx-env prod "$@" || kubectx-env prd "$@"
   }
   alias kx-prod=kubectx-prod
   alias ctx-prod=kubectx-prod
   function kubectx-staging {
-    kubectx-env staging || kubectx-env stage || kubectx-env stg
+    kubectx-env staging "$@" || kubectx-env stage "$@" || kubectx-env stg "$@"
   }
   alias kx-staging=kubectx-staging
   alias ctx-staging=kubectx-staging
   function kubectx-sandbox {
-    kubectx-env sandbox || kubectx-env sand
+    kubectx-env sandbox "$@" || kubectx-env sand "$@"
   }
   alias kx-sandbox=kubectx-sandbox
   alias ctx-sandbox=kubectx-sandbox
   function kubectx-ci {
-    kubectx-env ci
+    kubectx-env ci "$@"
   }
   alias kx-ci=kubectx-ci
   alias ctx-ci=kubectx-ci
