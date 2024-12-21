@@ -425,6 +425,26 @@ if [ $(which kubectx) ]; then
   }
   alias kx-ci=kubectx-ci
   alias ctx-ci=kubectx-ci
+
+  function kubectx-all() {
+    orig_context=$(kubectx --current)
+    echo $orig_context
+    orig_namespace=$(kubens --current)
+    echo $orig_namespace
+    for fn in sandbox ci dev staging prod ; do
+      "kubectx-${fn}"
+      kubens $orig_namespace
+      "$@"
+    done
+    kubectx $orig_context
+    kubens $orig_namespace
+  }
+  alias kx-all=kubectx-all
+  alias ctx-all=kubectx-all
+fi
+
+if [ $(which argocd) ]; then
+  source <(argocd completion bash)
 fi
 
 # BEGIN bash completion support for Pants
