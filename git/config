@@ -54,6 +54,7 @@
   defaultBranch = main
 [push]
   default = simple
+  autoSetupRemote = true
 [rebase]
   autostash = true
   autosquash = true
