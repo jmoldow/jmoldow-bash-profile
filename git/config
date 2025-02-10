@@ -82,7 +82,12 @@
   syntax-theme = Dracula
   plus-style = syntax "#003800"
   minus-style = syntax "#3f0001"
-  navigate = true    # use n and N to move between diff sections
+  navigate = false    # use n and N to move between diff sections - causes less history to not be saved/shared
+  file-added-label    = "commit:•:added:"
+  file-copied-label   = "commit:•:copied:"
+  file-modified-label = "commit:•:modified:"
+  file-removed-label  = "commit:•:removed:"
+  file-renamed-label  = "commit:•:renamed:"
 
   # delta detects terminal colors automatically; set one of these to disable auto-detection
   # dark = true
