@@ -120,7 +120,7 @@
   log-jordan-all        = log-jordan        --all
   log-jordan-all-not-origin-HEAD = log-jordan-all --no-merges --first-parent --not origin/HEAD --not
   log-jordan-graph-all  = log-jordan-graph  --all
-  log-jordan-graph-all-not-origin-HEAD = log-jordan-graph-all --not origin/HEAD --not
+  log-jordan-graph-all-not-origin-HEAD = log-jordan-graph --exclude=refs/remotes/*/HEAD --exclude=refs/*/main --exclude=HEAD --exclude=refs/heads/*zzzzzz/* --exclude=refs/*/merge-requests/* --all --no-merges --first-parent --not origin/HEAD --not
   log-all-jordan    = log-jordan-graph-all
   log-graph-jordan  = log-jordan-graph
   ignore = update-index --assume-unchanged
