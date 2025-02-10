@@ -529,6 +529,9 @@ function _pants_completions() {
 complete -o default -F _pants_completions pants
 # END bash completion support for Pants
 
+export PANTS_COLORS=true
+alias pants="PANTS_COLORS=true pants --colors"
+
 #export PS1="\u@\h \W \$(kprompt) \[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
 
 export MANPATH="${MANPATH:-}:/usr/local/opt/erlang/lib/erlang/man:"
