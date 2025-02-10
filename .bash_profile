@@ -137,6 +137,18 @@ for c in g git-root-from-toplevel g-root-from-toplevel git-root g-root git-root-
   eval "$(complete -p git | sed -E -e "s/ git$/ ${c}/g")"
 done
 
+function git-worktree-switch-branch() {
+  branch="$1"
+  branch_no_slashes="$(echo "$branch" | tr "/" "-")"
+  worktree_root="$(git root-show)/git-worktrees"
+  worktree_path="${worktree_root}/${branch_no_slashes}"
+  mkdir -p "$(git root-show)/git-worktrees"
+  [[ ! -d $worktree_path ]] || git worktree remove "$worktree_path"
+  git worktree prune
+  git-root-from-toplevel worktree add --checkout "$worktree_path" "$branch"
+  cd "$worktree_path"
+}
+
 function git-log-jordan-graph-all-plus-origin-head() {
   git log-jordan-all-not-origin-head --color=never --format="format:%h" --branches HEAD | xargs git log-graph "$@" | grep -A9 -E "HEAD|\/origin\/|\/heads\/|\/remotes\/|^[^*]*$|^[^*].*[*]" | less
 }
