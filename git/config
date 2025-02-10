@@ -106,19 +106,19 @@
   clean-nffdx                 = clean -nffdx
   clean-nffdx-force-execute   = clean  -ffdx
   log-decorate  = log --decorate=full --ext-diff
-  log-not = log-decorate --not
+  log-not = log-decorate --no-merges --first-parent --not
   log-not-HEAD        = log-not HEAD --not
   log-not-origin-HEAD = log-not origin/HEAD --not
   log-not-main-local  = log-not main --not
   log-not-main = log-not-origin-HEAD
   log-graph     = log-decorate --oneline --graph
-  log-graph-not-origin-HEAD = log-graph --not origin/HEAD --not
+  log-graph-not-origin-HEAD = log-graph --no-merges --first-parent --not origin/HEAD --not
   log-all       = log-graph --all
-  log-all-not-origin-HEAD = log-all --not origin/HEAD --not
+  log-all-not-origin-HEAD = log-all --no-merges --first-parent --not origin/HEAD --not
   log-jordan            = log-decorate --author=jmoldow --author=Moldow --author=jormol
   log-jordan-graph      = log-jordan --oneline --graph
   log-jordan-all        = log-jordan        --all
-  log-jordan-all-not-origin-HEAD = log-jordan-all --not origin/HEAD --not
+  log-jordan-all-not-origin-HEAD = log-jordan-all --no-merges --first-parent --not origin/HEAD --not
   log-jordan-graph-all  = log-jordan-graph  --all
   log-jordan-graph-all-not-origin-HEAD = log-jordan-graph-all --not origin/HEAD --not
   log-all-jordan    = log-jordan-graph-all
