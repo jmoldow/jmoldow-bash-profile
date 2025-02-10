@@ -31,6 +31,8 @@ export COLUMNS
 
 #export LESS="-RSMsi"
 #export LESS="-RM"
+export LESSHISTSIZE=999999999
+export LESSHISTFILE=$XDG_DATA_HOME/lesshst
 export LESS='RISM'
 alias less='less -RISM'
 alias diff='diff --color=always -U3'
