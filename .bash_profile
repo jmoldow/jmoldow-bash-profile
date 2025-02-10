@@ -150,7 +150,7 @@ function git-worktree-switch-branch() {
 }
 
 function git-log-jordan-graph-all-plus-origin-head() {
-  git log-jordan-all-not-origin-head --color=never --format="format:%h" --branches HEAD | xargs git log-graph "$@" | grep -A9 -E "HEAD|\/origin\/|\/heads\/|\/remotes\/|^[^*]*$|^[^*].*[*]" | less
+  git log-jordan-all-not-origin-head --color=never --format="format:%h" --branches HEAD | xargs -I{} git log-graph {} "$@" | command grep --color=never -A9 -E "HEAD|\/origin\/|\/heads\/|\/remotes\/|^[^*]*$|^[^*].*[*]" | less
 }
 
 function git-rebase-onto-merge-base-branch() {
