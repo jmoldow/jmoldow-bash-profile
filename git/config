@@ -9,6 +9,12 @@
   interactive = auto
   ui = auto
   pager = true
+[column]
+  ui = auto
+[branch]
+  sort = -committerdate
+[tag]
+  sort = version:refname
 [core]
   editor = /usr/bin/vim
   pager = "less -FRXISM"
