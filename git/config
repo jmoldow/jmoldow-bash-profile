@@ -19,7 +19,7 @@
   editor = /usr/bin/vim
   pager = "less -FRXISM"
   fsmonitor = false
-  untrackedcache = false
+  untrackedcache = true
   commentChar = auto
 [interactive]
   diffFilter = "delta --color-only"
@@ -28,6 +28,7 @@
 [grep]
   lineNumber = true
   extendedRegexp = true
+  fallbackToNoIndex = true
 [log]
   decorate = full
 [pager]
@@ -198,6 +199,7 @@
   aggressiveWindow = 100
 [feature]
   manyFiles = false
+  experimental = true
 [difftool]
   prompt = false
 
