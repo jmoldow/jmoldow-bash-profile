@@ -65,12 +65,21 @@
 [rebase]
   autostash = true
   autosquash = true
+  stat = true
+  updateRefs = true
+  missingCommitsCheck = error
 [merge]
   tool = vimdiff
   conflictStyle = zdiff3
   branchdesc = true
   autoStash = true
+[rerere]
+  enabled = true
+  autoUpdate = true
+[help]
+  autoCorrect = prompt
 [diff]
+  algorithm = histogram
   tool = difftastic
   statGraphWidth = 999
   mnemonicPrefix = true
