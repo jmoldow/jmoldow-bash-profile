@@ -171,9 +171,13 @@
   ddiff-cached = ddiff --cached
   dft-cached = dft --cached
   diff-HEAD         = diff HEAD
+  diff-HEAD-HEAD    = diff-HEAD HEAD
   diff-origin-HEAD  = diff origin/HEAD
+  diff-origin-HEAD-HEAD = diff-origin-HEAD HEAD
   diff-main-local   = diff main
-  diff-main = diff-origin-HEAD
+  diff-main-local-HEAD = diff-main-local HEAD
+  diff-main         = diff-origin-HEAD
+  diff-main-HEAD    = diff-main HEAD
   ddiff-HEAD        = ddiff HEAD
   ddiff-origin-HEAD = ddiff origin/HEAD
   ddiff-main-local  = ddiff main
