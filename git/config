@@ -129,15 +129,19 @@
   log-not-main-local  = log-not main --not
   log-not-main = log-not-origin-HEAD
   log-graph     = log-decorate --oneline --graph
-  log-graph-not-origin-HEAD = log-graph --no-merges --first-parent --not origin/HEAD --not
+  log-graph-not-origin-HEAD = log-not origin/HEAD --not --graph
   log-all       = log-graph --all
-  log-all-not-origin-HEAD = log-all --no-merges --first-parent --not origin/HEAD --not
+  log-all-not-origin-HEAD = log-graph-not-origin-HEAD --all
   log-jordan            = log-decorate --author=jmoldow --author=Moldow --author=jormol
-  log-jordan-graph      = log-jordan --oneline --graph
+  log-jordan-graph      = log-jordan --graph
+  log-jordan-not-origin-HEAD = log-jordan --no-merges --first-parent --not origin/HEAD --not --exclude=refs/remotes/*/HEAD --exclude=refs/*/main --exclude=HEAD --exclude=refs/heads/*zzzzzz/* --exclude=refs/*/merge-requests/*
+  log-jordan-not-origin-HEAD-HEAD = log-jordan-not-origin-HEAD HEAD
+  log-jordan-graph-not-origin-HEAD = log-jordan-not-origin-HEAD --graph
+  log-jordan-graph-not-origin-HEAD-HEAD = log-jordan-graph-not-origin-HEAD HEAD
   log-jordan-all        = log-jordan        --all
-  log-jordan-all-not-origin-HEAD = log-jordan-all --no-merges --first-parent --not origin/HEAD --not
-  log-jordan-graph-all  = log-jordan-graph  --all
-  log-jordan-graph-all-not-origin-HEAD = log-jordan-graph --exclude=refs/remotes/*/HEAD --exclude=refs/*/main --exclude=HEAD --exclude=refs/heads/*zzzzzz/* --exclude=refs/*/merge-requests/* --all --no-merges --first-parent --not origin/HEAD --not
+  log-jordan-all-not-origin-HEAD = log-jordan-not-origin-HEAD --all
+  log-jordan-graph-all  = log-jordan-graph --all
+  log-jordan-graph-all-not-origin-HEAD = log-jordan-all-not-origin-HEAD --graph
   log-all-jordan    = log-jordan-graph-all
   log-graph-jordan  = log-jordan-graph
   ignore = update-index --assume-unchanged
