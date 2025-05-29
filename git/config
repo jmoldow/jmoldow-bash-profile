@@ -66,6 +66,7 @@
 [push]
   default = simple
   autoSetupRemote = true
+  useForceIfIncludes = true
 [rebase]
   autostash = true
   autosquash = true
