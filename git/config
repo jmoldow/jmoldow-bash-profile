@@ -169,17 +169,21 @@
   log-graph     = log-decorate --oneline --graph
   log-graph-not-origin-HEAD = log-not origin/HEAD --not --graph
   log-all       = log-graph --all
-  log-all-not-origin-HEAD = log-graph-not-origin-HEAD --all
   log-jordan            = log-decorate --author=jmoldow --author=Moldow --author=jormol
   log-jordan-graph      = log-jordan --graph
-  log-jordan-not-origin-HEAD = log-jordan --no-merges --first-parent --not origin/HEAD --not --exclude=refs/remotes/*/HEAD --exclude=refs/*/main --exclude=HEAD --exclude=refs/heads/*zzzzzz/* --exclude=refs/*/merge-requests/*
+  log-all-not-origin-HEAD    = log-decorate --no-merges --first-parent --not --glob=refs/remotes/*/HEAD                                                                                                                    --not --exclude=refs/*/main --exclude=HEAD --exclude=refs/heads/*zzzzzz/* --exclude=refs/*/merge-requests/* --exclude=refs/*/pull/*/head --exclude=refs/pull/*/head --exclude=refs/*/gh-readonly-queue/* --source --abbrev-commit --graph --all
+  log-jordan-not-origin-HEAD = log-jordan   --no-merges --first-parent --not --glob=refs/remotes/*/HEAD                                                                                                                    --not --exclude=refs/*/main --exclude=HEAD --exclude=refs/heads/*zzzzzz/* --exclude=refs/*/merge-requests/* --exclude=refs/*/pull/*/head --exclude=refs/pull/*/head --exclude=refs/*/gh-readonly-queue/* --source --abbrev-commit
+  log-jordan-not-requests    = log-jordan   --no-merges --first-parent --not --glob=refs/remotes/*/HEAD --glob=refs/*/merge-requests/* --glob=refs/*/pull/*/head --glob=refs/pull/*/head --glob=refs/*/gh-readonly-queue/* --not --exclude=refs/*/main --exclude=HEAD --exclude=refs/heads/*zzzzzz/* --exclude=refs/*/merge-requests/* --exclude=refs/*/pull/*/head --exclude=refs/pull/*/head --exclude=refs/*/gh-readonly-queue/* --source --abbrev-commit
+  log-all-not-requests       = log-decorate --no-merges --first-parent --not --glob=refs/remotes/*/HEAD --glob=refs/*/merge-requests/* --glob=refs/*/pull/*/head --glob=refs/pull/*/head --glob=refs/*/gh-readonly-queue/* --not --exclude=refs/*/main --exclude=HEAD --exclude=refs/heads/*zzzzzz/* --exclude=refs/*/merge-requests/* --exclude=refs/*/pull/*/head --exclude=refs/pull/*/head --exclude=refs/*/gh-readonly-queue/* --source --abbrev-commit --graph --all
   log-jordan-not-origin-HEAD-HEAD = log-jordan-not-origin-HEAD HEAD
   log-jordan-graph-not-origin-HEAD = log-jordan-not-origin-HEAD --graph
   log-jordan-graph-not-origin-HEAD-HEAD = log-jordan-graph-not-origin-HEAD HEAD
   log-jordan-all        = log-jordan        --all
-  log-jordan-all-not-origin-HEAD = log-jordan-not-origin-HEAD --all
+  log-jordan-all-not-origin-HEAD  = log-jordan-not-origin-HEAD --all
+  log-jordan-all-not-requests     = log-jordan-not-requests --all
   log-jordan-graph-all  = log-jordan-graph --all
-  log-jordan-graph-all-not-origin-HEAD = log-jordan-all-not-origin-HEAD --graph
+  log-jordan-graph-all-not-origin-HEAD  = log-jordan-all-not-origin-HEAD --graph
+  log-jordan-graph-all-not-requests     = log-jordan-all-not-requests --graph
   log-all-jordan    = log-jordan-graph-all
   log-graph-jordan  = log-jordan-graph
   ignore = update-index --assume-unchanged
