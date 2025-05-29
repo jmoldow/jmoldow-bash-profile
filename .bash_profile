@@ -273,7 +273,11 @@ if [ $(which rg) ]; then
   eval "$(command rg --generate=complete-bash)"
   if [ $(which delta) ]; then
     function rg {
-      command rg --json -C 2 "$@" | delta
+      if echo "$@" | grep --quiet -E "((^| )[-][lc])|(--files)|(--count)"; then
+        command rg "$@"
+      else
+        command rg --json -C 2 "$@" | delta
+      fi
     }
   fi
   alias ripgrep=rg
