@@ -21,6 +21,7 @@
   fsmonitor = false
   untrackedcache = true
   commentChar = auto
+  gitProxy = ssh
 [interactive]
   diffFilter = "delta --color-only"
 [commit]
@@ -88,6 +89,40 @@
   colorMoved = dimmed-zebra
   colorMovedWS = ignore-space-at-eol,ignore-space-change,ignore-all-space
   wordRegex = [[:alnum:]_]+|\\S+
+[http]
+  sslVerify
+[protocol]
+  allow = never
+[protocol "file"]
+  allow = user
+[protocol "ssh"]
+  allow = always
+[url "ssh://git@github.com"]
+  insteadOf = "https://github.com"
+  insteadOf = "https://*.github.com"
+  insteadOf = "http://github.com"
+  insteadOf = "http://*.github.com"
+  insteadOf = "github.com"
+  insteadOf = "*.github.com"
+  pushInsteadOf = "https://github.com"
+  pushInsteadOf = "https://*.github.com"
+  pushInsteadOf = "http://github.com"
+  pushInsteadOf = "http://*.github.com"
+  pushInsteadOf = "github.com"
+  pushInsteadOf = "*.github.com"
+[url "ssh://git@gitlab.com"]
+  insteadOf = "https://gitlab.com"
+  insteadOf = "https://*.gitlab.com"
+  insteadOf = "http://gitlab.com"
+  insteadOf = "http://*.gitlab.com"
+  insteadOf = "gitlab.com"
+  insteadOf = "*.gitlab.com"
+  pushInsteadOf = "https://gitlab.com"
+  pushInsteadOf = "https://*.gitlab.com"
+  pushInsteadOf = "http://gitlab.com"
+  pushInsteadOf = "http://*.gitlab.com"
+  pushInsteadOf = "gitlab.com"
+  pushInsteadOf = "*.gitlab.com"
 [delta]
   features = line-numbers decorations
   hyperlinks = true
