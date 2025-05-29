@@ -406,7 +406,7 @@ if [ $(which kubectx) ]; then
     current_namespace="$(kubens --current)"
     namespace="${2:-${current_namespace}}"
     if ! (kubectx --current | grep -q $env); then
-      kubectx | grep $env | head -n1 | xargs -r kubectx
+      kubectx | command grep --color=never $env | head -n1 | xargs -r kubectx
       kubens $namespace || true
       kubectx --current | grep -q $env
     else
