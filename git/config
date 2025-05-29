@@ -32,6 +32,8 @@
   fallbackToNoIndex = true
 [log]
   decorate = full
+  initialDecorationSet = all
+  follow = true
 [pager]
   status = "delta --pager='less -FRXISM'"
   diff = "delta --pager='less -FRXISM'"
