@@ -488,8 +488,7 @@ if [ $(which docker) ]; then
     docker-run --rm $@
   }
   function docker-dive() {
-    #dive_image="wagoodman/dive:latest"
-    dive_image="ghcr.io/joschi/dive:latest"
+    dive_image="wagoodman/dive:latest"
     docker pull "$dive_image" || true
     docker-run-rm ${CI:+--env "CI=${CI}"} \
       "$dive_image" --config "$XDG_CONFIG_HOME/dive.yaml" --ci-config "$XDG_CONFIG_HOME/dive-ci.yaml"  $@
