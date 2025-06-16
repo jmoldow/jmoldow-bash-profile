@@ -92,6 +92,11 @@
   colorMoved = dimmed-zebra
   colorMovedWS = ignore-space-at-eol,ignore-space-change,ignore-all-space
   wordRegex = [[:alnum:]_]+|\\S+
+[credential]
+  interactive = false
+[credential "https://*git*.com"]
+  interactive = false
+  username = jmoldow
 [http]
   sslVerify
 [protocol]
@@ -168,7 +173,7 @@
   log-not-main = log-not-origin-HEAD
   log-graph     = log-decorate --oneline --graph
   log-graph-not-origin-HEAD = log-not origin/HEAD --not --graph
-  log-all       = log-graph --all
+  log-all       = log-graph --all --source
   log-jordan            = log-decorate --author=jmoldow --author=Moldow --author=jormol
   log-jordan-graph      = log-jordan --graph
   log-all-not-origin-HEAD    = log-decorate --no-merges --first-parent --not --glob=refs/remotes/*/HEAD                                                                                                                    --not --exclude=refs/*/main --exclude=HEAD --exclude=refs/heads/*zzzzzz/* --exclude=refs/*/merge-requests/* --exclude=refs/*/pull/*/head --exclude=refs/pull/*/head --exclude=refs/*/gh-readonly-queue/* --source --abbrev-commit --graph --all
@@ -178,10 +183,10 @@
   log-jordan-not-origin-HEAD-HEAD = log-jordan-not-origin-HEAD HEAD
   log-jordan-graph-not-origin-HEAD = log-jordan-not-origin-HEAD --graph
   log-jordan-graph-not-origin-HEAD-HEAD = log-jordan-graph-not-origin-HEAD HEAD
-  log-jordan-all        = log-jordan        --all
+  log-jordan-all        = log-jordan        --all --source
   log-jordan-all-not-origin-HEAD  = log-jordan-not-origin-HEAD --all
   log-jordan-all-not-requests     = log-jordan-not-requests --all
-  log-jordan-graph-all  = log-jordan-graph --all
+  log-jordan-graph-all  = log-jordan-graph --all --source
   log-jordan-graph-all-not-origin-HEAD  = log-jordan-all-not-origin-HEAD --graph
   log-jordan-graph-all-not-requests     = log-jordan-all-not-requests --graph
   log-all-jordan    = log-jordan-graph-all
@@ -236,6 +241,12 @@
   branch-current = branch --show-current
   root-show = rev-parse --show-toplevel
   pager-show = config core.pager
+  merge-base-origin-HEAD = merge-base origin/HEAD
+  merge-base-origin-HEAD-HEAD = merge-base-origin-HEAD HEAD
+  merge-base-main = merge-base-origin-HEAD
+  merge-base-main-HEAD = merge-base-main HEAD
+  merge-base-main-local = merge-base main
+  merge-base-main-local-HEAD = merge-base-main-local HEAD
 [gc]
   auto = 500
   pruneexpire = 1.weeks.ago
