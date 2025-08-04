@@ -22,6 +22,9 @@
   untrackedcache = true
   commentChar = auto
   gitProxy = ssh
+  warnAmbiguousRefs = true
+[checkout]
+  defaultRemote = origin
 [interactive]
   diffFilter = "delta --color-only"
 [commit]
