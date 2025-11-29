@@ -230,12 +230,15 @@
   diff-origin-HEAD  = diff origin/HEAD
   diff-origin-HEAD-HEAD = diff-origin-HEAD HEAD
   diff-merge-base-origin-HEAD-HEAD = diff origin/HEAD...HEAD
+  diff-merge-base-origin-HEAD-local = diff --merge-base origin/HEAD
   diff-main-local   = diff main
   diff-main-local-HEAD = diff-main-local HEAD
   diff-merge-base-main-local-HEAD = diff main...HEAD
+  diff-merge-base-main-local-local = diff --merge-base main
   diff-main         = diff-origin-HEAD
   diff-main-HEAD    = diff-main HEAD
   diff-merge-base-main-HEAD = diff-merge-base-origin-HEAD-HEAD
+  diff-merge-base-main-local = diff-merge-base-origin-HEAD-local
   ddiff-HEAD        = ddiff HEAD
   ddiff-origin-HEAD = ddiff origin/HEAD
   ddiff-main-local  = ddiff main
