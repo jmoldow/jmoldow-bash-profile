@@ -387,6 +387,14 @@ if [ $(which kustomize) ]; then
   source <(kustomize completion bash)
 fi
 
+if [ $(which gt) ]; then
+  alias graphite=gt
+  alias grphite=gt
+  source <(gt completion)
+  eval "$(complete -p gt | sed -E -e "s/ gt$/ graphite/g")"
+  eval "$(complete -p gt | sed -E -e "s/ gt$/ grphite/g")"
+fi
+
 export KREW_ROOT="${XDG_DATA_HOME}/krew"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
