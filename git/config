@@ -78,7 +78,7 @@
   missingCommitsCheck = error
 [merge]
   tool = vimdiff
-  conflictStyle = zdiff3
+  conflictStyle = diff3
   branchdesc = true
   autoStash = true
 [rerere]
@@ -286,3 +286,7 @@
 [difftool "difftastic"]
   # See `man git-difftool` for a description of MERGED, LOCAL and REMOTE.
   cmd = difft "$MERGED" "$LOCAL" "abcdef1" "100644" "$REMOTE" "abcdef2" "100644"
+
+[merge "mergiraf"]
+  name = mergiraf
+  driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
