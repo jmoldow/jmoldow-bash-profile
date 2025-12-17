@@ -69,6 +69,7 @@ if [ $(which brew) ]; then
   fi
   eval "$(brew shellenv)"
   export PATH="$(brew --prefix)/bin:$(brew --prefix)/sbin:$PATH"
+  export PATH="/opt/homebrew/opt/gnu-getopt/bin:$PATH"
   # BEGIN <https://docs.brew.sh/Shell-Completion#configuring-completions-in-bash>
   if type brew &>/dev/null
   then
