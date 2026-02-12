@@ -579,6 +579,9 @@ if [ $(which aws) ]; then
   fi
 fi
 
+export NVM_DIR="${XDG_CONFIG_HOME}/nvm"
+if [ -s "$NVM_DIR/nvm.sh" ]; then \. "$NVM_DIR/nvm.sh"; fi  # This loads nvm
+
 find_quote_spaces() {
   find "$@" | sed -E -e 's#(.*)#"\1"#g' -e "s# #\\ #g"
 }
