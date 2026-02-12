@@ -90,25 +90,21 @@
   "enabledPlugins": {},
   "extraKnownMarketplaces": {},
   "sandbox": {
-    "enabled": true,
-    "autoAllowBashIfSandboxed": false,
-    "allowUnsandboxedCommands": false,
-    "excludedCommands": [
-      "docker",
-      "git"
-    ],
     "network": {
-      "allowedDomains": [
-        "github.com",
-        "*.npmjs.org",
-        "registry.yarnpkg.com"
-      ],
+      "allowedDomains": [],
       "allowUnixSockets": [
         "/var/run/docker.sock"
       ],
       "allowAllUnixSockets": false,
       "allowLocalBinding": false,
       "enableWeakerNestedSandbox": false
-    }
+    },
+    "excludedCommands": [
+      "docker",
+      "git"
+    ],
+    "autoAllowBashIfSandboxed": false,
+    "allowUnsandboxedCommands": false,
+    "enabled": true
   }
 }
