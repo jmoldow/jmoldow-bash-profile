@@ -414,16 +414,32 @@ if [ $(which kubectx) ]; then
   alias kn-current=kubens-current
   alias ns-current=kubens-current
   function kubectx-env {
-    env=$1
+    env="$1"
+    shift 1
+    env_additional_filter=""
+    if [[ $# -ge 2 ]]; then
+      env_additional_filter="$1"
+      shift 1
+    fi
     current_namespace="$(kubens --current)"
-    namespace="${2:-${current_namespace}}"
-    if ! (kubectx --current | grep -q $env); then
-      kubectx | command grep --color=never $env | head -n1 | xargs -r kubectx
-      kubens $namespace || true
-      kubectx --current | grep -q $env
+    namespace="${1:-${current_namespace}}"
+    if [[ "$namespace" != "$current_namespace" ]] && [[ -z "$env_additional_filter" ]]; then
+      kubens "$namespace" >/dev/null 2>&1 || { env_additional_filter="$namespace"; namespace="$current_namespace"; }
+    fi
+    if ! (kubectx --current | command grep -E --color=never "$env" | grep -E -q "$env_additional_filter"); then
+      new_ctx="$(kubectx | command grep -E --color=never "$env" | command grep -E --color=never "$env_additional_filter" | head -n1)"
+      if [[ -z "$new_ctx" ]]; then
+        echo >&2 "ERROR: No context found that matches ${env_additional_filter:+"$env_additional_filter && "}${env}"
+        return 1
+      fi
+      kubectx "$new_ctx"
+      kubens "$namespace" || true
+
+      # return code
+      kubectx --current | command grep -E --color=never "$env" | grep -E -q "$env_additional_filter"
     else
       if [[ "$(kubens --current)" != "$namespace" ]] ; then
-        kubens $namespace || true
+        kubens "$namespace" || true
       else
         kubectx --current
         kubens --current
