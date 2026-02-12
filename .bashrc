@@ -36,6 +36,7 @@ shopt -s checkwinsize
 shopt -s globstar
 
 set -u +H -o ignoreeof -o pipefail -o vi
+alias bash="bash -u +H -o ignoreeof -o pipefail -o vi"
 
 shopt -s checkjobs expand_aliases failglob huponexit lastpipe cmdhist lithist progcomp_alias xpg_echo
 
@@ -138,6 +139,9 @@ fi
 if [ -f ~/.bash_profile ]; then
     . ~/.bash_profile
 fi
+
+# Some shell auto-complete functions expect this
+set +u
 
 if [[ "${_XJORDANX_ENTRYPOINT:-}" = "bashrc" ]]; then
   export -n _XJORDANX_RUNNING_BASHRC _XJORDANX_RUNNING_BASH_PROFILE _XJORDANX_ENTRYPOINT this_entrypoint
