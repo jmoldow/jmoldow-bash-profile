@@ -259,6 +259,7 @@
   sh-echo = "!c() { (cd \"$GIT_PREFIX\" && echo "$@") ; }; c"
   sh-true = "!c() { true ; }; c"
   sh-false = "!c() { false ; }; c"
+  type = cat-file -t
 [gc]
   auto = 500
   pruneexpire = 1.weeks.ago
