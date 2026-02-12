@@ -137,6 +137,9 @@ alias g-local=git-local
 for c in g git-root-from-toplevel g-root-from-toplevel git-root g-root git-root-relative g-root-relative git-local g-local; do
   eval "$(complete -p git | sed -E -e "s/ git$/ ${c}/g")"
 done
+function git-root-eval() {
+  (cd "$(git root-show)" && eval "$@")
+}
 
 function git-worktree-switch-branch() {
   branch="$1"
