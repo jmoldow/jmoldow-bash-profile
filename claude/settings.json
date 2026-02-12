@@ -106,5 +106,10 @@
     "autoAllowBashIfSandboxed": false,
     "allowUnsandboxedCommands": false,
     "enabled": true
+  },
+  "alwaysThinkingEnabled": false,
+  "statusLine": {
+    "type": "command",
+    "command": "bash /Users/jordan/.claude/statusline-command.sh"
   }
 }
