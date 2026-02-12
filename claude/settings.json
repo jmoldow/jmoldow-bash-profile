@@ -45,7 +45,21 @@
       "Bash(pants --no-dynamic-ui fmt:*)",
       "Bash(pants --no-dynamic-ui tailor:*)",
       "Bash(pants --no-dynamic-ui test:*)",
-      "Bash(rg:*)"
+      "Bash(rg:*)",
+      "Bash(ls:*)",
+      "Bash(brew --prefix)",
+      "Bash(git rev-parse --show-toplevel)",
+      "Bash(git --exec-path)",
+      "Bash(git --info-path)",
+      "Bash(git --man-path)",
+      "Bash(which)",
+      "Bash(command -v)",
+      "Bash(brew shellenv)",
+      "Read(/usr/local/etc/profile.d/**)",
+      "Read(/**/etc/profile.d/**)",
+      "Read(/**/etc/bash_completion.d/**)",
+      "Read(/**/etc/bash_completion/**)",
+      "Read(/**/completions/**)"
     ],
     "deny": [
       "Bash(curl:*)",
@@ -117,5 +131,6 @@
     "allowUnsandboxedCommands": false,
     "enabled": true
   },
-  "alwaysThinkingEnabled": false
+  "alwaysThinkingEnabled": false,
+  "model": "haiku"
 }
