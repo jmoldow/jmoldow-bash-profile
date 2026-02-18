@@ -1,6 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "env": {
+    "BASH_COMPLETION_COMPAT_DIR": "",
     "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1",
     "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
     "CLAUDE_ENABLE_TELEMETRY": "0",
@@ -24,6 +25,10 @@
       "Bash(npm run test:*)",
       "Read(~/.config/**)",
       "Read(~/.claude/**)",
+      "Read(~/.claude/**/*.md)",
+      "Read(~/.claude/*.md)",
+      "Read(~/.claude/CLAUDE.md)",
+      "Read(~/.claude/settings.json)",
       "Read(~/.bash_profile)",
       "Read(~/.bash_profile_gitignore)",
       "Read(~/.bashrc)",
@@ -47,19 +52,33 @@
       "Bash(pants --no-dynamic-ui test:*)",
       "Bash(rg:*)",
       "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(touch:*)",
+      "Bash(ping:*)",
+      "Bash(jq:*)",
       "Bash(brew --prefix)",
       "Bash(git rev-parse --show-toplevel)",
+      "Bash(git rev-parse --git-dir)",
+      "Bash(git rev-parse:*)",
+      "Bash(git branch --show-current:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git branch -v:*)",
+      "Bash(git rev-list:*)",
+      "Bash(git add:*)",
+      "Bash(git checkout -b:*)",
       "Bash(git --exec-path)",
       "Bash(git --info-path)",
       "Bash(git --man-path)",
+      "Bash(git status:*)",
+      "Bash(git grep:*)",
+      "Bash(git ls-files:*)",
       "Bash(which)",
       "Bash(command -v)",
       "Bash(brew shellenv)",
-      "Read(/usr/local/etc/profile.d/**)",
-      "Read(/**/etc/profile.d/**)",
-      "Read(/**/etc/bash_completion.d/**)",
-      "Read(/**/etc/bash_completion/**)",
-      "Read(/**/completions/**)"
+      "Bash(terragrunt render:*)",
+      "Bash(terragrunt plan:*)"
     ],
     "deny": [
       "Bash(curl:*)",
@@ -99,13 +118,18 @@
       "Read(~/.config/netrc)",
       "Read(~/.pex/**)",
       "Read(~/.config/pex/**)",
+      "Read(/usr/local/etc/profile.d/**)",
+      "Read(/**/etc/profile.d/**)",
+      "Read(/**/etc/bash_completion.d/**)",
+      "Read(/**/etc/bash_completion/**)",
+      "Read(/**/completions/**)",
       "WebFetch"
     ],
     "ask": [
       "Write(./.claude/*.*sh)",
       "Write(./.claude/**/*.*sh)",
-      "Write(~/.claude/*.json)",
-      "Write(./.claude/*.json)",
+      "Write(~/.claude/*.json*)",
+      "Write(./.claude/*.json*)",
       "Write(~/.claude/**/*.*sh)",
       "Write(~/.claude/*.*sh)"
     ]
@@ -116,7 +140,11 @@
   },
   "enabledPlugins": {},
   "extraKnownMarketplaces": {},
+  "outputStyle": "default",
   "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": false,
+    "allowUnsandboxedCommands": false,
     "network": {
       "allowUnixSockets": [
         "/var/run/docker.sock"
@@ -126,11 +154,8 @@
     "excludedCommands": [
       "docker",
       "git"
-    ],
-    "autoAllowBashIfSandboxed": false,
-    "allowUnsandboxedCommands": false,
-    "enabled": true
+    ]
   },
   "alwaysThinkingEnabled": false,
-  "model": "haiku"
+  "effortLevel": "low"
 }
