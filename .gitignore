@@ -4,6 +4,7 @@
 claude/file-history
 claude/plans
 claude/plugins
-claude/projects
+claude/projects/*/*.jsonl
+claude/projects/**/subagents
 claude/todos
 claude/history.jsonl

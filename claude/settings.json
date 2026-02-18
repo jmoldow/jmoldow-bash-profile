@@ -157,5 +157,6 @@
     ]
   },
   "alwaysThinkingEnabled": false,
+  "autoMemoryEnabled": true,
   "effortLevel": "low"
 }
