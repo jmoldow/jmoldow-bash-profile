@@ -1,1 +1,9 @@
 .bash_profile_gitignore
+
+## Claude files that shouldn't be readily deleted, and are possibly worth archiving, but not worth committing
+claude/file-history
+claude/plans
+claude/plugins
+claude/projects
+claude/todos
+claude/history.jsonl

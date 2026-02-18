@@ -1,1 +1,13 @@
 **/.claude/settings.local.json
+**/claude/*cache*
+**/.claude/*cache*
+**/claude/*debug*
+**/.claude/*debug*
+**/claude/*snapshot*
+**/.claude/*snapshot*
+**/claude/*statsig*
+**/.claude/*statsig*
+**/claude/*data*
+**/.claude/*data*
+**/claude/*usage*
+**/.claude/*usage*
