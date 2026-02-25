@@ -29,6 +29,10 @@ export TERM=xterm-256color
 export EDITOR=vim
 export COLUMNS
 
+if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+fi
+
 #export LESS="-RSMsi"
 #export LESS="-RM"
 export LESSHISTSIZE=999999999
@@ -45,10 +49,6 @@ else
   export JQ='env --split-string --ignore-environment TZ=UTC jq'
 fi
 alias jq="$JQ"
-
-if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-fi
 
 if [ $(which go) ]; then
   export GOENV=$XDG_CONFIG_HOME/go/env
