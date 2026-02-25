@@ -53,8 +53,9 @@ alias jq="$JQ"
 
 if [ $(which go) ]; then
   export GOENV=$XDG_CONFIG_HOME/go/env
-  export GOPATH=$(go env GOPATH || echo "$XDG_STATE_HOME/go-path-build/go")
-  export PATH=$PATH:$(go env GOBIN):$GOPATH/bin:$GOPATH:$HOME/go/bin:$HOME/go:$(go env GOTOOLDIR):$(go env GOROOT)/bin:$(go env GOROOT)
+  IFS=";" read -r _GOPATH _GOBIN _GOTOOLDIR _GOROOT < <(go env GOPATH GOBIN GOTOOLDIR GOROOT | tr '\n' ';')
+  export GOPATH="${_GOPATH:-$XDG_STATE_HOME/go-path-build/go}"
+  export PATH=$PATH:${_GOBIN}:$GOPATH/bin:$GOPATH:$HOME/go/bin:$HOME/go:${_GOTOOLDIR}:${_GOROOT}/bin:${_GOROOT}
 fi
 
 function is-interactive() {
