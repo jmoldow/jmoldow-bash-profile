@@ -43,6 +43,7 @@
       "Read(~/.vimrc)",
       "Read(~/.config/git/**)",
       "Read(~/.gitconfig)",
+      "Read(~/git/jmoldow/**)",
       "Write(~/.cache/**)",
       "Write(~/Library/Caches/**)",
       "Bash(jira issue view *)",
@@ -184,5 +185,8 @@
   },
   "alwaysThinkingEnabled": false,
   "autoMemoryEnabled": true,
+  "additionalDirectories": [
+    "~/git/jmoldow"
+  ],
   "effortLevel": "low"
 }
