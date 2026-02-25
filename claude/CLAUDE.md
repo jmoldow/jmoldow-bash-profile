@@ -115,3 +115,10 @@ them when it would be worthwhile.
 
 ## Memories
 - Claude Code CLI supports a global, user-specific `CLAUDE.md` file (`~/.claude/CLAUDE.md`) that is loaded automatically into every session, regardless of project.
+- `~/.profile` IS sourced (via Claude Code's parent process)
+
+### Memories - Claude Code Bash Shell Init
+- Claude Code runs bash as non-interactive, non-login (`$-` = `hmtBc`, no `i`, PS1 unset)
+- `~/.profile` IS sourced (via Claude Code's parent process)
+- `.bashrc` early-returns (non-interactive guard) — settings there don't affect Claude Code
+- The `completion-on` function in `.bash_profile` guards completion-related sourcing
