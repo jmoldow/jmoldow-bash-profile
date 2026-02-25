@@ -591,7 +591,7 @@ find_quote_spaces_all() {
 }
 
 export CLAUDE_ENV_FILE=~/.claude/env-setup.sh
-alias claude="CLAUDE_ENV_FILE=${CLAUDE_ENV_FILE:-~/.claude/env-setup.sh} PAGER=cat GIT_PAGER=cat claude"
+alias claude="CLAUDE_ENV_FILE=${CLAUDE_ENV_FILE:-~/.claude/env-setup.sh} PAGER=cat GIT_PAGER=cat BASH_COMPLETION_COMPAT_DIR='' claude"
 
 # Any commands that shouldn't be committed, because they are hyper-specific to a particular non-personal environment and
 # cannot be generalized. e.g.
