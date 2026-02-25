@@ -590,6 +590,9 @@ find_quote_spaces_all() {
   find . | sed -E 's/(.*)/"\1"/g' | sed -E "s/ /\\ /g"
 }
 
+export CLAUDE_ENV_FILE=~/.claude/env-setup.sh
+alias claude="CLAUDE_ENV_FILE=${CLAUDE_ENV_FILE:-~/.claude/env-setup.sh} PAGER=cat GIT_PAGER=cat claude"
+
 # Any commands that shouldn't be committed, because they are hyper-specific to a particular non-personal environment and
 # cannot be generalized. e.g.
 #     export PATH="/opt/homebrew/opt/kubernetes-cli@1.29/bin:$PATH"

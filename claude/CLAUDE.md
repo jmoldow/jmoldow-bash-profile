@@ -70,7 +70,8 @@ them when it would be worthwhile.
   `git -C /path`, just run `git` directly.
 - For all `git` commands that might produce more than a screen of output (eg `git diff`, `git show`, `git log`, `git
   branch`, `git ls-files`, `git grep`), use `PAGER=cat GIT_PAGER=cat` environment variable overrides. In fact, it might
-  be smart to always use those overrides in all bash sessions.
+  be smart to always use those overrides in all bash sessions. However, if the pager is already set to `cat` / disabled
+  in the parent environment, there is no need to explicitly these environment variables for every bash call.
 - When suggesting read-only `git` commands, prefer to use those that are pre-approved in `settings.json` instead of
   suggesting equivalents that require my approval. But if the unapproved command is significantly better, then feel free
   to suggest it, and suggest that I grant approval in @~/.claude/settings.json .
