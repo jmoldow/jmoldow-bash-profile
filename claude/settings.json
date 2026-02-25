@@ -94,6 +94,8 @@
       "Bash(brew shellenv)",
       "Bash(terragrunt render *)",
       "Bash(terragrunt plan *)",
+      "Bash(go help *)",
+      "Bash(go env *)",
       "Bash(set *)",
       "Bash(shopt *)",
       "Bash(file *)"
