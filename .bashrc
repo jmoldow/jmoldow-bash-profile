@@ -32,8 +32,47 @@ export HISTFILESIZE=999999999
 shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
+# match all files and zero or more directories and subdirectories. If the pattern is followed by a /, only directories and
+# subdirectories match.
 shopt -s globstar
+
+# If set, bash includes filenames beginning with a “.” in the results of pathname expansion.
+# The filenames . and .. must always be matched explicitly, even if dotglob is set.
+shopt -s dotglob
+
+# If set, pathname expansion will never match the filenames . and .., even if the pattern begins
+# with a “.”.  This option is enabled by default.
+shopt -s globskipdots
+
+# If set, enable the extended pattern matching features described above under Pathname Expansion.
+# If the extglob shell option is enabled using the shopt builtin, the shell recognizes several extended pattern
+# matching operators.  In the following description, a pattern-list is a list of one or more patterns separated
+# by a |.  Composite patterns may be formed using one or more of the following sub-patterns:
+#
+#       ?(pattern-list)
+#              Matches zero or one occurrence of the given patterns.
+#       *(pattern-list)
+#              Matches zero or more occurrences of the given patterns.
+#       +(pattern-list)
+#              Matches one or more occurrences of the given patterns.
+#       @(pattern-list)
+#              Matches one of the given patterns.
+#       !(pattern-list)
+#              Matches anything except one of the given patterns.
+#
+# The extglob option changes the behavior of the parser, since the parentheses are normally treated as operators
+# with syntactic meaning.  To ensure that extended matching patterns are parsed correctly, make sure that extglob
+# is enabled before parsing constructs containing the patterns, including shell functions and command
+# substitutions.
+# [[ expression ]]
+#   When the == and != operators are used, the string to the right of the operator is considered a pattern
+#   and matched according to the rules described below under Pattern Matching, as if the extglob shell
+#   option were enabled.  The = operator is equivalent to ==.
+shopt -s extglob
+
+# If set, $'string' and $"string" quoting is performed within ${parameter} expansions enclosed in
+# double quotes.  This option is enabled by default.
+shopt -s extquote
 
 set -u +H -o ignoreeof -o pipefail -o vi
 alias bash="bash -u +H -o ignoreeof -o pipefail -o vi"
