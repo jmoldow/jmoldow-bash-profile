@@ -15,6 +15,10 @@ When working with AWS CLI or cloud provider commands, remember that Claude's san
 ## File Output Rules
 Always write output files (documentation, exports, scripts) to the current project directory, never to @/tmp or other system directories unless explicitly asked.
 
+When you wish to edit or overwrite a file, first check whether it is a symlink or not. If it is a symlink, ask me
+whether I would like to instead edit the target file, or whether I would like to overwrite the symlink with a normal
+file, or whether I would like to abort.
+
 ## Output Expectations
 When asked to export or reproduce conversation history, provide the full content as requested—do not summarize or truncate unless the user explicitly asks for a summary.
 

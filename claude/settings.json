@@ -25,6 +25,7 @@
     "allow": [
       "WebFetch",
       "WebSearch",
+      "Search",
       "Bash(npm run lint)",
       "Bash(npm run test *)",
       "Read(./**)",
