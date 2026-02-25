@@ -57,10 +57,20 @@ if [ $(which go) ]; then
   export PATH=$PATH:$(go env GOBIN):$GOPATH/bin:$GOPATH:$HOME/go/bin:$HOME/go:$(go env GOTOOLDIR):$(go env GOROOT)/bin:$(go env GOROOT)
 fi
 
-[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+function is-interactive() {
+  # Check for interactive bash.
+  case $- in
+      *i*) ;;
+        *) return 1;;
+  esac
+  [ "x${BASH_VERSION-}" != x -a "x${PS1-}" != x ]
+}
+
+is-interactive && [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
 function completion-on() {
-  test -n "${BASH_COMPLETION_VERSINFO:+true}"
+  # Check for interactive bash and that completion has been successfully sourced.
+  is-interactive && [ "x${BASH_COMPLETION_VERSINFO-}" != x ]
 }
 
 export HOMEBREW_NO_AUTO_UPDATE=1
@@ -72,11 +82,11 @@ if [ $(which brew) ]; then
   if [ $(which pyenv) ]; then
     alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
   fi
-  completion-on && eval "$(brew shellenv)"
+  eval "$(brew shellenv)"
   export PATH="$(brew --prefix)/bin:$(brew --prefix)/sbin:$PATH"
   export PATH="/opt/homebrew/opt/gnu-getopt/bin:$PATH"
   # BEGIN <https://docs.brew.sh/Shell-Completion#configuring-completions-in-bash>
-  if completion-on && type brew &>/dev/null
+  if is-interactive && type brew &>/dev/null
   then
     HOMEBREW_PREFIX="$(brew --prefix)"
     if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]
@@ -90,7 +100,7 @@ if [ $(which brew) ]; then
     fi
   fi
   # END <https://docs.brew.sh/Shell-Completion#configuring-completions-in-bash>
-  completion-on && eval "$(brew shellenv)"
+  eval "$(brew shellenv)"
   if completion-on && [ -d "$(brew --prefix)/etc/bash_completion.d" ]; then
     while IFS= read -r -d '' file; do
       source $file ;
@@ -99,10 +109,10 @@ if [ $(which brew) ]; then
       source $file ;
     done < <(find -H -L "$(brew --prefix)" -maxdepth 6 -name "completions" -print0 | xargs -0 -J % find -H -L % -type f \( -name '*.bash' -or -name '*.sh' \) | xargs -n 1 readlink -f | sort -u | tr "\n" "\0")
   fi
-  completion-on && [[ -r "$(brew --prefix)/completions/bash/brew" ]] && . "$(brew --prefix)/completions/bash/brew"
-  completion-on && [[ -r "$(brew --prefix)/etc/bash_completion" ]] && . "$(brew --prefix)/etc/bash_completion"
-  completion-on && [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
-  completion-on && [[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && . "$(brew --prefix)/etc/profile.d/bash_completion.sh"
+  is-interactive && [[ -r "$(brew --prefix)/completions/bash/brew" ]] && . "$(brew --prefix)/completions/bash/brew"
+  is-interactive && [[ -r "$(brew --prefix)/etc/bash_completion" ]] && . "$(brew --prefix)/etc/bash_completion"
+  is-interactive && [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+  is-interactive && [[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && . "$(brew --prefix)/etc/profile.d/bash_completion.sh"
 fi
 # curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash > ~/git-completion.bash
 # curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > ~/git-prompt.sh
