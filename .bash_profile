@@ -40,6 +40,7 @@ export LESSHISTFILE=$XDG_DATA_HOME/lesshst
 export LESS='RISM'
 alias less='less -RISM'
 alias diff='diff --color=auto -U3'
+alias xargs='xargs -o'
 
 # "Fix" for <https://github.com/jqlang/jq/issues/2001> until jq 1.7 is released to Debian.
 if (env --split-string --ignore-environment TZ=UTC true 2>&1 || true) | grep -q -E "env: illegal option -- s" ;
