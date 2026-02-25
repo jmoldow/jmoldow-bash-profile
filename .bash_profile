@@ -58,6 +58,10 @@ fi
 
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
+function completion-on() {
+  test -n "${BASH_COMPLETION_VERSINFO:+true}"
+}
+
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_ANALYTICS=1  # $ brew analytics off
 if [ -d "/opt/homebrew" ]; then
@@ -67,11 +71,11 @@ if [ $(which brew) ]; then
   if [ $(which pyenv) ]; then
     alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
   fi
-  eval "$(brew shellenv)"
+  completion-on && eval "$(brew shellenv)"
   export PATH="$(brew --prefix)/bin:$(brew --prefix)/sbin:$PATH"
   export PATH="/opt/homebrew/opt/gnu-getopt/bin:$PATH"
   # BEGIN <https://docs.brew.sh/Shell-Completion#configuring-completions-in-bash>
-  if type brew &>/dev/null
+  if completion-on && type brew &>/dev/null
   then
     HOMEBREW_PREFIX="$(brew --prefix)"
     if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]
@@ -85,8 +89,8 @@ if [ $(which brew) ]; then
     fi
   fi
   # END <https://docs.brew.sh/Shell-Completion#configuring-completions-in-bash>
-  eval "$(brew shellenv)"
-  if [ -d "$(brew --prefix)/etc/bash_completion.d" ]; then
+  completion-on && eval "$(brew shellenv)"
+  if completion-on && [ -d "$(brew --prefix)/etc/bash_completion.d" ]; then
     while IFS= read -r -d '' file; do
       source $file ;
     done < <(find -H -L "$(brew --prefix)" -maxdepth 6 -name "bash_completion.d" -print0 | xargs -0 -J % find -H -L % -type f | xargs -n1 readlink -f | sort -u | tr "\n" "\0")
@@ -94,14 +98,14 @@ if [ $(which brew) ]; then
       source $file ;
     done < <(find -H -L "$(brew --prefix)" -maxdepth 6 -name "completions" -print0 | xargs -0 -J % find -H -L % -type f \( -name '*.bash' -or -name '*.sh' \) | xargs -n 1 readlink -f | sort -u | tr "\n" "\0")
   fi
-  [[ -r "$(brew --prefix)/completions/bash/brew" ]] && . "$(brew --prefix)/completions/bash/brew"
-  [[ -r "$(brew --prefix)/etc/bash_completion" ]] && . "$(brew --prefix)/etc/bash_completion"
-  [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
-  [[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && . "$(brew --prefix)/etc/profile.d/bash_completion.sh"
+  completion-on && [[ -r "$(brew --prefix)/completions/bash/brew" ]] && . "$(brew --prefix)/completions/bash/brew"
+  completion-on && [[ -r "$(brew --prefix)/etc/bash_completion" ]] && . "$(brew --prefix)/etc/bash_completion"
+  completion-on && [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+  completion-on && [[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && . "$(brew --prefix)/etc/profile.d/bash_completion.sh"
 fi
 # curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash > ~/git-completion.bash
 # curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > ~/git-prompt.sh
-source ~/git-completion.bash
+completion-on && source ~/git-completion.bash
 source ~/git-prompt.sh
 [[ -r "/Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh" ]] && source /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh
 [[ -r "/usr/share/git-core/git-prompt.sh" ]] && source /usr/share/git-core/git-prompt.sh
@@ -135,7 +139,7 @@ function git-local() {
 }
 alias g-local=git-local
 for c in g git-root-from-toplevel g-root-from-toplevel git-root g-root git-root-relative g-root-relative git-local g-local; do
-  eval "$(complete -p git | sed -E -e "s/ git$/ ${c}/g")"
+  completion-on && eval "$(complete -p git | sed -E -e "s/ git$/ ${c}/g")"
 done
 function git-root-eval() {
   (cd "$(git root-show)" && eval "$@")
@@ -271,10 +275,10 @@ export gcdifft="-c diff.external=difft -c \"core.pager='less -FRXISM'\""
 
 if [ $(which delta) ]; then
   alias delta="delta --pager='less -RISM'"
-  eval "$(delta --generate-completion bash)"
+  completion-on && eval "$(delta --generate-completion bash)"
 fi
 if [ $(which rg) ]; then
-  eval "$(command rg --generate=complete-bash)"
+  completion-on && eval "$(command rg --generate=complete-bash)"
   if [ $(which delta) ]; then
     function rg {
       if echo "$@" | grep --quiet -E "((^| )[-][lc])|(--files)|(--count)"; then
@@ -287,7 +291,7 @@ if [ $(which rg) ]; then
   alias ripgrep=rg
   alias rgrep=rg
   for c in ripgrep rgrep; do
-    eval "$(command rg --generate=complete-bash | sed -E -e "s/ rg$/ ${c}/g" -e "s/_rg/_${c}/g" -e "s/rg)/${c})/g" -e "s/rg[(]/${c}[(]/g" -e "s/'rg'/'${c}'/g" -e "s/\"rg\"/\"${c}\"/g")"
+    completion-on && eval "$(command rg --generate=complete-bash | sed -E -e "s/ rg$/ ${c}/g" -e "s/_rg/_${c}/g" -e "s/rg)/${c})/g" -e "s/rg[(]/${c}[(]/g" -e "s/'rg'/'${c}'/g" -e "s/\"rg\"/\"${c}\"/g")"
   done
 fi
 if [ $(which difft) ]; then
@@ -356,47 +360,47 @@ _gradle() {
 alias gradle=_gradle
 
 if [ $(which kubectl) ]; then
-  source <(kubectl completion bash)
+  completion-on && source <(kubectl completion bash)
   alias kube=kubectl
   alias k=kubectl
   alias k8s=kubectl
   for c in kube k k8s; do
-    eval "$(complete -p kubectl | sed -E -e "s/ kubectl$/ ${c}/g")"
+    completion-on && eval "$(complete -p kubectl | sed -E -e "s/ kubectl$/ ${c}/g")"
   done
   if [ $(which kubectx) ]; then
     alias kx=kubectx
     alias ctx=kubectx
     for c in kx ctx; do
-      eval "$(complete -p kubectx | sed -E -e "s/ kubectx$/ ${c}/g")"
+      completion-on && eval "$(complete -p kubectx | sed -E -e "s/ kubectx$/ ${c}/g")"
     done
   fi
   if [ $(which kubens) ]; then
     alias kn=kubens
     alias ns=kubens
     for c in kn ns; do
-      eval "$(complete -p kubens | sed -E -e "s/ kubens$/ ${c}/g")"
+      completion-on && eval "$(complete -p kubens | sed -E -e "s/ kubens$/ ${c}/g")"
     done
   fi
 fi
 
 if [ $(which k9s) ]; then
-  source <(k9s completion bash)
+  completion-on && source <(k9s completion bash)
 fi
 
 if [ $(which helm) ]; then
-  source <(helm completion bash)
+  completion-on && source <(helm completion bash)
 fi
 
 if [ $(which kustomize) ]; then
-  source <(kustomize completion bash)
+  completion-on && source <(kustomize completion bash)
 fi
 
 if [ $(which gt) ]; then
   alias graphite=gt
   alias grphite=gt
-  source <(gt completion)
-  eval "$(complete -p gt | sed -E -e "s/ gt$/ graphite/g")"
-  eval "$(complete -p gt | sed -E -e "s/ gt$/ grphite/g")"
+  completion-on && source <(gt completion)
+  completion-on && eval "$(complete -p gt | sed -E -e "s/ gt$/ graphite/g")"
+  completion-on && eval "$(complete -p gt | sed -E -e "s/ gt$/ grphite/g")"
 fi
 
 export KREW_ROOT="${XDG_DATA_HOME}/krew"
@@ -492,7 +496,7 @@ if [ $(which kubectx) ]; then
 fi
 
 if [ $(which argocd) ]; then
-  source <(argocd completion bash)
+  completion-on && source <(argocd completion bash)
 fi
 
 if [ $(which docker) ]; then
@@ -521,7 +525,7 @@ if [ $(which docker) ]; then
     docker-run-rm ${CI:+--env "CI=${CI}"} \
       "$dive_image" --config "$XDG_CONFIG_HOME/dive.yaml" --ci-config "$XDG_CONFIG_HOME/dive-ci.yaml"  $@
   }
-  eval "$(complete -p docker | sed -E -e "s/ docker$/ docker-dive/g")"
+  completion-on && eval "$(complete -p docker | sed -E -e "s/ docker$/ docker-dive/g")"
   function docker-dive-image-archive() {
     image="$1"
     shift 1
