@@ -20,6 +20,7 @@
     "ENABLE_ERROR_REPORTING": "0"
   },
   "permissions": {
+    "defaultMode": "plan",
     "allow": [
       "Bash(npm run lint)",
       "Bash(npm run test:*)",
@@ -37,6 +38,10 @@
       "Read(~/.lesskey)",
       "Read(~/.profile)",
       "Read(~/.vimrc)",
+      "Read(~/.config/git/**)",
+      "Read(~/.gitconfig)",
+      "Write(~/.cache/**)",
+      "Write(~/Library/Caches/**)",
       "Bash(jira issue view:*)",
       "Bash(pants check:*)",
       "Bash(pants lint:*)",
@@ -50,8 +55,13 @@
       "Bash(pants --no-dynamic-ui fmt:*)",
       "Bash(pants --no-dynamic-ui tailor:*)",
       "Bash(pants --no-dynamic-ui test:*)",
+      "Bash(pants --no-dynamic-ui fmt fix lint:*)",
+      "Bash(pants --no-dynamic-ui fmt fix lint check:*)",
+      "Bash(pants --no-dynamic-ui fmt fix lint check test:*)",
+      "Bash(pants --no-dynamic-ui tailor fmt fix lint check test:*)",
       "Bash(rg:*)",
       "Bash(ls:*)",
+      "Bash(wc:*)",
       "Bash(mkdir:*)",
       "Bash(touch:*)",
       "Bash(ping:*)",
@@ -62,6 +72,7 @@
       "Bash(git rev-parse:*)",
       "Bash(git branch --show-current:*)",
       "Bash(git diff:*)",
+      "Bash(git diff-merge-base-origin-HEAD-HEAD:*)",
       "Bash(git log:*)",
       "Bash(git show:*)",
       "Bash(git branch -v:*)",
@@ -103,7 +114,6 @@
       "Read(~/.*hsts*)",
       "Read(~/*session*)",
       "Read(~/.*session*)",
-      "Read(~/.cache/**)",
       "Read(~/.local/**)",
       "Read(~/.docker/**)",
       "Read(~/.config/docker/**)",
@@ -114,24 +124,25 @@
       "Read(~/.git-credentials)",
       "Read(~/.config/git/credentials)",
       "Read(~/.config/git-credentials)",
-      "Read(~/.netrc)",
-      "Read(~/.config/netrc)",
       "Read(~/.pex/**)",
       "Read(~/.config/pex/**)",
       "Read(/usr/local/etc/profile.d/**)",
       "Read(/**/etc/profile.d/**)",
       "Read(/**/etc/bash_completion.d/**)",
       "Read(/**/etc/bash_completion/**)",
-      "Read(/**/completions/**)",
-      "WebFetch"
+      "Read(/**/completions/**)"
     ],
     "ask": [
+      "WebFetch",
+      "WebSearch",
       "Write(./.claude/*.*sh)",
       "Write(./.claude/**/*.*sh)",
       "Write(~/.claude/*.json*)",
       "Write(./.claude/*.json*)",
       "Write(~/.claude/**/*.*sh)",
-      "Write(~/.claude/*.*sh)"
+      "Write(~/.claude/*.*sh)",
+      "Read(~/.netrc)",
+      "Read(~/.config/netrc)"
     ]
   },
   "statusLine": {
@@ -153,7 +164,8 @@
     },
     "excludedCommands": [
       "docker",
-      "git"
+      "git",
+      "pants"
     ]
   },
   "alwaysThinkingEnabled": false,
