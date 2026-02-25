@@ -22,8 +22,9 @@
     "ENABLE_ERROR_REPORTING": "0"
   },
   "permissions": {
-    "defaultMode": "plan",
     "allow": [
+      "WebFetch",
+      "WebSearch",
       "Bash(npm run lint)",
       "Bash(npm run test *)",
       "Read(./**)",
@@ -91,7 +92,10 @@
       "Bash(command -v)",
       "Bash(brew shellenv)",
       "Bash(terragrunt render *)",
-      "Bash(terragrunt plan *)"
+      "Bash(terragrunt plan *)",
+      "Bash(set *)",
+      "Bash(shopt *)",
+      "Bash(file *)"
     ],
     "deny": [
       "Bash(curl *)",
@@ -127,18 +131,10 @@
       "Read(~/.config/git/credentials)",
       "Read(~/.config/git-credentials)",
       "Read(~/.pex/**)",
-      "Read(~/.config/pex/**)",
-      "Read(//usr/local/etc/profile.d/**)",
-      "Read(//**/etc/profile.d/**)",
-      "Read(//**/etc/bash_completion.d/**)",
-      "Read(//**/etc/bash_completion/**)",
-      "Read(//**/completions/**)"
+      "Read(~/.config/pex/**)"
     ],
     "ask": [
-      "WebFetch",
-      "WebSearch",
       "Write(./**)",
-      "Edit./**)",
       "Write(/**/.claude/*.*sh)",
       "Edit(/**/.claude/*.*sh)",
       "Write(/**/.claude/**/*.*sh)",
@@ -154,8 +150,14 @@
       "Write(~/.claude/**/*.md)",
       "Edit(~/.claude/**/*.md)",
       "Read(~/.netrc)",
-      "Read(~/.config/netrc)"
-    ]
+      "Read(~/.config/netrc)",
+      "Read(//usr/local/etc/profile.d/**)",
+      "Read(//**/etc/profile.d/**)",
+      "Read(//**/etc/bash_completion.d/**)",
+      "Read(//**/etc/bash_completion/**)",
+      "Read(//**/completions/**)"
+    ],
+    "defaultMode": "plan"
   },
   "statusLine": {
     "type": "command",
