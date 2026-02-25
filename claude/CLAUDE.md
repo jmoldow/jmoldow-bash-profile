@@ -15,9 +15,10 @@ When working with AWS CLI or cloud provider commands, remember that Claude's san
 ## File Output Rules
 Always write output files (documentation, exports, scripts) to the current project directory, never to @/tmp or other system directories unless explicitly asked.
 
-When you wish to edit or overwrite a file, first check whether it is a symlink or not. If it is a symlink, ask me
-whether I would like to instead edit the target file, or whether I would like to overwrite the symlink with a normal
-file, or whether I would like to abort.
+When you wish to edit or overwrite a file outside the project working directory, first check whether it is a symlink
+(using `ls -la`). If it is a symlink, ask me whether I would like to instead edit the target file, or whether I would
+like to overwrite the symlink with a normal file, or whether I would like to abort. Known symlinks are listed in the
+relevant sections below (e.g. bash shell customizations).
 
 ## Output Expectations
 When asked to export or reproduce conversation history, provide the full content as requested—do not summarize or truncate unless the user explicitly asks for a summary.
@@ -59,6 +60,11 @@ useful.
 I have personal customizations to `bash` in @~/.profile, `~/.bash_profile`, and @~/.bashrc. In particular, I have
 defined a number of helper aliases and helper functions. Please learn those aliases and functions, and suggest using
 them when it would be worthwhile.
+- `~/.bash_profile` is a symlink → the real file is @~/git/jmoldow/jmoldow-bash-profile/.bash_profile
+- `~/.profile` is a symlink to `~/.bash_profile` (which chains to the above)
+- Always edit the symlink target, never the symlink itself
+- `.bashrc` early-returns (non-interactive guard) — settings there don't affect Claude Code
+- The `completion-on` function in `.bash_profile` guards completion-related sourcing
 
 ## Git Diff Commands
 - When asked to inspect commit contents: use `git show [<object>...]` (eg `git show HEAD`) or `git diff <commit> <commit>` (eg `git show HEAD~1 HEAD`) to inspect commit contents.
