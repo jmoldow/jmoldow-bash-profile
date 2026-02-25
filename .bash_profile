@@ -51,7 +51,7 @@ else
 fi
 alias jq="$JQ"
 
-if [ $(which go) ]; then
+if command -v go &>/dev/null; then
   export GOENV=$XDG_CONFIG_HOME/go/env
   IFS=";" read -r _GOPATH _GOBIN _GOTOOLDIR _GOROOT < <(go env GOPATH GOBIN GOTOOLDIR GOROOT | tr '\n' ';')
   export GOPATH="${_GOPATH:-$XDG_STATE_HOME/go-path-build/go}"
@@ -79,8 +79,8 @@ export HOMEBREW_NO_ANALYTICS=1  # $ brew analytics off
 if [ -d "/opt/homebrew" ]; then
   export PATH="$PATH:/opt/homebrew/bin:/opt/homebrew/sbin"
 fi
-if [ $(which brew) ]; then
-  if [ $(which pyenv) ]; then
+if command -v brew &>/dev/null; then
+  if command -v pyenv &>/dev/null; then
     alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
   fi
   eval "$(brew shellenv)"
@@ -285,13 +285,13 @@ export gljordan="--author=jmoldow --author=Moldow --author=jormol"
 export gcamend="--amend --reset-author -e"
 export gcdifft="-c diff.external=difft -c \"core.pager='less -FRXISM'\""
 
-if [ $(which delta) ]; then
+if command -v delta &>/dev/null; then
   alias delta="delta --pager='less -RISM'"
   completion-on && eval "$(delta --generate-completion bash)"
 fi
-if [ $(which rg) ]; then
+if command -v rg &>/dev/null; then
   completion-on && eval "$(command rg --generate=complete-bash)"
-  if [ $(which delta) ]; then
+  if command -v delta &>/dev/null; then
     function rg {
       if echo "$@" | grep --quiet -E "((^| )[-][lc])|(--files)|(--count)"; then
         command rg "$@"
@@ -306,7 +306,7 @@ if [ $(which rg) ]; then
     completion-on && eval "$(command rg --generate=complete-bash | sed -E -e "s/ rg$/ ${c}/g" -e "s/_rg/_${c}/g" -e "s/rg)/${c})/g" -e "s/rg[(]/${c}[(]/g" -e "s/'rg'/'${c}'/g" -e "s/\"rg\"/\"${c}\"/g")"
   done
 fi
-if [ $(which difft) ]; then
+if command -v difft &>/dev/null; then
   export DFT_COLOR=always
   function difft {
     command difft "$@" | less
@@ -339,7 +339,7 @@ export JAVA_OPTS="-XX:+UseG1GC -Xmx6g -Xss8m"  # -XX:MaxMetaspaceSize=768m"
 
 find ~/.ssh \( -name 'id_*' -or -name '*rsa*' -or -name '*dsa*' -or -name '*ed25519*' \) -and \( -not -name '*.*' \) -and \( -not -name '*pub*' \) | xargs ssh-add &>/dev/null
 
-if [ $(which pyenv) ]; then
+if command -v pyenv &>/dev/null; then
   export PYENV_ROOT="$XDG_STATE_HOME/pyvenv/pyenv"
   [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
   eval "$(pyenv init --detect-shell bash)"
@@ -371,7 +371,7 @@ _gradle() {
 
 alias gradle=_gradle
 
-if [ $(which kubectl) ]; then
+if command -v kubectl &>/dev/null; then
   completion-on && source <(kubectl completion bash)
   alias kube=kubectl
   alias k=kubectl
@@ -379,14 +379,14 @@ if [ $(which kubectl) ]; then
   for c in kube k k8s; do
     completion-on && eval "$(complete -p kubectl | sed -E -e "s/ kubectl$/ ${c}/g")"
   done
-  if [ $(which kubectx) ]; then
+  if command -v kubectx &>/dev/null; then
     alias kx=kubectx
     alias ctx=kubectx
     for c in kx ctx; do
       completion-on && eval "$(complete -p kubectx | sed -E -e "s/ kubectx$/ ${c}/g")"
     done
   fi
-  if [ $(which kubens) ]; then
+  if command -v kubens &>/dev/null; then
     alias kn=kubens
     alias ns=kubens
     for c in kn ns; do
@@ -395,19 +395,19 @@ if [ $(which kubectl) ]; then
   fi
 fi
 
-if [ $(which k9s) ]; then
+if command -v k9s &>/dev/null; then
   completion-on && source <(k9s completion bash)
 fi
 
-if [ $(which helm) ]; then
+if command -v helm &>/dev/null; then
   completion-on && source <(helm completion bash)
 fi
 
-if [ $(which kustomize) ]; then
+if command -v kustomize &>/dev/null; then
   completion-on && source <(kustomize completion bash)
 fi
 
-if [ $(which gt) ]; then
+if command -v gt &>/dev/null; then
   alias graphite=gt
   alias grphite=gt
   completion-on && source <(gt completion)
@@ -418,7 +418,7 @@ fi
 export KREW_ROOT="${XDG_DATA_HOME}/krew"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
-if [ $(which kubectx) ]; then
+if command -v kubectx &>/dev/null; then
   function kubectx-current() {
     kubectx --current
   }
@@ -507,11 +507,11 @@ if [ $(which kubectx) ]; then
   alias ctx-all=kubectx-all
 fi
 
-if [ $(which argocd) ]; then
+if command -v argocd &>/dev/null; then
   completion-on && source <(argocd completion bash)
 fi
 
-if [ $(which docker) ]; then
+if command -v docker &>/dev/null; then
   function docker-run() {
     docker run -ti \
       $(env | command grep --color=never -E '^((XDG_CONFIG_HOME|COLORTERM|LESS|LOGNAME|HOME|LANG|COLUMNS|CLICOLOR|TERM|USER|INPUTRC|EMAIL)|([A-Z][A-Z]+))[=][a-zA-Z0-9_/.~@-]{0,99}$' | command grep --color=never -vE "SHELL|EDITOR|PWD|DIR|FILE|HIST|TMP|OLD|PATH|COLUMNS|^GO|SHLVL" | xargs -I% echo "--env" % | xargs) \
@@ -586,7 +586,7 @@ export MANPATH="${MANPATH:-}:/usr/local/opt/erlang/lib/erlang/man:"
 export PATH="$PATH:/usr/local/opt/mysql-client@5.7/bin"
 export PATH=/usr/local/opt/curl/bin:$PATH
 
-if [ $(which aws) ]; then
+if command -v aws &>/dev/null; then
   if [ -f ~/.aws/config ]; then
     export AWS_PROFILE="$(grep --color=never -E "^[[]profile .*dev" ~/.aws/config | head -n1 | sed -E -e "s/^.*profile //g" -e "s/[]]//g")"
     function aws-sso-login {
