@@ -1,6 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "env": {
+    "PAGER": "cat",
+    "GIT_PAGER": "cat",
     "BASH_COMPLETION_COMPAT_DIR": "",
     "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1",
     "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
