@@ -1,3 +1,57 @@
+@AGENTS.md
+
+Note to developers: use AGENTS.md (imported above) for general rules, and use this file
+for Claude-specific rules (e.g. permissions).
+
+If I ask you a question that you are not confident in, say "I don't know" instead of making up a false statement.
+
+If I ask you for the answer to a question, just give me the answer. Don't go on a long diatribe.
+
+In general, be succinct. Act like an information retrieval system, and not like we're having a friendly conversation.
+
+When making changes, make sure to use the formatting rules that are relevant based on file pattern matches.
+
+When referring to code in chat, always include a clickable link to the specific line in code you're referring to.
+
+## Skills
+
+Agents should prefer skills over raw MCP use when a skill is available.
+When an agent learns something significant or awkward about an existing skill during use, it should suggest an update to the skill file to incorporate that learning.
+Skills are living documents that improve through use.
+
+## Projects
+
+Whenever you load a project-specific rules file, make sure to say so.
+
+## Polishing code that has been edited in this session
+
+When finalizing code that has been edited in this session, polish the code by executing this pipeline:
+1. Fix any existing docstrings or comments that might be incorrect.
+2. Add or enhance docstrings for all public modules/classes/functions/methods, following the documented docstring style
+for the programming language. Do the same for any private functions/methods with significant complexity that would be
+served by having a docstring. Docstrings should be sufficiently informative, but also not too verbose. If appropriate,
+suggest function/method renames that would make them better at self-documenting themselves.
+3. Add inline comments explaining non-obvious logic.
+4. If the code being updated is of high-level importance within the repository, update any relevant README or other
+Markdown (`.md`) files as necessary.
+5. Write a conventional commit message summarizing all changes, and commit the final result with the generated commit
+message.
+
+## Bash tool usage
+- Bash permission rules (e.g. `Bash(logcli:*)`, `Bash(logcli *)`) are prefix-matched against the command string.
+  - Always issue allowed commands as standalone calls starting with the binary name so the rule matches.
+- Do not wrap commands in shell comments or multi-statement blocks that change what the command string starts with.
+- Prefer the built-in `Glob` tool over `find` for file discovery — it is read-only and does not require a permission prompt.
+- `find` can execute arbitrary commands via `-exec`, `-execdir`, `-ok`, and `-delete` flags.
+  It is a useful tool when those destructive options are not used, but because of their existence
+  (and potential for new destructive options in future versions), `find` is not pre-approved —
+  each `find` command will be reviewed individually. It is fine to suggest using `find` (including
+  with destructive options) when it is the best tool for the job — just ask for permission.
+- Do not run useless `cat` commands. Only use `cat` for: (a) actually concatenating two or more
+  files; (b) when there is no standard alternative and Claude's Read tool isn't available; (c) if
+  necessary for debugging. For reading a single file, use the Read tool. For piping file contents
+  into a command, prefer shell redirection (`< file`) over `cat file |`.
+
 ## Environment Constraints
 When working with AWS CLI or cloud provider commands, remember that Claude's sandbox does not have access to live AWS credentials or cloud APIs. Generate the commands for the user to run manually instead of attempting to execute them directly.
 
