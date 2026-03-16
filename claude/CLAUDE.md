@@ -25,17 +25,8 @@ Whenever you load a project-specific rules file, make sure to say so.
 
 ## Polishing code that has been edited in this session
 
-When finalizing code that has been edited in this session, polish the code by executing this pipeline:
-1. Fix any existing docstrings or comments that might be incorrect.
-2. Add or enhance docstrings for all public modules/classes/functions/methods, following the documented docstring style
-for the programming language. Do the same for any private functions/methods with significant complexity that would be
-served by having a docstring. Docstrings should be sufficiently informative, but also not too verbose. If appropriate,
-suggest function/method renames that would make them better at self-documenting themselves.
-3. Add inline comments explaining non-obvious logic.
-4. If the code being updated is of high-level importance within the repository, update any relevant README or other
-Markdown (`.md`) files as necessary.
-5. Write a conventional commit message summarizing all changes, and commit the final result with the generated commit
-message.
+When finalizing code that has been edited in this session, polish the code by executing the pipeline defined in the
+/polish skill at @~/.claude/skills/polish/SKILL.md .
 
 ## Bash tool usage
 - Bash permission rules (e.g. `Bash(logcli:*)`, `Bash(logcli *)`) are prefix-matched against the command string.
