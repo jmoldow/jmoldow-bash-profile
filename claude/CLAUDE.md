@@ -62,6 +62,12 @@ When working with AWS CLI or cloud provider commands, remember that Claude's san
   and commit sha at that point in time, and consider re-evaluating the truth of those memories after an appropriate amount
   of time.
 
+## Temporary files
+- Write temporary files (not plans or requested work products) to `/tmp/claude/<session-id>/`
+  where `<session-id>` is the Claude Code session ID (the UUID used with `claude --resume`).
+- Use the `/get-session-id` skill to determine the current session ID.
+- This keeps temp files organized per-session and avoids collisions across concurrent sessions.
+
 ## File Output Rules
 Always write output files (documentation, exports, scripts) to the current project directory, never to @/tmp or other system directories unless explicitly asked.
 
