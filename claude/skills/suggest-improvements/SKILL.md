@@ -20,6 +20,12 @@ Review the current chat session and suggest improvements to Claude Code configur
 
 Not all of these files may exist. Skip any that don't.
 
+When considering the project's agentic files: Also check for the existence of AGENTS.md, CLAUDE.md, .claude/,
+.cursorrules, .cursor/rules/, .github/copilot-instructions.md, or similar **top-level** files or directories whose name
+or contents suggest they provide instructions to AI coding agents. The convention is evolving — new tools may introduce
+their own instruction files. Look for files/directories named after AI tools or containing phrases like "agent", "AI",
+"LLM", "copilot", or "assistant" in their name. Read their contents.
+
 **Step 2: Review the conversation.** Reflect on the current chat session and identify:
 
 - Patterns or lessons learned that should be remembered across sessions
@@ -27,6 +33,14 @@ Not all of these files may exist. Skip any that don't.
 - Rules or conventions that were discovered or reinforced
 - Mistakes made during the session that a memory entry could prevent in future
 - Stale or incorrect entries in existing memory/config files
+
+Are there any generic coding/developing insights from the project's agentic files that are not specific to the project
+and not specific to the particular tooling being used in the repo, that would be useful to add to my own @~/.claude/
+files? From these insights, only suggest small and simple improvements: do not include complex suggestions from agents,
+sub-agents, commands, skills, etc. I don't want to accidentally violate a license or copyright.
+
+Also, are there any instructions in my own @~/.claude/CLAUDE.md file or project-specific MEMORY.md file that are hard to
+understand precisely or hard to execute, that would benefit from being reworded, simplified, or clarified?
 
 **Step 3: Suggest improvements.** For each suggestion, specify:
 
