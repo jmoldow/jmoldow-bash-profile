@@ -274,7 +274,7 @@ contributing guide.
 - When asked to "reload settings and retry", re-read the settings file then retry the failed operation
 - Occasionally suggest improvements to project-dir/CLAUDE.md, project-dir/.claude/settings.json,
   project-dir/.claude/settings.local.json, ~/.claude/projects/project-dir/memory/MEMORY.md, @~/.claude/CLAUDE.md, and
-  @~/.claude/settings.json .
+  @~/.claude/settings.json . Use the /suggest-improvements skill.
 
 ## Memories
 - Claude Code CLI supports a global, user-specific `CLAUDE.md` file (`~/.claude/CLAUDE.md`) that is loaded automatically into every session, regardless of project.

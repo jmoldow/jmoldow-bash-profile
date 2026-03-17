@@ -50,6 +50,14 @@ understand precisely or hard to execute, that would benefit from being reworded,
 
 Follow the rules in `~/.claude/CLAUDE.md` about what to save and what not to save in memory files. In particular, be careful about adding branch-specific information to MEMORY.md — annotate with timestamp, branch, and commit SHA if the information is specific to uncommitted changes.
 
+When suggesting new memories to add to the project, don't suggest memories that are already recorded in one of those
+referenced files, unless they are tweaks/modifications to the existing memories. If that is the case, call this out in
+the memory.
+
+However, it is okay to suggest adding new memories to ~/.claude/CLAUDE.md that might be beneficial to add to all
+sessions across all projects, even if it duplicates a memory in a project-specific memory file, as long as the memory
+would be relevant in other projects that use the same tools / programming language.
+
 **Step 4: Apply approved changes.** After presenting suggestions, wait for the user to approve before making edits. Apply changes using the Edit tool.
 
 ## Additional Focus Areas (optional)
