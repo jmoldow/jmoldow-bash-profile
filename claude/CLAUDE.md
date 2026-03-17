@@ -47,9 +47,13 @@ When finalizing code that has been edited in this session, polish the code by ex
 When working with AWS CLI or cloud provider commands, remember that Claude's sandbox does not have access to live AWS credentials or cloud APIs. Generate the commands for the user to run manually instead of attempting to execute them directly.
 
 ## Context Loading
-- Start every new `claude` code chat session, as well as every `claude` code chat session resume, by reading @CLAUDE.md
-  and all files that it references (especially if it uses @ to reference the file), and reading @~/.claude/CLAUDE.md and
-  all files that it references.
+- Start every new `claude` code chat session, as well as every `claude` code chat session resume, by reading @AGENTS.md
+  and all files that it references (especially if it uses @ to reference the file) including `*.mdc` files, and reading
+  @CLAUDE.md and all files that it references, and reading @~/.claude/CLAUDE.md and all files that it references. List
+  every file that has been read and loaded.
+  - If it exists, read @AGENTS_gitignore.md and all files that it references.
+  - If it exists, read @CLAUDE_gitignore.md and all files that it references.
+  - If it exists, read @~/.claude/CLAUDE_gitignore.md and all files that it references.
 - When asked to "ingest", "load", or "read files into context", read them and confirm readiness — do not summarize or
   analyze unless explicitly asked.
 - Be careful about adding information to MEMORY.md that is specific to changes that aren't committed to main. This
