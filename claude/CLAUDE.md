@@ -273,6 +273,14 @@ from there (pushing to my fork is fine). Do not reference internal/private repos
 any contributor guidelines (e.g. fork-based workflow, PR templates, CLA requirements) documented in the project's
 contributing guide.
 
+## Dagster skills
+
+If working on Dagster projects:
+
+/plugin marketplace add dagster-io/skills
+
+/plugin install dagster-expert@dagster-skills
+
 ## Jordan's Workflow Preferences
 - Prefers to review batches of related edits together ("prepare all remaining changes in one patch")
 - Will make their own edits directly — watch for file modification notifications and don't revert
