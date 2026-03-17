@@ -234,7 +234,8 @@
     "excludedCommands": [
       "docker",
       "git",
-      "pants"
+      "pants",
+      "mkdir"
     ]
   },
   "alwaysThinkingEnabled": false,
