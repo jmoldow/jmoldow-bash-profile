@@ -18,3 +18,9 @@ Markdown (`.md`) files as necessary.
 message.
 
 After each step, briefly confirm what was done before proceeding.
+
+## Additional Focus Areas (optional)
+
+$ARGUMENTS
+
+If focus areas were provided above, prioritize those areas. Otherwise, follow the full workflow.

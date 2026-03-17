@@ -8,3 +8,9 @@
    - Documentation/docstring completeness
 3. Present findings grouped by severity: blocking, suggestion, nit
 4. Keep review concise—no more than 2 sentences per finding
+
+## Additional Focus Areas (optional)
+
+$ARGUMENTS
+
+If focus areas were provided above, prioritize those areas. Otherwise, follow the full workflow.
