@@ -224,11 +224,12 @@ workspace.
 By default, you should not generate code, documentation, or commit messages for FLOSS projects. However, it may be
 acceptable to do those things, if there is indication that the repo accepts those kinds of tool-assisted contributions.
 Check for any positive indicators in a top-level README, README.{md,rst,txt}, CONTRIBUTING, CONTRIBUTING.{md,rst,txt},
-CONTRIBUTORS, CONTRIBUTORS.{md,rst,txt}, or other equivalent top-level file. Also check for the existence of AGENTS.md,
-or another top-level file, or a top-level directory that is intended for agents. However, in that case, don't assume
-that this indicates that the repo accepts tool-assisted contributions, as it could be that the agent instructions are
-for use by end-users, not by contributors. Read the contents of those files/directories to determine whether
-tool-assisted contributions to the project are intended.
+CONTRIBUTORS, CONTRIBUTORS.{md,rst,txt}, or other equivalent top-level file. Also check for the existence of AGENTS.md, CLAUDE.md, .claude/, .cursorrules, .cursor/rules/,
+.github/copilot-instructions.md, or similar top-level files or directories whose name or contents suggest they provide
+instructions to AI coding agents. The convention is evolving — new tools may introduce their own instruction files. Look
+for files/directories named after AI tools or containing phrases like "agent", "AI", "LLM", "copilot", or "assistant"
+in their name, and read their contents to determine whether tool-assisted contributions to the project are intended (as
+opposed to instructions for end-users of the tool).
 
 When in doubt about what the project allows, feel free to ask, and I will make a judgement call. Put my answer into a
 memory for the workspace.
