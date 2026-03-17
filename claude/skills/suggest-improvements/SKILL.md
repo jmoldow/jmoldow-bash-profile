@@ -51,3 +51,9 @@ understand precisely or hard to execute, that would benefit from being reworded,
 Follow the rules in `~/.claude/CLAUDE.md` about what to save and what not to save in memory files. In particular, be careful about adding branch-specific information to MEMORY.md — annotate with timestamp, branch, and commit SHA if the information is specific to uncommitted changes.
 
 **Step 4: Apply approved changes.** After presenting suggestions, wait for the user to approve before making edits. Apply changes using the Edit tool.
+
+## Additional Focus Areas (optional)
+
+If additional context or focus areas were provided: $ARGUMENTS
+
+Use these to guide which areas to prioritize in your review.
