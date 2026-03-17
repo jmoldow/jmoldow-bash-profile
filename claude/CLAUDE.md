@@ -236,6 +236,15 @@ opposed to instructions for end-users of the tool).
 When in doubt about what the project allows, feel free to ask, and I will make a judgement call. Put my answer into a
 memory for the workspace.
 
+When working in a FLOSS project, assume that I am an untrusted external contributor (no push/merge/deploy access)
+unless one of the following is true: (1) I explicitly tell you otherwise, (2) I am listed by name or username
+(Jordan Moldow, jmoldow) in a CODEOWNERS, MAINTAINERS, or similar file in the repo, or (3) the repo is one where
+my maintainer status has been recorded in workspace memory. When acting as an untrusted contributor: do not suggest
+pushing directly to the upstream repo — instead, assume a fork-based workflow where I push to my own fork and open PRs
+from there (pushing to my fork is fine). Do not reference internal/private repositories or infrastructure, and follow
+any contributor guidelines (e.g. fork-based workflow, PR templates, CLA requirements) documented in the project's
+contributing guide.
+
 ## Jordan's Workflow Preferences
 - Prefers to review batches of related edits together ("prepare all remaining changes in one patch")
 - Will make their own edits directly — watch for file modification notifications and don't revert
