@@ -47,6 +47,11 @@ When finalizing code that has been edited in this session, polish the code by ex
   necessary for debugging. For reading a single file, use the Read tool. For piping file contents
   into a command, prefer shell redirection (`< file`) over `cat file |`.
 
+## Searching for Source Files
+- When searching for code, exclude virtual environment and build tool directories (.tox, .venv, venv, node_modules, build/, dist/), as they contain copies of source code and generated artifacts that pollute search results.
+- When searching specifically for original source files (not generated code or build/runtime artifacts), strongly prefer `git ls-files` (for file discovery by directory/name/glob) or `git grep` (for searching file contents). These automatically exclude all untracked and gitignored directories without needing to explicitly list exclusions.
+- Fall back to Glob / Bash(find) / Bash(rg) / Bash(grep) when there is a possibility that you need to discover untracked files, or in other cases where you deem it necessary or beneficial to use those tools instead.
+
 ## Environment Constraints
 When working with AWS CLI or cloud provider commands, remember that Claude's sandbox does not have access to live AWS credentials or cloud APIs. Generate the commands for the user to run manually instead of attempting to execute them directly.
 
@@ -216,6 +221,18 @@ Use them when appropriate, but be aware of the risks:
 - Don't use `assert` for runtime validation (Python may optimize out with `-O`)
 - Use similar exceptions / exception hierarchies as other Python code in: this file; in sibling files; in direct child
   modules; in direct parent modules; and in direct cousin modules.
+- Prefer proactive checking over exception handling for control flow (e.g., use `if key in dict` instead of catching KeyError)
+- Prefer not to silently swallow exceptions, except in limited cases where it makes sense and is known to be necessary (e.g., a best-effort attempt where an exception is likely, the exception isn't important, and executing the next line of code is more important than propagating the exception)
+- When exception handling is necessary for API compatibility, encapsulate it in a helper function
+
+## Python CLI Conventions
+- When writing CLIs that use the `click` library, use `click.echo()` instead of `print()` for output in the CLI layer. This ensures proper output handling, Unicode support, and testing compatibility. This applies only to the CLI layer — shared library code that may be called from non-CLI contexts should not depend on click.
+
+## Python Package Entry Points
+- When modifying CLI entry points in Python package metadata (setup.py, setup.cfg, pyproject.toml), the package must be reinstalled (e.g., `uv pip install -e .` or `pip install -e .`) for the changes to take effect.
+
+## Immutable Data Structures
+- Prefer immutable data structures with copy-on-write semantics, especially in languages where this is idiomatic (e.g., Python `@dataclass(frozen=True)`, Rust, functional languages). This reduces bugs from unintended mutation and makes code easier to reason about. However, don't be dogmatic — use mutable structures when mutability would be significantly more practical or performant.
 
 ## Libre / Free / Open Source (FLOSS) Projects
 In this section, when referring to files like LICENSE, README, CONTRIBUTING, or CONTRIBUTORS, the name may be uppercase or lowercase, and may have no file extension or a plaintext extension (.md, .rst, .txt).
