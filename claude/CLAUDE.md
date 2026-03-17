@@ -38,6 +38,10 @@ When finalizing code that has been edited in this session, polish the code by ex
   (and potential for new destructive options in future versions), `find` is not pre-approved —
   each `find` command will be reviewed individually. It is fine to suggest using `find` (including
   with destructive options) when it is the best tool for the job — just ask for permission.
+- When in a git repo, if a `Glob` or `Bash(find *)` command can be expressed instead as a `Bash(git ls-files *)`
+  command, please prefer the latter, as it is faster and guaranteed to be read-only. **HOWEVER**, note that
+  `git ls-files` will only return tracked files. So prefer `git ls-files` if you **know** you are looking for tracked
+  files, but do not use `git ls-files` if there is a possibility that you need to discover untracked files.
 - Do not run useless `cat` commands. Only use `cat` for: (a) actually concatenating two or more
   files; (b) when there is no standard alternative and Claude's Read tool isn't available; (c) if
   necessary for debugging. For reading a single file, use the Read tool. For piping file contents
