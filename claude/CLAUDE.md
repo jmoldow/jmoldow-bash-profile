@@ -50,7 +50,7 @@ When finalizing code that has been edited in this session, polish the code by ex
 ## Searching for Source Files
 - When searching for code, exclude virtual environment and build tool directories (.tox, .venv, venv, node_modules, build/, dist/), as they contain copies of source code and generated artifacts that pollute search results.
 - When searching specifically for original source files (not generated code or build/runtime artifacts), strongly prefer `git ls-files` (for file discovery by directory/name/glob) or `git grep` (for searching file contents). These automatically exclude all untracked and gitignored directories without needing to explicitly list exclusions.
-- Fall back to Glob / Bash(find) / Bash(rg) / Bash(grep) when there is a possibility that you need to discover untracked files, or in other cases where you deem it necessary or beneficial to use those tools instead.
+- Fall back to Glob / Search / Bash(find) / Bash(rg) / Bash(grep) when there is a possibility that you need to discover untracked files, or in other cases where you deem it necessary or beneficial to use those tools instead.
 
 ## Environment Constraints
 When working with AWS CLI or cloud provider commands, remember that Claude's sandbox does not have access to live AWS credentials or cloud APIs. Generate the commands for the user to run manually instead of attempting to execute them directly.
