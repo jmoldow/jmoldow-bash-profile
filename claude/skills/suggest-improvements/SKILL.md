@@ -20,11 +20,14 @@ Review the current chat session and suggest improvements to Claude Code configur
 
 Not all of these files may exist. Skip any that don't.
 
+Also consider any of your own skill, command, agent, or rule files that were invoked or relevant during the session (e.g. files in `~/.claude/skills/`, `~/.claude/commands/`, `~/.claude/agents/`, `~/.claude/rules/`). Do not consider the project-level equivalents under `.claude/` — those belong to the project and should not be modified.
+
 When considering the project's agentic files: Also check for the existence of AGENTS.md, CLAUDE.md, .claude/,
 .cursorrules, .cursor/rules/, .github/copilot-instructions.md, or similar **top-level** files or directories whose name
 or contents suggest they provide instructions to AI coding agents. The convention is evolving — new tools may introduce
 their own instruction files. Look for files/directories named after AI tools or containing phrases like "agent", "AI",
-"LLM", "copilot", or "assistant" in their name. Read their contents.
+"LLM", "copilot", or "assistant" in their name. Read their contents. As before, skip skills, commands, agents, etc. that
+belong to the project, but do include them if they belong to me.
 
 **Step 2: Review the conversation.** Reflect on the current chat session and identify:
 
@@ -62,6 +65,6 @@ would be relevant in other projects that use the same tools / programming langua
 
 ## Additional Focus Areas (optional)
 
-If additional context or focus areas were provided: $ARGUMENTS
+$ARGUMENTS
 
-Use these to guide which areas to prioritize in your review.
+If focus areas were provided above, prioritize those areas in your review. Otherwise, review broadly.
