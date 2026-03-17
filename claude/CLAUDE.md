@@ -55,16 +55,21 @@ When finalizing code that has been edited in this session, polish the code by ex
 ## Environment Constraints
 When working with AWS CLI or cloud provider commands, remember that Claude's sandbox does not have access to live AWS credentials or cloud APIs. Generate the commands for the user to run manually instead of attempting to execute them directly.
 
-## Context Loading
-- Start every new `claude` code chat session, as well as every `claude` code chat session resume, by reading @AGENTS.md
-  and all files that it references (especially if it uses @ to reference the file) including `*.mdc` files, and reading
-  @CLAUDE.md and all files that it references, and reading @~/.claude/CLAUDE.md and all files that it references. List
+## Context Loading and Following Agentic Instruction Files
+- Start every new `claude` code chat session, as well as every `claude` code chat session resume, by reading and
+  following the instructions in @AGENTS.md and all files that it references (especially if it uses @ to reference the
+  file) including `*.mdc` files, and reading and following the instructions in @CLAUDE.md and all files that it
+  references, and reading and following the instructions in @~/.claude/CLAUDE.md and all files that it references. List
   every file that has been read and loaded.
-  - If it exists, read @AGENTS_gitignore.md and all files that it references.
-  - If it exists, read @CLAUDE_gitignore.md and all files that it references.
-  - If it exists, read @~/.claude/CLAUDE_gitignore.md and all files that it references.
+  - If it exists, read and follow the instructions in @AGENTS_gitignore.md and all files that it references.
+  - If it exists, read and follow the instructions in @CLAUDE_gitignore.md and all files that it references.
+  - If it exists, read and follow the instructions in @~/.claude/CLAUDE_gitignore.md and all files that it references.
 - When asked to "ingest", "load", or "read files into context", read them and confirm readiness — do not summarize or
   analyze unless explicitly asked.
+- When loading agent instruction files at session start/resume (CLAUDE.md, AGENTS.md, etc.),
+  if one instruction file directs you to read and follow other instruction files but the system
+  did not auto-load them, warn the user and list which referenced instruction files were not
+  automatically loaded.
 - Be careful about adding information to MEMORY.md that is specific to changes that aren't committed to main. This
   information is subject to change as different branches are checked out, or as details of a pending change are
   re-worked. If information does need to be added to MEMORY.md, it would be good if you recorded the timestamp, branch,
@@ -200,7 +205,7 @@ Use them when appropriate, but be aware of the risks:
 - The `os.chmod` on the sandboxer binary cannot be bypassed with env vars or write permissions alone
 
 ## Shared AI agent rules in referenced files
-- When starting or refreshing a session, read the repo's CLAUDE.md for memories, instructions, and contexts, etc.
+- When starting or refreshing a session, read and follow the instructions in the repo's CLAUDE.md for memories, instructions, and contexts, etc.
 - Furthermore, CLAUDE.md might have references to other files or directories. If that is the case, follow those
   file/directory references, read those files, and interpret the memories, instructions, and contexts, etc. that are
   contained in those files, as if they had appeared in CLAUDE.md itself.
