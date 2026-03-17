@@ -214,20 +214,20 @@ Use them when appropriate, but be aware of the risks:
   modules; in direct parent modules; and in direct cousin modules.
 
 ## Libre / Free / Open Source (FLOSS) Projects
+In this section, when referring to files like LICENSE, README, CONTRIBUTING, or CONTRIBUTORS, the name may be uppercase or lowercase, and may have no file extension or a plaintext extension (.md, .rst, .txt).
+
 Identify projects that are Libre / Free / Open Source (FLOSS) Projects based on existence of a known license in a
-top-level file named LICENSE (uppercase or lowercase, with or without a common extension like .md, .rst, .txt) or an equivalent top-level file, or mention of
-the project's FLOSS license in a README file (uppercase or lowercase, with or without a common extension like .md, .rst,
-.txt) at the top level or one directory down.
+top-level LICENSE file or an equivalent top-level file, or mention of the project's FLOSS license in a README file at
+the top level or one directory down.
 
 If you aren't sure if the project is or isn't a FLOSS project, feel free to ask. Put my answer into a memory for the
 workspace.
 
 By default, you should not generate code, documentation, or commit messages for FLOSS projects. However, it may be
 acceptable to do those things, if there is indication that the repo accepts those kinds of tool-assisted contributions.
-Check for any positive indicators in a README, CONTRIBUTING, or CONTRIBUTORS file (uppercase or lowercase, with or
-without a common extension like .md, .rst, .txt) at the top level, one directory down (e.g. .github/CONTRIBUTING.md),
-or within a top-level docs/ directory (e.g. docs/docs/about/contributing.md). Also check for contributing- or
-contributors-related directories within docs/ (e.g. docs/docs/about/contributing-docs/).
+Check for any positive indicators in a README, CONTRIBUTING, or CONTRIBUTORS file at the top level, one directory down
+(e.g. .github/CONTRIBUTING.md), or within a top-level docs/ directory (e.g. docs/docs/about/contributing.md). Also
+check for contributing- or contributors-related directories within docs/ (e.g. docs/docs/about/contributing-docs/).
 Also check for the existence of AGENTS.md, CLAUDE.md, .claude/, .cursorrules, .cursor/rules/,
 .github/copilot-instructions.md, or similar top-level files or directories whose name or contents suggest they provide
 instructions to AI coding agents. The convention is evolving — new tools may introduce their own instruction files. Look
