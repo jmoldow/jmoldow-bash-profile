@@ -301,6 +301,7 @@ if command -v rg &>/dev/null; then
       fi
     }
   fi
+  alias rg-no-ignore="rg --no-ignore"
   alias ripgrep=rg
   alias rgrep=rg
   for c in ripgrep rgrep; do
