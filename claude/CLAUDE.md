@@ -203,7 +203,8 @@ Use them when appropriate, but be aware of the risks:
   would be relevant in other projects that use the same tools / programming language.
 - Tests: module-level functions preferred (no classes), but Jordan may keep classes — ask or follow existing pattern
 - Mocking: prefer `patch.object()` over string-based `patch()`; use `spec=` or `create_autospec()` with `spec_set=True`
-- Always run `pants --no-dynamic-ui fmt fix lint` before considering Python changes done (run twice if first run makes changes)
+- When the project uses pants: always run `pants --no-dynamic-ui fmt fix lint` before considering changes done (run twice if first run makes changes)
+- In general, always run the project's file formatters and linters before considering changes done (run twice if the first run makes changes).
 
 ## Python Exception Conventions
 - `ValueError`/`TypeError` are for validating inputs, not outputs from third-party libraries
@@ -214,7 +215,7 @@ Use them when appropriate, but be aware of the risks:
 
 ## Libre / Free / Open Source (FLOSS) Projects
 Identify projects that are Libre / Free / Open Source (FLOSS) Projects based on existence of a known license in a
-top-level file named LICENSE, LICENSE.md, LICENSE.rst, LICENSE.txt, etc. or an equivalent top-level file, or mention of
+top-level file named LICENSE (uppercase or lowercase, with or without a common extension like .md, .rst, .txt) or an equivalent top-level file, or mention of
 the project's FLOSS license in a README file (uppercase or lowercase, with or without a common extension like .md, .rst,
 .txt) at the top level or one directory down.
 
@@ -226,7 +227,8 @@ acceptable to do those things, if there is indication that the repo accepts thos
 Check for any positive indicators in a README, CONTRIBUTING, or CONTRIBUTORS file (uppercase or lowercase, with or
 without a common extension like .md, .rst, .txt) at the top level, one directory down (e.g. .github/CONTRIBUTING.md),
 or within a top-level docs/ directory (e.g. docs/docs/about/contributing.md). Also check for contributing- or
-contributors-related directories within docs/ (e.g. docs/docs/about/contributing-docs/). Also check for the existence of AGENTS.md, CLAUDE.md, .claude/, .cursorrules, .cursor/rules/,
+contributors-related directories within docs/ (e.g. docs/docs/about/contributing-docs/).
+Also check for the existence of AGENTS.md, CLAUDE.md, .claude/, .cursorrules, .cursor/rules/,
 .github/copilot-instructions.md, or similar top-level files or directories whose name or contents suggest they provide
 instructions to AI coding agents. The convention is evolving — new tools may introduce their own instruction files. Look
 for files/directories named after AI tools or containing phrases like "agent", "AI", "LLM", "copilot", or "assistant"
