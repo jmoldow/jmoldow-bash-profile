@@ -134,15 +134,57 @@ them when it would be worthwhile.
 - Consider using my merge-base related aliases from @~/.gitconfig to compute differences from a base branch.
 
 ## Other Git Commands
+- Jordan's ~/.gitconfig has `log.follow = true`. This causes `git log --since=<date>` (with or
+  without `--author`) to silently return zero results when no pathspec is given (git 2.47.1 bug).
+  Always use `-c log.follow=false` when combining `--since`/`--after` with `git log` without a
+  file path. Alternatively, use `--since-as-filter=<date>` instead of `--since=<date>`.
 - If the working directory is already the git repo root, and `git` is being run without a Claude sandbox: — do NOT use
   `git -C /path`, just run `git` directly.
-- For all `git` commands that might produce more than a screen of output (eg `git diff`, `git show`, `git log`, `git
-  branch`, `git ls-files`, `git grep`), use `PAGER=cat GIT_PAGER=cat` environment variable overrides. In fact, it might
-  be smart to always use those overrides in all bash sessions. However, if the pager is already set to `cat` / disabled
-  in the parent environment, there is no need to explicitly these environment variables for every bash call.
+- Pager env vars are set to `cat` globally in `~/.claude/settings.json`, so there is no need to
+  prefix git commands with `PAGER=cat GIT_PAGER=cat`. Just run git commands directly.
 - When suggesting read-only `git` commands, prefer to use those that are pre-approved in `settings.json` instead of
   suggesting equivalents that require my approval. But if the unapproved command is significantly better, then feel free
   to suggest it, and suggest that I grant approval in @~/.claude/settings.json .
+
+## Reading man pages and git help
+- `man <page>` and `git help <cmd>` output contains backspace overstriking that breaks grep/search.
+- `col -b` strips overstriking but only works on file input, not pipes.
+- Working approach:
+  1. `man <page> > /tmp/claude/manpage.txt 2>/dev/null`
+     (or `git help <cmd> > /tmp/claude/manpage.txt 2>/dev/null`)
+  2. `col -b < /tmp/claude/manpage.txt > /tmp/claude/manpage-clean.txt`
+  3. Use Grep/Read tools on the clean file.
+
+## Pager environment variables
+- Common pager env vars (`PAGER`, `GIT_PAGER`, `MANPAGER`, `BAT_PAGER`, `DELTA_PAGER`,
+  `SYSTEMD_PAGER`) are set to `cat` in `~/.claude/settings.json` so that commands produce
+  plain output without interactive pagers.
+
+## Programs that require caution
+The following common programs can perform destructive or privileged operations.
+Use them when appropriate, but be aware of the risks:
+- `find` — can execute arbitrary commands via `-exec`, `-execdir`, `-ok`, `-delete`
+- `env` — executes arbitrary commands with modified environment
+- `xargs` — executes arbitrary commands from stdin
+- `date` — can set the system clock (requires superuser)
+- `tee` — writes to files (not just stdout)
+- `dd` — can write to devices and files
+- `tar`, `gzip`, `bzip2`, `zip`, `unzip` — can create/extract/overwrite files
+- `kill`, `nice`, `renice` — process control
+- `rm`, `rmdir`, `mv`, `cp`, `ln`, `chmod`, `chown` — filesystem write/destructive operations
+- `ssh`, `scp`, `rsync` — network/remote access
+- `curl`, `wget` — network access (denied in settings)
+
+## Debugging and troubleshooting
+- When debugging root causes, state your confidence level for each hypothesis. Do not present a
+  hypothesis as the definitive cause until verified.
+
+## Debugging with environment variables
+- When a command misbehaves, it's fine to experiment with env var overrides on the command line
+  to debug the issue (e.g. `ENVVAR=value command`).
+- But once you're confident the problem is solvable with a consistent env var setting, suggest
+  adding it to `~/.claude/settings.json` rather than relying on one-off prefixes — env var
+  prefixes change the command string and can break Bash permission prefix matching.
 
 ## Pants in Claude Code Sandbox
 - Pants requires `excludedCommands: ["pants"]` in settings AND unsandboxed fallback (`/sandbox`) to perform `pants run`
