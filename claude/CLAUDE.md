@@ -85,6 +85,8 @@ When asked to export or reproduce conversation history, provide the full content
 - For well-scoped tasks: Move directly to execution without extended planning overhead
 - Always check if a plan is needed before starting — not every task requires full plan mode
 - When executing plans: Provide step-by-step summaries periodically to stay oriented (especially after long sessions)
+- When editing code, don't prompt one line at a time for the same task. Show at least 4 changed lines per prompt, unless
+  there are fewer than 4 remaining lines to change for the current task.
 
 ## Claude Code Sandboxing Constraints
 
@@ -160,6 +162,13 @@ them when it would be worthwhile.
 - Tests: module-level functions preferred (no classes), but Jordan may keep classes — ask or follow existing pattern
 - Mocking: prefer `patch.object()` over string-based `patch()`; use `spec=` or `create_autospec()` with `spec_set=True`
 - Always run `pants --no-dynamic-ui fmt fix lint` before considering Python changes done (run twice if first run makes changes)
+
+## Python Exception Conventions
+- `ValueError`/`TypeError` are for validating inputs, not outputs from third-party libraries
+- Use `RuntimeError` for unexpected results from third-party libraries
+- Don't use `assert` for runtime validation (Python may optimize out with `-O`)
+- Use similar exceptions / exception hierarchies as other Python code in: this file; in sibling files; in direct child
+  modules; in direct parent modules; and in direct cousin modules.
 
 ## Jordan's Workflow Preferences
 - Prefers to review batches of related edits together ("prepare all remaining changes in one patch")
