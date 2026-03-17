@@ -293,6 +293,19 @@ If working on Dagster projects:
 - Claude Code CLI supports a global, user-specific `CLAUDE.md` file (`~/.claude/CLAUDE.md`) that is loaded automatically into every session, regardless of project.
 - `~/.profile` IS sourced (via Claude Code's parent process)
 
+### Memories - Git Recovery of Unstaged/Uncommitted Files
+- `git fsck --dangling --no-reflogs` finds dangling blobs (files that were `git add`-ed but never committed)
+- `git fsck --lost-found` writes dangling objects to `.git/lost-found/other/` for inspection
+- `git stash list` and `git show stash@{N}:<path>` can recover files that were stashed
+- `git gc` prunes unreachable objects after ~30 days, so recovery is time-sensitive
+- Reference blog posts: josephvoss.com/post/git-fsck/ and citizen428.net/blog/git-quick-tips-3-recover-deleted-uncommited-files/
+
+### Memories - Git Stash Commands
+- `git stash list` — list all stashes
+- `git stash show -p stash@{N}` — show diff of a stash
+- `git show stash@{N}:<file-path>` — show a specific file from a stash
+- `git diff stash@{N} -- <file-path>` — diff a stashed file against working tree
+
 ### Memories - Claude Code Bash Shell Init
 - Claude Code runs bash as non-interactive, non-login (`$-` = `hmtBc`, no `i`, PS1 unset)
 - `~/.profile` IS sourced (via Claude Code's parent process)

@@ -106,6 +106,7 @@
       "Bash(git verify-tag *)",
       "Bash(git cat-file *)",
       "Bash(git ls-remote *)",
+      "Bash(git fsck *)",
       "Bash(gt log *)",
       "Bash(gt status *)",
       "Bash(gt info *)",
