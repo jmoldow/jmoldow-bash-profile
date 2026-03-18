@@ -319,6 +319,19 @@ If working on Dagster projects:
 - `git show stash@{N}:<file-path>` — show a specific file from a stash
 - `git diff stash@{N} -- <file-path>` — diff a stashed file against working tree
 
+### Memories - Python Virtualenv in Claude Code
+- Shell state doesn't persist between Bash tool calls — `source /path/to/.venv/bin/activate` must prefix each command that needs the venv (e.g. `make` targets that invoke Python, or commands that rely on `PATH` resolution)
+- For single commands where the binary path is known, invoking directly is simpler: `/path/to/.venv/bin/pytest`, `/path/to/.venv/bin/ruff`, etc.
+- Use `source activate &&` when: running `make` targets, chaining multiple commands, or when the command relies on environment variables set by activation
+- Use direct binary path when: running a single tool like `pytest` or `ruff` where no env vars beyond `PATH` are needed
+
+### Memories - Sandbox .git Deny Can Block Git Binary
+- If a project's `.claude/settings.json` has `Read(./.git/**)` in the `deny` list, this tool-level deny can get promoted to a sandbox filesystem `read.denyOnly` rule
+- This blocks the `git` binary from reading `.git`, even if `git` is in `excludedCommands`
+- Symptom: `fatal: not a git repository` despite being in a git repo
+- Fix: add `"sandbox": { "enabled": false }` to the project's `.claude/settings.local.json`
+- This appears to be a Claude Code bug — `excludedCommands` should exempt the command from sandbox filesystem restrictions
+
 ### Memories - Claude Code Bash Shell Init
 - Claude Code runs bash as non-interactive, non-login (`$-` = `hmtBc`, no `i`, PS1 unset)
 - @~/.profile IS sourced (via Claude Code's parent process)
