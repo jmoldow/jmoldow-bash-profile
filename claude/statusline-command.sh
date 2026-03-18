@@ -4,18 +4,23 @@
 # Format: username@hostname:directory (git-branch)
 # Colors: green for user@host, blue for directory
 
+# Read JSON input from Claude Code
+input=$(cat)
+cwd=$(echo "$input" | jq -r '.cwd // ""')
+if [ -z "$cwd" ]; then cwd=$(pwd); fi
+
 # Get username and hostname
 user=$(whoami)
 host=$(hostname -s)
 
 # Get current directory (basename only, like \W)
-dir=$(basename "$PWD")
+dir=$(basename "$cwd")
 
 # Replace home directory with ~
-if [[ "$PWD" == "$HOME" ]]; then
+if [[ "$cwd" == "$HOME" ]]; then
   dir="~"
-elif [[ "$PWD" == "$HOME"/* ]]; then
-  dir="~/${PWD#$HOME/}"
+elif [[ "$cwd" == "$HOME"/* ]]; then
+  dir="~/${cwd#$HOME/}"
   dir=$(basename "$dir")
 fi
 
@@ -26,7 +31,7 @@ RESET="\033[00m"
 
 # Try to get git branch info if __git_ps1 is available
 git_info=""
-if command -v __git_ps1 &>/dev/null && git rev-parse --git-dir &>/dev/null 2>&1; then
+if command -v __git_ps1 &>/dev/null && git -C "$cwd" rev-parse --git-dir &>/dev/null 2>&1; then
   # Source git-prompt if needed
   if ! declare -F __git_ps1 &>/dev/null; then
     [[ -r ~/git-prompt.sh ]] && source ~/git-prompt.sh
@@ -45,7 +50,8 @@ if command -v __git_ps1 &>/dev/null && git rev-parse --git-dir &>/dev/null 2>&1;
   export GIT_PS1_SHOWCONFLICTSTATE="yes"
 
   if declare -F __git_ps1 &>/dev/null; then
-    git_info=$(__git_ps1 " (%s)")
+    # Run __git_ps1 in the correct directory context
+    git_info=$(cd "$cwd" && __git_ps1 " (%s)")
   fi
 fi
 
