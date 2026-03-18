@@ -48,7 +48,21 @@ project-specific formulations.
 Present candidate insights to the user. For each, explain what inspired it and propose wording
 for `~/.claude/CLAUDE.md`. Wait for approval before making any edits.
 
-**Step 5: Run /suggest-improvements.** After completing the above steps, invoke the
+**Step 5: Create editor config files.** Create `.editorconfig` and `.lvimrc` files at the
+project root to match the project's coding standards:
+
+- `.editorconfig`: Match the project's formatter configs (e.g. ruff.toml line-length for Python,
+  Prettier printWidth for JS/TS). Include sections for all relevant file types. Read `~/.vimrc`
+  to understand Jordan's global editor defaults and identify which settings need overriding.
+- `.lvimrc`: Override Jordan's global Vim settings (from `~/.vimrc`) to match the project.
+  Include `setlocal` overrides for indent size, tab width, and textwidth per filetype.
+  Override ALE buffer-local variables (`b:ale_fixers`, `b:ale_linters`) to use only the
+  linters/formatters the project actually uses (e.g. only `ruff` for Python formatting if the
+  project uses Ruff, not black/isort/autopep8).
+
+These files are for local use and are rarely intended to be committed to the FLOSS project.
+
+**Step 6: Run /suggest-improvements.** After completing the above steps, invoke the
 suggest-improvements skill to catch any additional session-level improvements.
 
 ## Additional Focus Areas (optional)
