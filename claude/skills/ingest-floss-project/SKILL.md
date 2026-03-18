@@ -48,8 +48,9 @@ project-specific formulations.
 Present candidate insights to the user. For each, explain what inspired it and propose wording
 for `~/.claude/CLAUDE.md`. Wait for approval before making any edits.
 
-**Step 5: Create editor config files.** Create `.editorconfig` and `.lvimrc` files at the
-project root to match the project's coding standards:
+**Step 5: Create editor config files.** Check whether the project already has an
+`.editorconfig` or `.lvimrc` at the root. If so, review and update them rather than
+overwriting. Otherwise, create them to match the project's coding standards:
 
 - `.editorconfig`: Match the project's formatter configs (e.g. ruff.toml line-length for Python,
   Prettier printWidth for JS/TS). Include sections for all relevant file types. Read `~/.vimrc`

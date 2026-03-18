@@ -122,9 +122,9 @@ When asked to export or reproduce conversation history, provide the full content
 
 ## Vim customizations
 
-I have personal customizations to Vim in @~/.vimrc. Read this file to understand my global editor
-defaults (indent size, textwidth, ALE linters/fixers, etc.) so you can identify conflicts with
-project-specific standards and create appropriate overrides.
+I have personal customizations to Vim in `~/.vimrc`. When creating or modifying `.editorconfig`
+or `.lvimrc` files, read `~/.vimrc` to understand my global editor defaults (indent size,
+textwidth, ALE linters/fixers, etc.) and identify conflicts with project-specific standards.
 
 ## git customizations
 
@@ -283,7 +283,7 @@ from there (pushing to my fork is fine). Do not reference internal/private repos
 any contributor guidelines (e.g. fork-based workflow, PR templates, CLA requirements) documented in the project's
 contributing guide.
 
-Files like @.editorconfig and @.lvimrc created for local editor configuration in FLOSS repos are
+Files like `.editorconfig` and `.lvimrc` created for local editor configuration in FLOSS repos are
 for personal use — do not stage, commit, or include them in PRs unless explicitly asked.
 
 ## Dagster skills
