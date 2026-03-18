@@ -50,7 +50,27 @@ if declare -F __git_ps1 &>/dev/null && git -C "$cwd" rev-parse --git-dir &>/dev/
 
   # Run __git_ps1 in the correct directory context.
   git_info=$(cd "$cwd" && __git_ps1 " (%s)")
+  # Strip PS1 \[...\] non-printing markers that __git_ps1 emits with SHOWCOLORHINTS.
+  # These tell readline about zero-width chars but appear as literal garbage outside PS1.
+  git_info=$(printf '%s' "$git_info" | sed $'s/\001//g; s/\002//g')
+fi
+
+# Kubernetes context/namespace (if kubectl is available).
+k8s_info=""
+if command -v kubectl &>/dev/null; then
+  k8s_ctx=$(kubectl config current-context 2>/dev/null)
+  if [ -n "$k8s_ctx" ]; then
+    k8s_ns=$(kubectl config view --minify --output 'jsonpath={..namespace}' 2>/dev/null)
+    k8s_ns="${k8s_ns:-default}"
+    k8s_info=" [k8s: ${k8s_ctx}/${k8s_ns}]"
+  fi
+fi
+
+# AWS profile.
+aws_info=""
+if [ -n "${AWS_PROFILE:-}" ]; then
+  aws_info=" [aws: ${AWS_PROFILE}]"
 fi
 
 # Output the status line (without the trailing $).
-printf "${GREEN}${user}@${host}${RESET}:${BLUE}${dir}${RESET}${git_info}\n"
+printf '%b%s@%s%b:%b%s%b%s%s%s\n' "$GREEN" "$user" "$host" "$RESET" "$BLUE" "$dir" "$RESET" "$git_info" "$k8s_info" "$aws_info"
