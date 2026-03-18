@@ -264,7 +264,9 @@
   "alwaysThinkingEnabled": false,
   "autoMemoryEnabled": true,
   "additionalDirectories": [
-    "~/git/jmoldow"
+    "~/git/jmoldow",
+    "~/git/eq/helios",
+    "~/git/dagster-io/dagster"
   ],
   "effortLevel": "low"
 }
