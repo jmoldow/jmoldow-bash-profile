@@ -124,6 +124,30 @@ source ~/git-prompt.sh
 [[ -r "/usr/share/git-core/git-prompt.sh" ]] && source /usr/share/git-core/git-prompt.sh
 [[ -r "$(git --exec-path)/git-sh-prompt" ]] && source $(git --exec-path)/git-sh-prompt
 command -v __git_ps1 > /dev/null
+
+function __k8s_info_ps1() {
+  # Kubernetes context/namespace (if kubectl is available).
+  k8s_info=""
+  if command -v kubectl &>/dev/null; then
+    k8s_ctx=$(kubectl config current-context 2>/dev/null)
+    if [ -n "$k8s_ctx" ]; then
+      k8s_ns=$(kubectl config view --minify --output 'jsonpath={..namespace}' 2>/dev/null)
+      k8s_ns="${k8s_ns:-default}"
+      k8s_info=" [k8s: ${k8s_ctx}/${k8s_ns}]"
+    fi
+  fi
+  printf "%s" "$k8s_info"
+}
+
+function __aws_info_ps1() {
+  # AWS profile.
+  aws_info=""
+  if [ -n "${AWS_PROFILE:-}" ]; then
+    aws_info=" [aws: ${AWS_PROFILE}]"
+  fi
+  printf "%s" "$aws_info"
+}
+
 if [ 0 -eq 0 ]; then
    export GIT_PS1_SHOWDIRTYSTATE="yes"
    export GIT_PS1_SHOWUPSTREAM="auto"
@@ -132,7 +156,7 @@ if [ 0 -eq 0 ]; then
    export GIT_PS1_SHOWCONFLICTSTATE="yes"
    export GIT_PS1_SHOWCOLORHINTS="yes"
    # Tweak this as per your needs
-   export PS1="$(echo "$PS1" | sed -E -e 's#\\w#\\W#g' -e 's#\\\$ #$(__git_ps1 " (%s)")\$ #g')"
+   export PS1="$(echo "$PS1" | sed -E -e 's#\\w#\\W#g' -e 's#\\\$ #$(__git_ps1 " (%s)")$(__k8s_info_ps1)$(__aws_info_ps1)\n\$ #g')"
    alias init-tput="tput init"
    alias clear-formatting="tput init"
 fi
