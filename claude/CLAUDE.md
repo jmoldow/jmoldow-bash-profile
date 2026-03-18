@@ -120,6 +120,12 @@ When asked to export or reproduce conversation history, provide the full content
 - Always include `--profile profile-name` flag in AWS CLI commands for explicit clarity
 - Example: `AWS_PROFILE=eq-stage aws ssm get-parameter --name '/path' --profile eq-stage`
 
+## Vim customizations
+
+I have personal customizations to Vim in @~/.vimrc. Read this file to understand my global editor
+defaults (indent size, textwidth, ALE linters/fixers, etc.) so you can identify conflicts with
+project-specific standards and create appropriate overrides.
+
 ## git customizations
 
 I have personal customizations to `git` in @~/.gitconfig (also available at `${XDG_CONFIG_HOME}/git/config`, aka
@@ -129,14 +135,18 @@ useful.
 
 ## bash shell customizations
 
-I have personal customizations to `bash` in @~/.profile, `~/.bash_profile`, and @~/.bashrc. In particular, I have
+I have personal customizations to `bash` in @~/.profile, @~/.bash_profile, and @~/.bashrc. In particular, I have
 defined a number of helper aliases and helper functions. Please learn those aliases and functions, and suggest using
 them when it would be worthwhile.
-- `~/.bash_profile` is a symlink → the real file is @~/git/jmoldow/jmoldow-bash-profile/.bash_profile
-- `~/.profile` is a symlink to `~/.bash_profile` (which chains to the above)
+- @~/.bash_profile is a symlink → the real file is @~/git/jmoldow/jmoldow-bash-profile/.bash_profile
+- @~/.profile is a symlink to @~/.bash_profile (which chains to the above)
 - Always edit the symlink target, never the symlink itself
 - `.bashrc` early-returns (non-interactive guard) — settings there don't affect Claude Code
-- The `completion-on` function in `.bash_profile` guards completion-related sourcing
+- The `completion-on` function in @~/.bash_profile guards completion-related sourcing
+
+## Other customizations to be aware of
+
+- @~/.config/git/attributes
 
 ## Git Diff Commands
 - When asked to inspect commit contents: use `git show [<object>...]` (eg `git show HEAD`) or `git diff <commit> <commit>` (eg `git show HEAD~1 HEAD`) to inspect commit contents.
@@ -273,6 +283,9 @@ from there (pushing to my fork is fine). Do not reference internal/private repos
 any contributor guidelines (e.g. fork-based workflow, PR templates, CLA requirements) documented in the project's
 contributing guide.
 
+Files like @.editorconfig and @.lvimrc created for local editor configuration in FLOSS repos are
+for personal use — do not stage, commit, or include them in PRs unless explicitly asked.
+
 ## Dagster skills
 
 If working on Dagster projects:
@@ -291,7 +304,7 @@ If working on Dagster projects:
 
 ## Memories
 - Claude Code CLI supports a global, user-specific `CLAUDE.md` file (`~/.claude/CLAUDE.md`) that is loaded automatically into every session, regardless of project.
-- `~/.profile` IS sourced (via Claude Code's parent process)
+- @~/.profile IS sourced (via Claude Code's parent process)
 
 ### Memories - Git Recovery of Unstaged/Uncommitted Files
 - `git fsck --dangling --no-reflogs` finds dangling blobs (files that were `git add`-ed but never committed)
@@ -308,6 +321,6 @@ If working on Dagster projects:
 
 ### Memories - Claude Code Bash Shell Init
 - Claude Code runs bash as non-interactive, non-login (`$-` = `hmtBc`, no `i`, PS1 unset)
-- `~/.profile` IS sourced (via Claude Code's parent process)
+- @~/.profile IS sourced (via Claude Code's parent process)
 - `.bashrc` early-returns (non-interactive guard) — settings there don't affect Claude Code
-- The `completion-on` function in `.bash_profile` guards completion-related sourcing
+- The `completion-on` function in @~/.bash_profile guards completion-related sourcing
