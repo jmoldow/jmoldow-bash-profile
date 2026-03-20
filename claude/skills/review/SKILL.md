@@ -6,6 +6,8 @@
    - Style consistency with existing code
    - Test coverage gaps
    - Documentation/docstring completeness
+   - In general: consistency with all documented standards. Look for standards in the same places as the
+     /ingest-floss-project skill.
 3. Present findings grouped by severity: blocking, suggestion, nit
 4. Keep review concise—no more than 2 sentences per finding
 

@@ -13,8 +13,9 @@ suggest function/method renames that would make them better at self-documenting 
 Markdown (`.md`) files as necessary.
 6. Generate unit tests for any new/modified functions (verify patch targets match actual imports, run tests before presenting).
 7. Run all tests to confirm nothing is broken.
-8. Repeat all steps above as necessary.
-9. Write a conventional commit message summarizing all changes, and commit the final result with the generated commit
+8. Ensure consistency with all documented standards. Look for standards in the same places as the /ingest-floss-project skill.
+9. Repeat all steps above as necessary.
+10. Write a conventional commit message summarizing all changes, and commit the final result with the generated commit
 message.
 
 After each step, briefly confirm what was done before proceeding.
