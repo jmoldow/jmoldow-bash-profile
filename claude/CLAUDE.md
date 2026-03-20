@@ -313,6 +313,21 @@ If working on Dagster projects:
 - `git gc` prunes unreachable objects after ~30 days, so recovery is time-sensitive
 - Reference blog posts: josephvoss.com/post/git-fsck/ and citizen428.net/blog/git-quick-tips-3-recover-deleted-uncommited-files/
 
+### Memories - git add -A Can Stage Untracked Files
+- `git add -A` stages ALL files including untracked ones (node_modules, build artifacts, etc.)
+- Always use `git add <specific-files>` when committing, never `git add -A` or `git add .`
+- This is especially dangerous in monorepos with large untracked directories
+
+### Memories - Git Reflog for Recovering Pre-Squash Commit Messages
+- After `git reset --soft` for squashing, `HEAD@{1}` in reflog may not work reliably for referencing pre-squash commits
+- Instead, use `git reflog --format="%H %s"` to find the exact SHA of the pre-squash HEAD
+- Then use `git log --format="%B" <base>..<pre-squash-sha>` to recover all commit messages
+
+### Memories - git commit --amend After User Edits
+- When the user makes manual edits to files between agent commits, `git commit --amend --no-edit` will include those edits in the amended commit
+- Always check `git diff --stat` before amending to confirm only expected files are staged
+- If the user says "I added a commit manually", check `git log` before assuming the branch state
+
 ### Memories - Git Stash Commands
 - `git stash list` — list all stashes
 - `git stash show -p stash@{N}` — show diff of a stash
