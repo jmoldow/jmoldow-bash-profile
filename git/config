@@ -210,6 +210,12 @@
   drange-diff = -c "diff.external='difft $DDIFF_ARGS'" -c "core.pager='less -FRXISM'" range-diff        --ext-diff
   dstash      = -c "diff.external='difft $DDIFF_ARGS'" -c "core.pager='less -FRXISM'" stash             --ext-diff
   dreflog     = -c "diff.external='difft $DDIFF_ARGS'" -c "core.pager='less -FRXISM'" reflog        -p  --ext-diff
+  semlog        = -c "diff.external='git-ext-diff-sem.sh'" -c "core.pager='less -FRXISM'" log-decorate  -p  --ext-diff
+  semshow       = -c "diff.external='git-ext-diff-sem.sh'" -c "core.pager='less -FRXISM'" show              --ext-diff
+  semdiff       = -c "diff.external='git-ext-diff-sem.sh'" -c "core.pager='less -FRXISM'" diff              --ext-diff
+  semrange-diff = -c "diff.external='git-ext-diff-sem.sh'" -c "core.pager='less -FRXISM'" range-diff        --ext-diff
+  semstash      = -c "diff.external='git-ext-diff-sem.sh'" -c "core.pager='less -FRXISM'" stash             --ext-diff
+  semreflog     = -c "diff.external='git-ext-diff-sem.sh'" -c "core.pager='less -FRXISM'" reflog        -p  --ext-diff
   dl = dlog
   ds = dshow
   dft = ddiff
@@ -287,6 +293,10 @@
 [difftool "difftastic"]
   # See `man git-difftool` for a description of MERGED, LOCAL and REMOTE.
   cmd = difft "$MERGED" "$LOCAL" "abcdef1" "100644" "$REMOTE" "abcdef2" "100644"
+
+[difftool "sem"]
+  # See `man git-difftool` for a description of MERGED, LOCAL and REMOTE.
+  cmd = sem diff "$LOCAL" "$REMOTE"
 
 [merge "mergiraf"]
   name = mergiraf
