@@ -42,7 +42,7 @@
   diff = "git-pager-diffnav.sh"
   grep = true
   log = "delta --pager='less -FRXISM'"
-  show = "delta --pager='less -FRXISM'"
+  show = "git-pager-diffnav.sh"
   branch = true
   describe = true
   notes = true
@@ -135,7 +135,7 @@
   pushInsteadOf = "gitlab.com"
   pushInsteadOf = "*.gitlab.com"
 [delta]
-  features = default-feature line-numbers decorations
+  features = default-feature line-numbers decorations diffnav-always
 [delta "default-feature"]
   hyperlinks = true
   keep-plus-minus-markers = true
@@ -161,11 +161,54 @@
   file-style = bold yellow ul
   file-decoration-style = none
   hunk-header-decoration-style = cyan box ul
+  hunk-header-style = file line-number
 [delta "line-numbers"]
   line-numbers-left-style = cyan
   line-numbers-right-style = cyan
   line-numbers-minus-style = 124
   line-numbers-plus-style = 28
+  line-numbers-zero-style = white dim
+  line-numbers-left-format = "{nm:>4} "
+  line-numbers-right-format = "│ {np:>4} "
+[delta "diffnav-always"]
+  # <https://github.com/dlvhdr/diffnav/blob/main/cfg/delta.conf>
+  tabs = 2
+  wrap-left-symbol = " "
+  wrap-right-symbol = " "
+  wrap-right-prefix-symbol = " "
+  hunk-header-file-style = "#868E99" dim
+[delta "diffnav"]
+  # <https://github.com/dlvhdr/diffnav/blob/main/cfg/delta.conf>
+  # syntax-theme = tokyonight_night
+  # dark = true
+  tabs = 2
+
+  file-style = omit
+  file-decoration-style = none
+
+  line-numbers-left-format = "{nm:>4} "
+  line-numbers-right-format = "│ {np:>4} "
+  line-numbers-left-style = white dim
+  line-numbers-right-style = "#1f2335" dim
+  line-numbers-zero-style = white dim
+  line-numbers-plus-style = white dim
+  line-numbers-minus-style = white dim
+  line-numbers-zero-style = white dim
+
+  wrap-left-symbol = " "
+  wrap-right-symbol = " "
+  wrap-right-prefix-symbol = " "
+
+  # plus-style = syntax "#0e250e"
+  # plus-emph-style = syntax "#103610"
+  # minus-style = syntax "#402a26"
+  # minus-emph-style = syntax "#45221c"
+
+  hunk-label = "  󰡏 "
+  hunk-header-line-number-style = "#10233A"
+  hunk-header-style = "#868E99"
+  hunk-header-file-style = "#868E99" dim
+  hunk-header-decoration-style = "#163050" ol ul
 [alias]
   clean-nffdx                 = clean -nffdx
   clean-nffdx-force-execute   = clean  -ffdx
