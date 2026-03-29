@@ -20,7 +20,7 @@
   pager = "less -FRXISM"
   fsmonitor = false
   untrackedcache = true
-  commentChar = auto
+  commentString = "⁑⁕⁑"
   gitProxy = ssh
   warnAmbiguousRefs = true
 [checkout]
