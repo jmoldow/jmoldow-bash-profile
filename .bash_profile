@@ -6,12 +6,16 @@ if [[ "x${_XJORDANX_ENTRYPOINT:-}" = "x" ]]; then
   _XJORDANX_ENTRYPOINT="bash_profile"
 fi
 
+_XJORDAN_BASH_PROFILE_SCRIPT_PATH="$(readlink -f ~/.bash_profile)"
+_XJORDAN_BASH_PROFILE_GIT_REPO_PATH="$(cd "$(dirname "$_XJORDAN_BASH_PROFILE_SCRIPT_PATH")" && git rev-parse --show-toplevel)"
+_XJORDAN_GIT_REPO_BIN_PATH="${_XJORDAN_BASH_PROFILE_GIT_REPO_PATH}/bin"
+
 export XDG_CONFIG_HOME=~/.config
 export XDG_CACHE_HOME=~/.cache
 export XDG_DATA_HOME=~/.local/share
 export XDG_STATE_HOME=~/.local/state
 export LOCAL_BIN_HOME=~/.local/bin
-export PATH="${LOCAL_BIN_HOME}:$PATH"
+export PATH="${LOCAL_BIN_HOME}:${_XJORDAN_GIT_REPO_BIN_PATH}:$PATH"
 
 # append to the history file, don't overwrite it
 shopt -s histappend
