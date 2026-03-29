@@ -39,10 +39,10 @@
   follow = true
 [pager]
   status = "delta --pager='less -FRXISM'"
-  diff = "git-pager-diffnav.sh"
+  diff = "delta --pager='less -FRXISM'"
   grep = true
   log = "delta --pager='less -FRXISM'"
-  show = "git-pager-diffnav.sh"
+  show = "delta --pager='less -FRXISM'"
   branch = true
   describe = true
   notes = true
@@ -260,6 +260,8 @@
   semrange-diff = -c "diff.external='git-ext-diff-sem.sh'" -c "core.pager='less -FRXISM'" range-diff        --ext-diff
   semstash      = -c "diff.external='git-ext-diff-sem.sh'" -c "core.pager='less -FRXISM'" stash             --ext-diff
   semreflog     = -c "diff.external='git-ext-diff-sem.sh'" -c "core.pager='less -FRXISM'" reflog        -p  --ext-diff
+  navshow       = -c "pager.show='git-pager-diffnav.sh'" show
+  navdiff       = -c "pager.diff='git-pager-diffnav.sh'" diff
   dl = dlog
   ds = dshow
   dft = ddiff
