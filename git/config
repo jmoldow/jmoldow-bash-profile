@@ -135,7 +135,8 @@
   pushInsteadOf = "gitlab.com"
   pushInsteadOf = "*.gitlab.com"
 [delta]
-  features = line-numbers decorations
+  features = default-feature line-numbers decorations
+[delta "default-feature"]
   hyperlinks = true
   keep-plus-minus-markers = true
   inspect-raw-lines = true
