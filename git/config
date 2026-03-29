@@ -39,7 +39,7 @@
   follow = true
 [pager]
   status = "delta --pager='less -FRXISM'"
-  diff = "delta --pager='less -FRXISM'"
+  diff = "git-pager-diffnav.sh"
   grep = true
   log = "delta --pager='less -FRXISM'"
   show = "delta --pager='less -FRXISM'"
