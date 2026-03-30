@@ -321,6 +321,9 @@ fi
 if command -v diffnav &>/dev/null; then
   completion-on && eval "$(diffnav completion bash)"
 fi
+if command -v fzf &>/dev/null; then
+  completion-on && eval "$(fzf --bash)" #  FZF_CTRL_R_COMMAND=
+fi
 if command -v rg &>/dev/null; then
   completion-on && eval "$(command rg --generate=complete-bash)"
   if command -v delta &>/dev/null; then
