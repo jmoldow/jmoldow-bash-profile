@@ -57,7 +57,7 @@
   reflog = "delta --pager='less -FRXISM'"
   remote = true
   replace = true
-  blame = true
+  blame = "delta --pager='less -FRXISM'"
   difftool = true
   help = true
   show-branch = "delta --pager='less -FRXISM'"
