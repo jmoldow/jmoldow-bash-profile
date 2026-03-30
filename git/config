@@ -135,7 +135,7 @@
   pushInsteadOf = "gitlab.com"
   pushInsteadOf = "*.gitlab.com"
 [delta]
-  features = default-feature line-numbers decorations diffnav-always
+  features = default-feature line-numbers decorations diffnav-always diff-so-fancy
 [delta "default-feature"]
   hyperlinks = true
   keep-plus-minus-markers = true
