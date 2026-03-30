@@ -338,6 +338,9 @@ if command -v fzf &>/dev/null; then
   completion-on && eval "$(fzf --bash)" #  FZF_CTRL_R_COMMAND=
   source "${_XJORDAN_GIT_REPO_BIN_PATH}"/fzf-git.sh
 fi
+if command -v fd &>/dev/null; then
+  completion-on && eval "$(command fd --gen-completions bash)"
+fi
 if command -v rg &>/dev/null; then
   completion-on && eval "$(command rg --generate=complete-bash)"
   if command -v delta &>/dev/null; then
