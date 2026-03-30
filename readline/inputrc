@@ -213,6 +213,7 @@ Control-Space:set-mark
 "\C-n":history-search-forward
 
 # Copied/modified from /usr/share/doc/readline-doc/examples/Inputrc
+# LICENSE: GNU General Public License version 3
 #   Copyright (C) 1989-2009 Free Software Foundation, Inc.
 #
 #   This program is free software: you can redistribute it and/or modify
@@ -285,6 +286,7 @@ $if Ftp
 $endif
 
 # Copied/modified from /etc/inputrc
+# LICENSE: GNU General Public License version 3
 #   Copyright (C) 1987-2022 Free Software Foundation, Inc.
 #
 #   Readline is free software: you can redistribute it and/or modify

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # <https://github.com/junegunn/fzf-git.sh/blob/main/fzf-git.sh>
+# LICENSE: The MIT License (MIT)
 # The MIT License (MIT)
 #
 # Copyright (c) 2024 Junegunn Choi
