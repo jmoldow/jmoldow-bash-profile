@@ -22,6 +22,10 @@ set visible-stats On
 set enable-meta-key On
 
 "\C-\e(":redraw-current-line
+"\C-(":redraw-current-line
+"\er":redraw-current-line
+"\C-x\C-x r":redraw-current-line
+"\C-x\C-xr":redraw-current-line
 $if mode=emacs
 "\C-z":vi-editing-mode
 $endif
