@@ -404,6 +404,9 @@ if command -v fzf &>/dev/null; then
   source "${_XJORDAN_GIT_REPO_BIN_PATH}"/fzf-git.sh
 
   complete -o bashdefault -o default -o nospace -F __git_wrap__git_diff gd
+
+  source "${_XJORDAN_GIT_REPO_BIN_PATH}"/fzf-bash-completion.sh
+  bind -x '"\C-x **\t": fzf_bash_completion'
 fi
 if command -v fd &>/dev/null; then
   completion-on && eval "$(command fd --gen-completions bash)"
