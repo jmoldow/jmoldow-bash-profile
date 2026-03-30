@@ -129,6 +129,18 @@ source ~/git-prompt.sh
 [[ -r "$(git --exec-path)/git-sh-prompt" ]] && source $(git --exec-path)/git-sh-prompt
 command -v __git_ps1 > /dev/null
 
+function __git_wrap__git_diff() {
+  __git_func_wrap _git_diff
+}
+
+function __git_wrap__git_log() {
+  __git_func_wrap _git_log
+}
+
+function __git_wrap__git_rebase() {
+  __git_func_wrap _git_rebase
+}
+
 function __k8s_info_ps1() {
   # Kubernetes context/namespace (if kubectl is available).
   k8s_info=""
@@ -202,6 +214,8 @@ function git-log-jordan-graph-all-plus-origin-head() {
   git log-jordan-all-not-origin-head --color=never --format="format:%h" --branches HEAD | xargs -I{} git log-graph {} "$@" | command grep --color=never -A9 -E "HEAD|\/origin\/|\/heads\/|\/remotes\/|^[^*]*$|^[^*].*[*]" | less
 }
 
+complete -o bashdefault -o default -o nospace -F __git_wrap__git_log git-log-jordan-graph-all-plus-origin-head
+
 function git-rebase-onto-merge-base-branch() {
   # Rebase A..B onto $(git merge-base A B).
   # If B was forked directly from A, then B' should have the same fork point as B. This can be useful for
@@ -222,6 +236,10 @@ alias   g-rebase-onto-merge-base-main-branch=git-rebase-onto-merge-base-origin-H
 #alias   g-rebase-onto-merge-base-main-local-branch="git-rebase-onto-merge-base-main-local-branch"
 #alias git-rebase-onto-merge-base-HEAD-branch="git-rebase-onto-merge-base-branch HEAD"
 #alias   g-rebase-onto-merge-base-HEAD-branch="git-rebase-onto-merge-base-HEAD-branch"
+
+for c in git-rebase-onto-merge-base-branch g-rebase-onto-merge-base-branch git-rebase-onto-merge-base-origin-HEAD-branch g-rebase-onto-merge-base-origin-HEAD-branch git-rebase-onto-merge-base-main-branch g-rebase-onto-merge-base-main-branch git-rebase-onto-merge-base-main-local-branch g-rebase-onto-merge-base-main-local-branch git-rebase-onto-merge-base-HEAD-branch g-rebase-onto-merge-base-HEAD-branch; do
+  complete -o bashdefault -o default -o nospace -F __git_wrap__git_rebase "$c"
+done
 
 function git-branch-current() {
   current=$(git branch-current)
@@ -244,6 +262,10 @@ alias   g-rebase-onto-merge-base-origin-HEAD-branch-current="git-rebase-onto-mer
 alias git-rebase-onto-merge-base-main-branch-current=git-rebase-onto-merge-base-origin-HEAD-branch-current
 alias   g-rebase-onto-merge-base-main-branch-current=git-rebase-onto-merge-base-origin-HEAD-branch-current
 
+for c in git-rebase-onto-merge-base-branch-current g-rebase-onto-merge-base-branch-current git-rebase-onto-merge-base-origin-HEAD-branch-current g-rebase-onto-merge-base-origin-HEAD-branch-current git-rebase-onto-merge-base-main-branch-current g-rebase-onto-merge-base-main-branch-current; do
+  complete -o bashdefault -o default -o nospace -F __git_wrap__git_rebase "$c"
+done
+
 function git-rebase-onto-onto-upstream-merge-base-3() {
   H="$1"
   A="$2"
@@ -261,6 +283,21 @@ alias   g-rebase-onto-onto-upstream-merge-base-main-local-3="git-rebase-onto-ont
 alias git-rebase-onto-onto-upstream-merge-base-main-3=git-rebase-onto-onto-upstream-merge-base-origin-HEAD-3
 alias   g-rebase-onto-onto-upstream-merge-base-main-3=git-rebase-onto-onto-upstream-merge-base-origin-HEAD-3
 
+
+for c in git-rebase-onto-onto-upstream-merge-base-3 \
+          g-rebase-onto-onto-upstream-merge-base-3 \
+          git-rebase-onto-onto-upstream-merge-base-HEAD-3 \
+          g-rebase-onto-onto-upstream-merge-base-HEAD-3 \
+          git-rebase-onto-onto-upstream-merge-base-origin-HEAD-3 \
+          g-rebase-onto-onto-upstream-merge-base-origin-HEAD-3 \
+          git-rebase-onto-onto-upstream-merge-base-main-local-3 \
+          g-rebase-onto-onto-upstream-merge-base-main-local-3 \
+          git-rebase-onto-onto-upstream-merge-base-main-3 \
+          g-rebase-onto-onto-upstream-merge-base-main-3 \
+; do
+  complete -o bashdefault -o default -o nospace -F __git_wrap__git_rebase "$c"
+done
+
 function git-rebase-onto-onto-upstream-merge-base() {
   H="$1"
   B="$2"
@@ -276,6 +313,20 @@ alias git-rebase-onto-onto-upstream-merge-base-main-local="git-rebase-onto-onto-
 alias   g-rebase-onto-onto-upstream-merge-base-main-local="git-rebase-onto-onto-upstream-merge-base-main-local"
 alias git-rebase-onto-onto-upstream-merge-base-main=git-rebase-onto-onto-upstream-merge-base-origin-HEAD
 alias   g-rebase-onto-onto-upstream-merge-base-main=git-rebase-onto-onto-upstream-merge-base-origin-HEAD
+
+for c in git-rebase-onto-onto-upstream-merge-base \
+          g-rebase-onto-onto-upstream-merge-base \
+          git-rebase-onto-onto-upstream-merge-base-HEAD \
+          g-rebase-onto-onto-upstream-merge-base-HEAD \
+          git-rebase-onto-onto-upstream-merge-base-origin-HEAD \
+          g-rebase-onto-onto-upstream-merge-base-origin-HEAD \
+          git-rebase-onto-onto-upstream-merge-base-main-local \
+          g-rebase-onto-onto-upstream-merge-base-main-local \
+          git-rebase-onto-onto-upstream-merge-base-main \
+          g-rebase-onto-onto-upstream-merge-base-main \
+; do
+  complete -o bashdefault -o default -o nospace -F __git_wrap__git_rebase "$c"
+done
 
 function git-diff-tool-merge-base() {
   difftool="$1"
@@ -300,6 +351,20 @@ for tool in diff ddiff dft; do
   alias   "g-${tool}-merge-base-main-local"="git-${tool}-merge-base-main-local"
   alias "git-${tool}-merge-base-origin-HEAD"="git-${tool}-merge-base origin/HEAD"
   alias   "g-${tool}-merge-base-origin-HEAD"="git-${tool}-merge-base-origin-HEAD"
+
+  for c in "git-${tool}-merge-base" \
+            "g-${tool}-merge-base" \
+            "git-${tool}-merge-base-HEAD" \
+            "g-${tool}-merge-base-HEAD" \
+            "git-${tool}-merge-base-origin-HEAD" \
+            "g-${tool}-merge-base-origin-HEAD" \
+            "git-${tool}-merge-base-main-local" \
+            "g-${tool}-merge-base-main-local" \
+            "git-${tool}-merge-base-origin-HEAD" \
+            "g-${tool}-merge-base-origin-HEAD" \
+  ; do
+    complete -o bashdefault -o default -o nospace -F __git_wrap__git_diff "$c"
+  done
 done
 
 export gcnffdx="-nffdx"
@@ -337,6 +402,8 @@ if command -v fzf &>/dev/null; then
 
   completion-on && eval "$(fzf --bash)" #  FZF_CTRL_R_COMMAND=
   source "${_XJORDAN_GIT_REPO_BIN_PATH}"/fzf-git.sh
+
+  complete -o bashdefault -o default -o nospace -F __git_wrap__git_diff gd
 fi
 if command -v fd &>/dev/null; then
   completion-on && eval "$(command fd --gen-completions bash)"
