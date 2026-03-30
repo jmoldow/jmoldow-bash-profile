@@ -322,7 +322,21 @@ if command -v diffnav &>/dev/null; then
   completion-on && eval "$(diffnav completion bash)"
 fi
 if command -v fzf &>/dev/null; then
+  if command -v rg &>/dev/null; then
+    export FZF_DEFAULT_COMMAND="rg --files --follow --hidden --glob '!.git'"
+  elif command -v fd &>/dev/null; then
+    export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
+  fi
+  if [[ -v FZF_DEFAULT_COMMAND ]]; then
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  fi
+
+  # <https://github.com/nickjj/dotfiles/blob/master/.config/fzf/config.sh>
+  export FZF_DEFAULT_OPTS="--highlight-line --info=inline-right --ansi --layout=reverse --border=none --bind shift-up:preview-page-up,shift-down:preview-page-down"
+  export FZF_CTRL_T_OPTS="--height=100% --preview='bat --color=always {}'"
+
   completion-on && eval "$(fzf --bash)" #  FZF_CTRL_R_COMMAND=
+  source "${_XJORDAN_GIT_REPO_BIN_PATH}"/fzf-git.sh
 fi
 if command -v rg &>/dev/null; then
   completion-on && eval "$(command rg --generate=complete-bash)"
