@@ -19,11 +19,193 @@ set menu-complete-display-prefix On
 set revert-all-at-newline On
 set skip-completed-text On
 set visible-stats On
+set enable-meta-key On
+
+"\C-\e(":redraw-current-line
+$if mode=emacs
+"\C-z":vi-editing-mode
+$endif
+$if mode=vi
+"\C-z":emacs-editing-mode
+$endif
+$if mode=vi-insert
+"\C-z":emacs-editing-mode
+$endif
 
 "\C-L":clear-screen
+"\C-x \C-r\C-r":reverse-search-history
+"\C-x \C-r \C-x": re-read-init-file
+"\C-q":quoted-insert
+"\C-v":quoted-insert
+RUBOUT:backward-delete-char
+Rubout:backward-delete-char
+"\b":backward-delete-char
+"\C-x \b":backward-kill-line
+"\C-x\C-x \d":backward-kill-line
+"\C-x\C-x\d":backward-kill-line
+Meta-DEL:backward-kill-word
+Meta-Del:backward-kill-word
+Control-DEL:backward-kill-word
+Control-Del:backward-kill-word
+"\M-\d":backward-kill-word
+"\C-\d":backward-kill-word
+"\C-x \d":backward-kill-word
+"\C-x\d":backward-kill-word
+Meta-TAB:dynamic-complete-history
+Meta-Tab:dynamic-complete-history
+Control-TAB:dynamic-complete-history
+Control-Tab:dynamic-complete-history
+"\M-\t":dynamic-complete-history
+"\C-\t":dynamic-complete-history
+"\C-x \t":dynamic-complete-history
+"\C-x\t":dynamic-complete-history
+#ESC:prefix-meta
+#Esc:prefix-meta
+#Meta-ESC:prefix-meta
+#Meta-Esc:prefix-meta
+#Control-ESC:prefix-meta
+#Control-Esc:prefix-meta
+#"\e":prefix-meta
+#"\M-\e":prefix-meta
+#"\C-\e":prefix-meta
+#"\C-x \e":prefix-meta
+#"\C-x\e":prefix-meta
+NEWLINE:accept-line
+Newline:accept-line
+"\n":accept-line
+RETURN:accept-line
+Return:accept-line
+RET:accept-line
+Ret:accept-line
+"\r":accept-line
+TAB:complete
+Tab:complete
+"\t":complete
+"\C-_":undo
+"\C-x\C-u":undo
+Meta-SPACE:set-mark
+Meta-Space:set-mark
+Control-SPACE:set-mark
+Control-Space:set-mark
+"\M- ":set-mark
+"\C- ":set-mark
+"\C-x  ":set-mark
+
+# $ grep -oE "CODE[>][a-z][a-z0-9]+([-][a-z0-9]+)* [(].*[)][<][/]CODE" /usr/share/doc/bash/bashref.html | grep -vE -e "[(].*[()].*[)]" -e "[-][&][#][0-9a-hA-H]" -e "[0-9a-hA-H]{2,}[;]" -e "[(][)]" -e "[-]kbd[-]" -e "[.][.][.]" -e " or " -e "KBD" -e Rubout | sort -u | sed -E -e "s/CODE>//g" -e "s|</CODE||g" -e "s/[A-Z][-]/\\\\&/g" | sed -E -e 's/^(.*) [(](.*)[)]$/"\2":\1/g'
+"\C-g":abort
+"\C-b":backward-char
+"\M-b":backward-word
+"\C-a":beginning-of-line
+"\M-c":capitalize-word
+"\C-]":character-search
+"\M-\C-]":character-search-backward
+"\C-l":clear-screen
+"\M-!":complete-command
+"\M-/":complete-filename
+"\M-@":complete-hostname
+"\M-{":complete-into-braces
+"\M-~":complete-username
+"\M-$":complete-variable
+"\C-d":delete-char
+"\C-x \C-v":display-shell-version
+"\M-l":downcase-word
+"\C-x\C-e":edit-and-execute-command
+"\C-e":end-of-line
+"\C-x \C-x":exchange-point-and-mark
+"\C-f":forward-char
+"\C-s":forward-search-history
+"\M-f":forward-word
+"\M-g":glob-complete-word
+"\C-x *":glob-expand-word
+"\C-x g":glob-list-expansions
+"\M-^":history-expand-line
+"\M-#":insert-comment
+"\M-*":insert-completions
+"\C-k":kill-line
+"\M-d":kill-word
+"\C-n":next-history
+"\M-n":non-incremental-forward-search-history
+"\M-p":non-incremental-reverse-search-history
+"\C-o":operate-and-get-next
+"\C-x !":possible-command-completions
+"\M-?":possible-completions
+"\C-x /":possible-filename-completions
+"\C-x @":possible-hostname-completions
+"\C-x ~":possible-username-completions
+"\C-x $":possible-variable-completions
+"\C-p":previous-history
+"\C-x \C-r":re-read-init-file
+"\C-r":reverse-search-history
+"\M-r":revert-line
+"\C-@":set-mark
+"\M-\C-e":shell-expand-line
+"\C-t":transpose-chars
+"\M-t":transpose-words
+"\C-u":unix-line-discard
+"\C-w":unix-word-rubout
+"\M-u":upcase-word
+"\C-y":yank
+"\M-\C-y":yank-nth-arg
+"\M-y":yank-pop
+
+# s/\\M-/\\C-x\\C-x /g
+"\C-x\C-x b":backward-word
+"\C-x\C-x c":capitalize-word
+"\C-x\C-x \C-]":character-search-backward
+"\C-x\C-x !":complete-command
+"\C-x\C-x /":complete-filename
+"\C-x\C-x @":complete-hostname
+"\C-x\C-x {":complete-into-braces
+"\C-x\C-x ~":complete-username
+"\C-x\C-x $":complete-variable
+"\C-x\C-x l":downcase-word
+"\C-x\C-x f":forward-word
+"\C-x\C-x g":glob-complete-word
+"\C-x\C-x ^":history-expand-line
+"\C-x\C-x #":insert-comment
+"\C-x\C-x *":insert-completions
+"\C-x\C-x d":kill-word
+"\C-x\C-x n":non-incremental-forward-search-history
+"\C-x\C-x p":non-incremental-reverse-search-history
+"\C-x\C-x ?":possible-completions
+"\C-x\C-x r":revert-line
+"\C-x\C-x \C-e":shell-expand-line
+"\C-x\C-x t":transpose-words
+"\C-x\C-x u":upcase-word
+"\C-x\C-x \C-y":yank-nth-arg
+"\C-x\C-x y":yank-pop
+
+# s/\\M-/\\C-x\\C-x/g
+"\C-x\C-xb":backward-word
+"\C-x\C-xc":capitalize-word
+"\C-x\C-x\C-]":character-search-backward
+"\C-x\C-x!":complete-command
+"\C-x\C-x/":complete-filename
+"\C-x\C-x@":complete-hostname
+"\C-x\C-x{":complete-into-braces
+"\C-x\C-x~":complete-username
+"\C-x\C-x$":complete-variable
+"\C-x\C-xl":downcase-word
+"\C-x\C-xf":forward-word
+"\C-x\C-xg":glob-complete-word
+"\C-x\C-x^":history-expand-line
+"\C-x\C-x#":insert-comment
+"\C-x\C-x*":insert-completions
+"\C-x\C-xd":kill-word
+"\C-x\C-xn":non-incremental-forward-search-history
+"\C-x\C-xp":non-incremental-reverse-search-history
+"\C-x\C-x?":possible-completions
+"\C-x\C-xr":revert-line
+"\C-x\C-x\C-e":shell-expand-line
+"\C-x\C-xt":transpose-words
+"\C-x\C-xu":upcase-word
+"\C-x\C-x\C-y":yank-nth-arg
+"\C-x\C-xy":yank-pop
 
 # <https://www.topbug.net/blog/2017/07/31/inputrc-for-humans/>
+# overwrites default "\C-p":previous-history
 "\C-p":history-search-backward
+# overwrites default "\C-n":next-history
 "\C-n":history-search-forward
 
 # Copied/modified from /usr/share/doc/readline-doc/examples/Inputrc
