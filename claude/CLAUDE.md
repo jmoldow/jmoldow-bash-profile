@@ -93,6 +93,12 @@ relevant sections below (e.g. bash shell customizations).
 ## Output Expectations
 When asked to export or reproduce conversation history, provide the full content as requested—do not summarize or truncate unless the user explicitly asks for a summary.
 
+## Showing diffs before applying changes
+
+When the user asks to "show me a diff" before applying a change (to a temp file,
+commit message, or any auxiliary file), always present the diff in unified format
+first and wait for explicit approval before writing the change.
+
 ## Working with Claude Code Plans
 
 - For complex multi-step tasks: Start with a complete plan before execution (use EnterPlanMode)
@@ -162,10 +168,16 @@ them when it would be worthwhile.
   without `--author`) to silently return zero results when no pathspec is given (git 2.47.1 bug).
   Always use `-c log.follow=false` when combining `--since`/`--after` with `git log` without a
   file path. Alternatively, use `--since-as-filter=<date>` instead of `--since=<date>`.
+- If `git log` isn't using `--since`/`--after`, do NOT use `git -c log.follow=false`.
 - If the working directory is already the git repo root, and `git` is being run without a Claude sandbox: — do NOT use
   `git -C /path`, just run `git` directly.
 - Pager env vars are set to `cat` globally in `~/.claude/settings.json`, so there is no need to
   prefix git commands with `PAGER=cat GIT_PAGER=cat`. Just run git commands directly.
+- When amending a commit message, use a temp file. The workflow is:
+  1. Save current message: `git log -1 --format="%B" > /tmp/claude/commit-msg.txt`
+  2. Show a unified diff of proposed changes to the temp file
+  3. Wait for approval, then apply changes with the Write/Edit tool
+  4. Amend: `git commit --amend --no-verify -F /tmp/claude/commit-msg.txt`
 - When suggesting read-only `git` commands, prefer to use those that are pre-approved in `settings.json` instead of
   suggesting equivalents that require my approval. But if the unapproved command is significantly better, then feel free
   to suggest it, and suggest that I grant approval in @~/.claude/settings.json .
@@ -198,6 +210,27 @@ Use them when appropriate, but be aware of the risks:
 - `rm`, `rmdir`, `mv`, `cp`, `ln`, `chmod`, `chown` — filesystem write/destructive operations
 - `ssh`, `scp`, `rsync` — network/remote access
 - `curl`, `wget` — network access (denied in settings)
+
+## Shell variable interpolation into re-parsed command strings
+- When a string is stored (env var, config file, etc.) and later re-parsed as a command line by
+  another process (fzf, `git -c core.pager=...`, `ssh RemoteCommand`, etc.), bash quoting only
+  protects the first (bash) parse. The receiving process does its own word-splitting on spaces,
+  parens, and other delimiters.
+- Use `printf "%q" "${VAR}"` to shell-escape a scalar value into a single token that survives re-parsing:
+      --bind "$(printf "%q" "${_FZF_BIND}")"
+- For an array, use `printf "%q " "${ARRAY[@]}"` to produce a space-separated sequence of
+  shell-quoted tokens (note the trailing space in the format string):
+      some_opt "$(printf "%q " "${MY_ARRAY[@]}")"
+- Avoid building the string with `\` line-continuations inside double-quotes — bash does NOT join
+  lines inside a double-quoted string; `\<newline>` becomes a literal newline in the value, which
+  many tools reject as "invalid command line string".
+  - Instead, build the string with concatenation outside the quotes, then assign:
+        VAR="part one"
+        VAR+=" part two"
+        VAR+=" part three"
+  - Or use a single long line.
+  - If you already have a multiline string (e.g. from a heredoc or external source), strip newlines
+    with parameter expansion: `"${VAR//$'\n'/ }"` (replaces each newline with a space).
 
 ## Debugging and troubleshooting
 - When debugging root causes, state your confidence level for each hypothesis. Do not present a
