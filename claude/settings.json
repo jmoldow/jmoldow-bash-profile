@@ -58,6 +58,10 @@
       "Bash(pants fmt *)",
       "Bash(pants tailor *)",
       "Bash(pants test *)",
+      "Bash(pants run *.py -- * --help *)",
+      "Bash(pants help *)",
+      "Bash(pants help-advanced *)",
+      "Bash(pants help-all *)",
       "Bash(pants --no-dynamic-ui check *)",
       "Bash(pants --no-dynamic-ui lint *)",
       "Bash(pants --no-dynamic-ui fix *)",
@@ -68,6 +72,10 @@
       "Bash(pants --no-dynamic-ui fmt fix lint check *)",
       "Bash(pants --no-dynamic-ui fmt fix lint check test *)",
       "Bash(pants --no-dynamic-ui tailor fmt fix lint check test *)",
+      "Bash(pants --no-dynamic-ui run *.py -- * --help *)",
+      "Bash(pants --no-dynamic-ui help *)",
+      "Bash(pants --no-dynamic-ui help-advanced *)",
+      "Bash(pants --no-dynamic-ui help-all *)",
       "Bash(rg *)",
       "Bash(ls *)",
       "Bash(wc *)",
@@ -175,7 +183,8 @@
       "Bash(du *)",
       "Bash(df *)",
       "Bash(pytest *)",
-      "Bash(erk *)"
+      "Bash(erk *)",
+      "Bash(fzf *)"
     ],
     "deny": [
       "Bash(curl *)",
