@@ -18,6 +18,10 @@ When referring to code in chat, always include a clickable link to the specific 
 Agents should prefer skills over raw MCP use when a skill is available.
 When an agent learns something significant or awkward about an existing skill during use, it should suggest an update to the skill file to incorporate that learning.
 Skills are living documents that improve through use.
+When writing a skill that accepts optional arguments via `$ARGUMENTS`, always include
+`argument-hint` in the frontmatter (even though it may not be officially documented for
+Claude Code skills). Best case it surfaces a UI hint; worst case it is a no-op.
+Example: `argument-hint: "[focus areas to prioritize]"`
 
 ## Projects
 
@@ -26,7 +30,7 @@ Whenever you load a project-specific rules file, make sure to say so.
 ## Polishing code that has been edited in this session
 
 When finalizing code that has been edited in this session, polish the code by executing the pipeline defined in the
-/polish skill at @~/.claude/skills/polish/SKILL.md .
+/user-jordan-polish skill at @~/.claude/skills/user-jordan-polish/SKILL.md .
 
 ## Bash tool usage
 - Bash permission rules (e.g. `Bash(logcli:*)`, `Bash(logcli *)`) are prefix-matched against the command string.
@@ -79,7 +83,7 @@ When working with AWS CLI or cloud provider commands, remember that Claude's san
 ## Temporary files
 - Write temporary files (not plans or requested work products) to `/tmp/claude/<session-id>/`
   where `<session-id>` is the Claude Code session ID (the UUID used with `claude --resume`).
-- Use the `/get-session-id` skill to determine the current session ID.
+- Use the `/user-jordan-get-session-id` skill to determine the current session ID.
 - This keeps temp files organized per-session and avoids collisions across concurrent sessions.
 
 ## File Output Rules
@@ -333,7 +337,7 @@ If working on Dagster projects:
 - When asked to "reload settings and retry", re-read the settings file then retry the failed operation
 - Occasionally suggest improvements to project-dir/CLAUDE.md, project-dir/.claude/settings.json,
   project-dir/.claude/settings.local.json, ~/.claude/projects/project-dir/memory/MEMORY.md, @~/.claude/CLAUDE.md, and
-  @~/.claude/settings.json . Use the /suggest-improvements skill.
+  @~/.claude/settings.json . Use the /user-jordan-suggest-improvements skill.
 
 ## Memories
 - Claude Code CLI supports a global, user-specific `CLAUDE.md` file (`~/.claude/CLAUDE.md`) that is loaded automatically into every session, regardless of project.

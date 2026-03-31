@@ -1,6 +1,7 @@
 ---
-name: suggest-improvements
+name: user-jordan-suggest-improvements
 description: Re-read ~/.claude/CLAUDE.md and suggest improvements to it and other configuration files based on the current chat session.
+argument-hint: "[focus areas to prioritize, e.g. 'focus on git workflow']"
 ---
 
 # Suggest Improvements

@@ -1,7 +1,8 @@
 ---
-name: ingest-floss-project
+name: user-jordan-ingest-floss-project
 description: Respectfully ingest generic learnings from a FLOSS project's agent instruction files,
 respecting its license.
+argument-hint: "[focus areas to prioritize, e.g. 'focus on Python conventions']"
 ---
 
 # Ingest FLOSS Project
@@ -63,8 +64,8 @@ overwriting. Otherwise, create them to match the project's coding standards:
 
 These files are for local use and are rarely intended to be committed to the FLOSS project.
 
-**Step 6: Run /suggest-improvements.** After completing the above steps, invoke the
-suggest-improvements skill to catch any additional session-level improvements.
+**Step 6: Run /user-jordan-suggest-improvements.** After completing the above steps, invoke the
+user-jordan-suggest-improvements skill to catch any additional session-level improvements.
 
 ## Additional Focus Areas (optional)
 
