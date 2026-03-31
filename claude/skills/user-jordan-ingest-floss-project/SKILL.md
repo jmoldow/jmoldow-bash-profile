@@ -1,7 +1,6 @@
 ---
 name: user-jordan-ingest-floss-project
-description: Respectfully ingest generic learnings from a FLOSS project's agent instruction files,
-respecting its license.
+description: Onboards to a FLOSS project by inventorying its agent instruction files and extracting generic, license-safe coding insights. Use when starting work in a new open-source repository or when the user says "ingest this project".
 argument-hint: "[focus areas to prioritize, e.g. 'focus on Python conventions']"
 ---
 

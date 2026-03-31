@@ -1,6 +1,6 @@
 ---
 name: user-jordan-get-session-id
-description: Determine the current Claude Code session ID (UUID) for use with `claude --resume` or for organizing temp files.
+description: Determines the current Claude Code session ID (UUID). Use when the user needs to resume a session with `claude --resume`, or before writing temp files to `/tmp/claude/<session-id>/`.
 ---
 
 # Get Session ID
