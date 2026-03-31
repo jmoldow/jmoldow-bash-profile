@@ -23,6 +23,24 @@ When writing a skill that accepts optional arguments via `$ARGUMENTS`, always in
 Claude Code skills). Best case it surfaces a UI hint; worst case it is a no-op.
 Example: `argument-hint: "[focus areas to prioritize]"`
 
+### Skill authoring best practices
+
+Source: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices
+
+When writing or improving skills:
+
+- **Concise is key**: Don't explain things Claude already knows. Challenge every sentence: does Claude need this?
+- **Descriptions**: Write in third person; include both *what* the skill does and *when* to use it; include key trigger terms. Max 1024 chars.
+- **Names**: Lowercase letters, numbers, hyphens only; gerund form preferred (`processing-pdfs`); avoid vague names (`helper`, `utils`).
+- **SKILL.md body under 500 lines**: Split larger content into separate files using progressive disclosure; reference them from SKILL.md.
+- **Keep references one level deep**: Don't nest `SKILL.md -> A.md -> B.md`; all refs should link directly from SKILL.md.
+- **Degrees of freedom**: High freedom (text instructions) for open-ended tasks; low freedom (exact scripts) for fragile/critical ops.
+- **Feedback loops**: For quality-critical tasks, include validate -> fix -> repeat cycles. Use checklists for complex multi-step workflows.
+- **Iterative development**: Use one Claude instance (A) to write/refine the skill; use a fresh instance (B) to test it; bring observations back to A.
+- **Avoid**: time-sensitive info, inconsistent terminology, offering too many options without a clear default, Windows-style paths.
+- **MCP tools**: Use fully qualified names (`ServerName:tool_name`) to avoid "tool not found" errors.
+- **Build evals before writing extensive docs**: Test Claude without the skill first; document gaps; write minimal content to address those gaps.
+
 ## Projects
 
 Whenever you load a project-specific rules file, make sure to say so.
