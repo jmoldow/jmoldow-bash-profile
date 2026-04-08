@@ -55,6 +55,17 @@ When finalizing code that has been edited in this session, polish the code by ex
   - Always issue allowed commands as standalone calls starting with the binary name so the rule matches.
 - Do not wrap commands in shell comments or multi-statement blocks that change what the command string starts with.
 - Prefer the built-in `Glob` tool over `find` for file discovery — it is read-only and does not require a permission prompt.
+- Never pipe the output (stdout and/or stderr) of a command through anything that would truncate or filter it (e.g. `grep`,
+  `head`, `tail`, `> /dev/null`). The full output must remain visible so unexpected changes are not missed. Pass-through pipes that
+  preserve all output are acceptable: `tee`, `cat`, `tac`, `grep --color=always -C9999999`. Exceptions:
+  - A bash command or bash pipeline that begins by reading a file may perform any truncations or filters.
+  - A bash command or bash pipeline that begins with something that is spiritually similar to reading a file, such as
+    reading a database, querying a REST API with a GET method, querying git, etc.
+  - Saving the result of a bash command or bash pipeline to a file with file redirection `> some-file.txt`, `tee some-file.txt`, or something like `--output some-file.txt`, etc. is fine.
+    - If `tee` is used and then piped to more commands, then truncations and filters are allowed later in the bash pipeline
+      after the `tee`.
+  - Piping to `/dev/null` is allowed in cases where we are 100% certain that the output will be useless to you and me.
+    If not 100% certain, but you are fairly certain it will not be useful, redirect the output to a temp file.
 - `find` can execute arbitrary commands via `-exec`, `-execdir`, `-ok`, and `-delete` flags.
   It is a useful tool when those destructive options are not used, but because of their existence
   (and potential for new destructive options in future versions), `find` is not pre-approved —
