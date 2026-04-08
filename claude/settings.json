@@ -154,10 +154,9 @@
       "Bash(true *)",
       "Bash(false *)",
       "Bash(echo *)",
-      "Bash(head *)",
-      "Bash(tail *)",
       "Bash(cat *)",
       "Bash(tac *)",
+      "Bash(tee *)",
       "Bash(sort *)",
       "Bash(uniq *)",
       "Bash(cut *)",
@@ -242,7 +241,9 @@
       "Read(//**/etc/profile.d/**)",
       "Read(//**/etc/bash_completion.d/**)",
       "Read(//**/etc/bash_completion/**)",
-      "Read(//**/completions/**)"
+      "Read(//**/completions/**)",
+      "Bash(head *)",
+      "Bash(tail *)"
     ],
     "defaultMode": "plan"
   },
