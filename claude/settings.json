@@ -183,7 +183,9 @@
       "Bash(df *)",
       "Bash(pytest *)",
       "Bash(erk *)",
-      "Bash(fzf *)"
+      "Bash(fzf *)",
+      "Bash(head *.txt)",
+      "Bash(tail *.txt)"
     ],
     "deny": [
       "Bash(curl *)",
@@ -241,9 +243,7 @@
       "Read(//**/etc/profile.d/**)",
       "Read(//**/etc/bash_completion.d/**)",
       "Read(//**/etc/bash_completion/**)",
-      "Read(//**/completions/**)",
-      "Bash(head *)",
-      "Bash(tail *)"
+      "Read(//**/completions/**)"
     ],
     "defaultMode": "plan"
   },
