@@ -51,8 +51,13 @@ When finalizing code that has been edited in this session, polish the code by ex
 /user-jordan-polish skill at @~/.claude/skills/user-jordan-polish/SKILL.md .
 
 ## Bash tool usage
-- Bash permission rules (e.g. `Bash(logcli:*)`, `Bash(logcli *)`) are prefix-matched against the command string.
+- Bash permission rules support glob patterns with `*` at any position (beginning, middle, end).
+  `Bash(npm run *)` matches commands starting with `npm run `; `Bash(git * main)` matches
+  `git checkout main`; `Bash(* --help *)` matches any command containing `--help`.
   - Always issue allowed commands as standalone calls starting with the binary name so the rule matches.
+  - Interior `*` wildcards may not match the empty string — e.g. `Bash(cmd * --flag)` may not
+    match `cmd --flag` (where nothing appears between `cmd` and `--flag`). If a wildcard segment
+    is optional, write a rule without it: `Bash(cmd --flag *)`.
 - Do not wrap commands in shell comments or multi-statement blocks that change what the command string starts with.
 - Prefer the built-in `Glob` tool over `find` for file discovery — it is read-only and does not require a permission prompt.
 - Never pipe the output (stdout and/or stderr) of a command through anything that would truncate or filter it (e.g. `grep`,
