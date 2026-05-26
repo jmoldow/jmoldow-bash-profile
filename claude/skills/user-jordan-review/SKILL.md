@@ -38,6 +38,13 @@ to disambiguate. Prefer branch interpretation if both match.
 Run the appropriate commands for the detected mode. Gather the diff, metadata, and commit
 messages. Use parallel tool calls where possible.
 
+> **Allow-list note**: Prefer git commands that are pre-approved (no permission prompt needed):
+> `git merge-base`, `git diff`, `git log`, `git show`, `git rev-parse`, `git status`.
+> `gh pr diff` and `gh pr view` are NOT pre-approved — they will require user approval.
+> Avoid compound subshell forms like `git diff $(git merge-base ...)..HEAD`; instead make
+> the `git merge-base` call first as a standalone Bash call, capture its SHA output, then
+> pass that SHA explicitly to subsequent `git diff`/`git log` calls.
+
 ### PR Mode
 ```bash
 # Diff
@@ -67,16 +74,35 @@ git diff --stat <range>
 ```
 
 ### Branch Mode / Default
+
+Preferred: use the pre-approved alias `git diff-merge-base-origin-HEAD-HEAD` (one call, no SHA
+capture needed — matches `Bash(git diff-merge-base-origin-HEAD-HEAD *)`):
 ```bash
-# Compute merge base (matches Jordan's git alias: diff-merge-base-origin-HEAD-HEAD)
-git diff $(git merge-base origin/HEAD HEAD)..HEAD
-# Commit log since fork point
-git log --format="%h %s" $(git merge-base origin/HEAD HEAD)..HEAD
-# Stats
-git diff --stat $(git merge-base origin/HEAD HEAD)..HEAD
+git diff-merge-base-origin-HEAD-HEAD         # full diff
+git log --format="%h %s" origin/HEAD...HEAD  # commit log (Bash(git log *))
+git diff --stat origin/HEAD...HEAD           # stats (Bash(git diff *))
 ```
 
-For branch mode with an explicit branch name, replace `HEAD` with the branch name.
+Alternative two-call pattern (when alias is unavailable):
+```bash
+# Step 1: get merge base as a standalone pre-approved call (Bash(git merge-base *))
+git merge-base origin/HEAD HEAD
+# → capture output as BASE_SHA
+
+# Step 2: diff, log, stats — each a separate pre-approved call with BASE_SHA substituted
+git diff <BASE_SHA>..HEAD
+git log --format="%h %s" <BASE_SHA>..HEAD
+git diff --stat <BASE_SHA>..HEAD
+```
+
+For branch mode with an explicit branch name, replace `HEAD` with the branch name:
+```bash
+git merge-base origin/HEAD <branch>
+# → capture output as BASE_SHA
+git diff <BASE_SHA>..<branch>
+git log --format="%h %s" <BASE_SHA>..<branch>
+git diff --stat <BASE_SHA>..<branch>
+```
 
 ### Read Changed Files
 
