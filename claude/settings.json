@@ -297,12 +297,12 @@
     ]
   },
   "alwaysThinkingEnabled": false,
+  "effortLevel": "low",
   "autoMemoryEnabled": true,
   "additionalDirectories": [
     "~/git/jmoldow",
     "~/git/eq/helios",
     "~/git/dagster-io/dagster",
     "~/git/dagster-io/skills"
-  ],
-  "effortLevel": "low"
+  ]
 }
