@@ -161,6 +161,9 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+# Some system and 3rd-party scripts expect this
+set +u
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -172,8 +175,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-
-
+set -u
 
 if [ -f ~/.bash_profile ]; then
     . ~/.bash_profile
