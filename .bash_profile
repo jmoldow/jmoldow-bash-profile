@@ -412,7 +412,7 @@ if command -v fd &>/dev/null; then
   completion-on && eval "$(command fd --gen-completions bash)"
 fi
 if command -v rg &>/dev/null; then
-  completion-on && eval "$(command rg --generate=complete-bash)"
+  completion-on && eval "$(command rg --generate=complete-bash 2>/dev/null || true)"
   if command -v delta &>/dev/null; then
     function rg {
       if echo "$@" | grep --quiet -E "((^| )[-][lc])|(--files)|(--count)"; then
@@ -426,7 +426,7 @@ if command -v rg &>/dev/null; then
   alias ripgrep=rg
   alias rgrep=rg
   for c in ripgrep rgrep; do
-    completion-on && eval "$(command rg --generate=complete-bash | sed -E -e "s/ rg$/ ${c}/g" -e "s/_rg/_${c}/g" -e "s/rg)/${c})/g" -e "s/rg[(]/${c}[(]/g" -e "s/'rg'/'${c}'/g" -e "s/\"rg\"/\"${c}\"/g")"
+    completion-on && eval "$((command rg --generate=complete-bash 2>/dev/null || true) | sed -E -e "s/ rg$/ ${c}/g" -e "s/_rg/_${c}/g" -e "s/rg[)]/${c})/g" -e "s/rg[(]/${c}(/g" -e "s/'rg'/'${c}'/g" -e "s/\"rg\"/\"${c}\"/g")"
   done
 fi
 if command -v difft &>/dev/null; then
