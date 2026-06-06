@@ -78,6 +78,30 @@ function completion-on() {
   is-interactive && [ "x${BASH_COMPLETION_VERSINFO-}" != x ]
 }
 
+function load-and-print-completion() {
+  completion-on || exit 1
+  local cmd="$1"
+  __load_completion "$cmd"
+  complete -p "$cmd"
+}
+
+function alias-with-completion() {
+  local alias="$1"
+  local cmd="$2"
+  local completion_name="${3:-$cmd}"
+  alias "${alias}=${cmd}"
+  completion-on || exit 0
+  alias-completion "$alias" "$completion_name"
+}
+
+function alias-completion() {
+  completion-on || exit 0
+  local alias="$1"
+  local completion_name="$2"
+  __load_completion "$completion_name" 2>/dev/null || true
+  eval "$(load-and-print-completion "$completion_name" | sed -E -e "s/ ${completion_name}$/ ${alias}/g")"
+}
+
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_ANALYTICS=1  # $ brew analytics off
 if [ -d "/opt/homebrew" ]; then
@@ -176,24 +200,24 @@ if [ 0 -eq 0 ]; then
    alias init-tput="tput init"
    alias clear-formatting="tput init"
 fi
-alias g=git
+alias-with-completion g git
 function git-root-from-toplevel() {
   git -C "$(git root-show)" "$@"
 }
-alias g-root-from-toplevel=git-root-from-toplevel
+alias-completion git-root-from-toplevel git
+alias-with-completion g-root-from-toplevel git-root-from-toplevel git
 function git-root() {
   git "$@" "$(git root-show)"
 }
-alias g-root=git-root
-alias git-root-relative=git-root
-alias g-root-relative=git-root
+alias-completion git-root git
+alias-with-completion g-root git-root git
+alias-with-completion git-root-relative git-root git
+alias-with-completion g-root-relative git-root git
 function git-local() {
   git "$@" .
 }
-alias g-local=git-local
-for c in g git-root-from-toplevel g-root-from-toplevel git-root g-root git-root-relative g-root-relative git-local g-local; do
-  completion-on && eval "$(complete -p git | sed -E -e "s/ git$/ ${c}/g")"
-done
+alias-completion git-local git
+alias-with-completion g-local git-local git
 function git-root-eval() {
   (cd "$(git root-show)" && eval "$@")
 }
@@ -498,25 +522,16 @@ alias gradle=_gradle
 
 if command -v kubectl &>/dev/null; then
   completion-on && source <(kubectl completion bash)
-  alias kube=kubectl
-  alias k=kubectl
-  alias k8s=kubectl
-  for c in kube k k8s; do
-    completion-on && eval "$(complete -p kubectl | sed -E -e "s/ kubectl$/ ${c}/g")"
-  done
+  alias-with-completion kube kubectl
+  alias-with-completion k kubectl
+  alias-with-completion k8s kubectl
   if command -v kubectx &>/dev/null; then
-    alias kx=kubectx
-    alias ctx=kubectx
-    for c in kx ctx; do
-      completion-on && eval "$(complete -p kubectx | sed -E -e "s/ kubectx$/ ${c}/g")"
-    done
+    alias-with-completion kx kubectx
+    alias-with-completion ctx kubectx
   fi
   if command -v kubens &>/dev/null; then
-    alias kn=kubens
-    alias ns=kubens
-    for c in kn ns; do
-      completion-on && eval "$(complete -p kubens | sed -E -e "s/ kubens$/ ${c}/g")"
-    done
+    alias-with-completion kn kubens
+    alias-with-completion ns kubens
   fi
 fi
 
@@ -533,11 +548,9 @@ if command -v kustomize &>/dev/null; then
 fi
 
 if command -v gt &>/dev/null; then
-  alias graphite=gt
-  alias grphite=gt
   completion-on && source <(gt completion)
-  completion-on && eval "$(complete -p gt | sed -E -e "s/ gt$/ graphite/g")"
-  completion-on && eval "$(complete -p gt | sed -E -e "s/ gt$/ grphite/g")"
+  alias-with-completion graphite gt
+  alias-with-completion grphite gt
 fi
 
 export KREW_ROOT="${XDG_DATA_HOME}/krew"
@@ -669,7 +682,7 @@ if command -v docker &>/dev/null; then
     docker-run-rm ${CI:+--env "CI=${CI}"} \
       "$dive_image" --config "$XDG_CONFIG_HOME/dive.yaml" --ci-config "$XDG_CONFIG_HOME/dive-ci.yaml"  $@
   }
-  completion-on && eval "$(complete -p docker | sed -E -e "s/ docker$/ docker-dive/g")"
+  alias-completion docker-dive docker
   function docker-dive-image-archive() {
     image="$1"
     shift 1
