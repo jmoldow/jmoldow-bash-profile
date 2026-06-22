@@ -203,7 +203,28 @@
       "Bash(erk *)",
       "Bash(fzf *)",
       "Bash(head *.txt)",
-      "Bash(tail *.txt)"
+      "Bash(tail *.txt)",
+      "WebFetch(domain:docs.google.com)",
+      "mcp__claude_ai_Notion__notion-fetch",
+      "mcp__claude_ai_Notion__notion-query-data-sources",
+      "mcp__claude_ai_Notion__notion-search",
+      "mcp__claude_ai_Slack__slack_search_public_and_private",
+      "mcp__claude_ai_Slack__slack_search_public",
+      "mcp__claude_ai_Slack__slack_search_users",
+      "mcp__claude_ai_Slack__slack_read_thread",
+      "mcp__claude_ai_Slack__slack_read_user_profile",
+      "mcp__claude_ai_Linear__list_users",
+      "mcp__claude_ai_Linear__list_issues",
+      "mcp__claude_ai_Linear__list_teams",
+      "mcp__claude_ai_Linear__list_projects",
+      "mcp__claude_ai_Linear__list_documents",
+      "mcp__claude_ai_Linear__list_cycles",
+      "mcp__claude_ai_Linear__list_comments",
+      "mcp__claude_ai_Linear__list_initiatives",
+      "mcp__claude_ai_Linear__get_project",
+      "mcp__claude_ai_Linear__get_initiative",
+      "mcp__claude_ai_Linear__get_user",
+      "mcp__claude_ai_Linear__get_issue"
     ],
     "deny": [
       "Bash(curl *)",
@@ -295,13 +316,21 @@
     "greptile@claude-plugins-official": true,
     "learning-output-style@claude-plugins-official": true,
     "semgrep@claude-plugins-official": false,
-    "dagster-expert@dagster": true
+    "dagster-expert@dagster": true,
+    "agent-deck@agent-deck": true,
+    "notion@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "dagster": {
       "source": {
         "source": "github",
         "repo": "dagster-io/skills"
+      }
+    },
+    "agent-deck": {
+      "source": {
+        "source": "github",
+        "repo": "asheshgoplani/agent-deck"
       }
     }
   },
