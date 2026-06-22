@@ -90,6 +90,17 @@ When finalizing code that has been edited in this session, polish the code by ex
 - When searching specifically for original source files (not generated code or build/runtime artifacts), strongly prefer `git ls-files` (for file discovery by directory/name/glob) or `git grep` (for searching file contents). These automatically exclude all untracked and gitignored directories without needing to explicitly list exclusions.
 - Fall back to Glob / Search / Bash(find) / Bash(rg) / Bash(grep) when there is a possibility that you need to discover untracked files, or in other cases where you deem it necessary or beneficial to use those tools instead.
 
+## Searching via MCP tools (Slack, Notion, etc.)
+- When an MCP search tool advertises both keyword and natural-language semantic search modes,
+  default to running both. Semantic search surfaces topically-related results that keyword misses
+  (e.g., gratitude threads that don't contain "thanks", design discussions that don't contain
+  the obvious keyword). Keyword search is more precise for known phrases. Together they have
+  higher recall than either alone.
+- The cost of running both modes is small; the cost of missing relevant content can be high
+  (incomplete inventory, weaker evidence anchoring).
+- Slack and Notion both currently support semantic search; check the tool description for the
+  exact phrasing (look for "natural language" or "semantic" in the tool's description).
+
 ## Environment Constraints
 When working with AWS CLI or cloud provider commands, remember that Claude's sandbox does not have access to live AWS credentials or cloud APIs. Generate the commands for the user to run manually instead of attempting to execute them directly.
 
@@ -120,6 +131,26 @@ When working with AWS CLI or cloud provider commands, remember that Claude's san
 - Use the `/user-jordan-get-session-id` skill to determine the current session ID.
 - This keeps temp files organized per-session and avoids collisions across concurrent sessions.
 
+### Truly temporary vs. working artifacts
+- **Truly temporary** (raw tool output, large JSON dumps, scratch files I won't reference after the
+  session): `/tmp/claude/<session-id>/`. Fine to lose. macOS `/tmp` may be purged on reboot and
+  across some session disconnects.
+- **Working artifacts** (synthesized inventories, mappings, in-progress drafts that took significant
+  tokens to produce): `~/.claude/projects/<project-dir>/<feature-name>/`. Survives reboots and
+  session disconnects. Use this whenever the work would be expensive or annoying to reconstruct.
+- When in doubt, prefer the durable location — the storage cost is trivial compared to re-doing
+  the synthesis.
+
+### Save long multi-section drafts incrementally
+- When drafting a long, multi-section output for Jordan (self-review, proposal, design doc,
+  plan, etc.), save each section to disk as soon as it's finalized — don't wait to write the
+  whole document at the end. Use the durable location
+  (`~/.claude/projects/<project-dir>/<feature>/`) not `/tmp/claude/`. This protects against
+  session crashes, MCP disconnects, and `/tmp` purges.
+- If the final document has a known path (e.g. `FINAL-OUTPUT.md`), append to it section by
+  section as sections lock. If sections are still under revision, write to per-section files
+  (`bullet-1.md`, `bullet-2.md`, …) and stitch at the end.
+
 ## File Output Rules
 Always write output files (documentation, exports, scripts) to the current project directory, never to @/tmp or other system directories unless explicitly asked.
 
@@ -130,6 +161,26 @@ relevant sections below (e.g. bash shell customizations).
 
 ## Output Expectations
 When asked to export or reproduce conversation history, provide the full content as requested—do not summarize or truncate unless the user explicitly asks for a summary.
+
+## Writing voice checklist for prose drafted on Jordan's behalf
+
+Before presenting any prose draft to Jordan (self-review, peer review, manager review, design
+doc, status update, email, commit message, PR description), check:
+
+1. **Active first-person voice** where Jordan is the actor. "I did X" not "X was done" or
+   "Reviewed PRs…".
+2. **Specific moments or numbers anchor every claim.** A claim should have one or both: a
+   dated moment ("on 2026-01-07"), or a specific artifact/number (PR #, $ saved, ms reduced).
+3. **No quote attributions to authors who didn't write the text.** Especially for documents
+   in collaborative systems (Notion, Google Docs, ADRs, RFCs) — the page-creator field is
+   not the author. Verify with Jordan for any cited document authorship.
+4. **Acknowledgment of partners or co-owners** for work that wasn't solo. "Chris drove most
+   of X, but I contributed Y alongside him" beats silent over-attribution.
+5. **No vague hedge words ("dozens", "several", "many") where a specific number is available
+   from the evidence inventory.** Hedge only when the specific number would be selection-biased
+   or otherwise misleading.
+
+Apply this checklist before showing the draft, not after Jordan asks for fixes.
 
 ## Showing diffs before applying changes
 
@@ -145,6 +196,17 @@ first and wait for explicit approval before writing the change.
 - When executing plans: Provide step-by-step summaries periodically to stay oriented (especially after long sessions)
 - When editing code, don't prompt one line at a time for the same task. Show at least 4 changed lines per prompt, unless
   there are fewer than 4 remaining lines to change for the current task.
+
+## Using evidence inventories you build earlier in a session
+
+When the first phase of a task surveys evidence (a research inventory, a git-log walk, an
+artifact list from external systems), reference the inventory explicitly during the later
+drafting phase. Bullet-by-bullet, ask: "What's in the inventory that anchors this claim?"
+Don't re-bootstrap evidence from memory if the inventory has it; don't make claims that the
+inventory contradicts.
+
+If the user pushes back on a claim, record the correction in the inventory so the rest of
+the drafting respects it.
 
 ## Claude Code Sandboxing Constraints
 
