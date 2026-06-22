@@ -295,6 +295,9 @@
     ],
     "defaultMode": "plan"
   },
+  "worktree": {
+    "baseRef": "fresh"
+  },
   "statusLine": {
     "type": "command",
     "command": "bash /Users/jordan/.claude/statusline-command.sh"
@@ -355,6 +358,10 @@
   "alwaysThinkingEnabled": false,
   "effortLevel": "low",
   "autoMemoryEnabled": true,
+  "theme": "dark-daltonized",
+  "editorMode": "vim",
+  "autoCompactEnabled": false,
+  "terminalProgressBarEnabled": false,
   "additionalDirectories": [
     "~/git/jmoldow",
     "~/git/eq/helios",
