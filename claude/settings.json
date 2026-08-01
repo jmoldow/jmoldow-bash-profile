@@ -321,7 +321,8 @@
     "semgrep@claude-plugins-official": false,
     "dagster-expert@dagster": true,
     "agent-deck@agent-deck": true,
-    "notion@claude-plugins-official": true
+    "notion@claude-plugins-official": true,
+    "dignified-python@dagster": true
   },
   "extraKnownMarketplaces": {
     "dagster": {
