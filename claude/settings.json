@@ -22,7 +22,9 @@
     "DISABLE_ERROR_REPORTING": "1",
     "CLAUDE_CODE_ENABLE_ERROR_REPORTING": "0",
     "CLAUDE_ENABLE_ERROR_REPORTING": "0",
-    "ENABLE_ERROR_REPORTING": "0"
+    "ENABLE_ERROR_REPORTING": "0",
+    "CLAUDE_ENABLE_LSP_TOOL": "1",
+    "ENABLE_LSP_TOOL": "1"
   },
   "permissions": {
     "allow": [
@@ -313,6 +315,7 @@
     "pr-review-toolkit@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": true,
     "explanatory-output-style@claude-plugins-official": true,
     "plugin-dev@claude-plugins-official": true,
