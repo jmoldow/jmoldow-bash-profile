@@ -24,7 +24,10 @@
     "CLAUDE_ENABLE_ERROR_REPORTING": "0",
     "ENABLE_ERROR_REPORTING": "0",
     "CLAUDE_ENABLE_LSP_TOOL": "1",
-    "ENABLE_LSP_TOOL": "1"
+    "ENABLE_LSP_TOOL": "1",
+    "CLAUDE_CODE_IDE_SKIP_AUTO_INSTALL": "1",
+    "CLAUDE_IDE_SKIP_AUTO_INSTALL": "1",
+    "IDE_SKIP_AUTO_INSTALL": "1"
   },
   "permissions": {
     "allow": [
@@ -213,6 +216,8 @@
       "Bash(comm *)",
       "Bash(fold *)",
       "Bash(paste *)",
+      "Bash(pbcopy)",
+      "Bash(pbpaste)",
       "Bash(join *)",
       "Bash(expand *)",
       "Bash(unexpand *)",
@@ -432,6 +437,10 @@
   "editorMode": "vim",
   "autoCompactEnabled": false,
   "terminalProgressBarEnabled": false,
+  "autoScrollEnabled": false,
+  "awaySummaryEnabled": true,
+  "fastModePerSessionOptIn": true,
+  "feedbackSurveyRate": 0,
   "cleanupPeriodDays": 999999999,
   "additionalDirectories": [
     "~/git/jmoldow",
