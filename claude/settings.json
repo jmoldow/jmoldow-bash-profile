@@ -412,7 +412,11 @@
       "allowUnixSockets": [
         "/var/run/docker.sock"
       ],
-      "allowLocalBinding": false
+      "allowLocalBinding": false,
+      "allowedDomains": [
+        "github.com",
+        "api.github.com"
+      ]
     },
     "excludedCommands": [
       "docker",
