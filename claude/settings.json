@@ -432,6 +432,7 @@
   "editorMode": "vim",
   "autoCompactEnabled": false,
   "terminalProgressBarEnabled": false,
+  "cleanupPeriodDays": 999999999,
   "additionalDirectories": [
     "~/git/jmoldow",
     "~/git/eq/helios",
