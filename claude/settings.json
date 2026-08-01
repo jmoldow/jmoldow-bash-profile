@@ -1,5 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "cleanupPeriodDays": 999999999,
   "env": {
     "PAGER": "cat",
     "GIT_PAGER": "cat",
@@ -414,14 +415,14 @@
     "autoAllowBashIfSandboxed": false,
     "allowUnsandboxedCommands": false,
     "network": {
-      "allowUnixSockets": [
-        "/var/run/docker.sock"
-      ],
-      "allowLocalBinding": false,
       "allowedDomains": [
         "github.com",
         "api.github.com"
-      ]
+      ],
+      "allowUnixSockets": [
+        "/var/run/docker.sock"
+      ],
+      "allowLocalBinding": false
     },
     "excludedCommands": [
       "docker",
@@ -430,18 +431,17 @@
       "mkdir"
     ]
   },
+  "feedbackSurveyRate": 0,
   "alwaysThinkingEnabled": false,
   "effortLevel": "low",
+  "fastModePerSessionOptIn": true,
+  "awaySummaryEnabled": true,
   "autoMemoryEnabled": true,
   "theme": "dark-daltonized",
   "editorMode": "vim",
   "autoCompactEnabled": false,
-  "terminalProgressBarEnabled": false,
   "autoScrollEnabled": false,
-  "awaySummaryEnabled": true,
-  "fastModePerSessionOptIn": true,
-  "feedbackSurveyRate": 0,
-  "cleanupPeriodDays": 999999999,
+  "terminalProgressBarEnabled": false,
   "additionalDirectories": [
     "~/git/jmoldow",
     "~/git/eq/helios",
