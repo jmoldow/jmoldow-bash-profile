@@ -442,6 +442,7 @@
   "autoCompactEnabled": false,
   "autoScrollEnabled": false,
   "terminalProgressBarEnabled": false,
+  "disableAutoMode": "disable",
   "additionalDirectories": [
     "~/git/jmoldow",
     "~/git/eq/helios",
