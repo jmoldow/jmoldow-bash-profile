@@ -79,7 +79,7 @@ function completion-on() {
 }
 
 function load-and-print-completion() {
-  completion-on || exit 1
+  completion-on || return 1
   local cmd="$1"
   __load_completion "$cmd"
   complete -p "$cmd"
@@ -90,12 +90,12 @@ function alias-with-completion() {
   local cmd="$2"
   local completion_name="${3:-$cmd}"
   alias "${alias}=${cmd}"
-  completion-on || exit 0
+  completion-on || return 0
   alias-completion "$alias" "$completion_name"
 }
 
 function alias-completion() {
-  completion-on || exit 0
+  completion-on || return 0
   local alias="$1"
   local completion_name="$2"
   __load_completion "$completion_name" 2>/dev/null || true
