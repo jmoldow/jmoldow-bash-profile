@@ -84,6 +84,23 @@ When finalizing code that has been edited in this session, polish the code by ex
   files; (b) when there is no standard alternative and Claude's Read tool isn't available; (c) if
   necessary for debugging. For reading a single file, use the Read tool. For piping file contents
   into a command, prefer shell redirection (`< file`) over `cat file |`.
+- Dis-prefer `python3 -c` / heredoc scripts for tasks that a standard Unix/GNU command already
+  handles simply — e.g. extracting/parsing JSON fields (`jq`, not `python3 -c "import json..."`),
+  counting lines/words/bytes (`wc`), or getting the first/last N characters or bytes (`head -c`,
+  `tail -c`, `cut`). These standard commands are pre-approved and simpler; an ad hoc Python script
+  for a task they already cover is more likely to be rejected as an unnecessarily indirect
+  approach. Only reach for `python3 -c`/heredoc when it's genuinely the superior option (e.g.
+  non-trivial data transformation that Unix text tools can't express reasonably).
+- When a command's only obstacle to auto-approval is a trivial variable assignment (e.g.
+  `F=some/constant/path; program "$F"` where `some/constant/path` is a fixed value known up
+  front, not something computed from prior output), just inline the constant directly
+  (`program some/constant/path`) instead. The variable-expansion form requires manual approval
+  even when the allow list would have auto-approved the equivalent literal-argument form —
+  don't introduce that friction for no benefit. This does not necessarily apply when the
+  variable holds a value that must be computed or is genuinely dynamic.
+- Similarly, do not create `Bash` tool commands that use top-level bash for-loops that iterate through a list of
+  constants. Example, do not create `Bash(for x in a f z; do echo $x; done)`. Instead, prefer `Bash(echo a; echo f; echo z)`
+  or even three individual `Bash` tool commands.
 
 ## Searching for Source Files
 - When searching for code, exclude virtual environment and build tool directories (.tox, .venv, venv, node_modules, build/, dist/), as they contain copies of source code and generated artifacts that pollute search results.
@@ -140,6 +157,17 @@ When working with AWS CLI or cloud provider commands, remember that Claude's san
   session disconnects. Use this whenever the work would be expensive or annoying to reconstruct.
 - When in doubt, prefer the durable location — the storage cost is trivial compared to re-doing
   the synthesis.
+
+### Keep raw backing for anything you summarize or cite
+
+- When you fetch/search external data (Slack, Notion, GitHub, etc.) and a
+  specific result is interesting enough to summarize or cite in your own
+  prose, save a raw copy of that result (or the query that produced it)
+  alongside the summary — not just the summary. Don't bother saving raw
+  copies of results that turned out to be noise/irrelevant.
+- This makes every claim independently verifiable later without re-running
+  the query, and avoids a summary silently becoming the only surviving
+  record of what a source actually said.
 
 ### Save long multi-section drafts incrementally
 - When drafting a long, multi-section output for Jordan (self-review, proposal, design doc,
