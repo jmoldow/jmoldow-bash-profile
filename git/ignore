@@ -13,3 +13,5 @@
 **/.claude/*data*
 **/claude/*usage*
 **/.claude/*usage*
+
+**/.claude/.cc-writes/
