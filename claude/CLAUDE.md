@@ -30,7 +30,7 @@ Source: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-p
 When writing or improving skills:
 
 - **Concise is key**: Don't explain things Claude already knows. Challenge every sentence: does Claude need this?
-- **Descriptions**: Write in third person; include both *what* the skill does and *when* to use it; include key trigger terms. Max 1024 chars.
+- **Descriptions**: Write in third person; include both _what_ the skill does and _when_ to use it; include key trigger terms. Max 1024 chars.
 - **Names**: Lowercase letters, numbers, hyphens only; gerund form preferred (`processing-pdfs`); avoid vague names (`helper`, `utils`).
 - **SKILL.md body under 500 lines**: Split larger content into separate files using progressive disclosure; reference them from SKILL.md.
 - **Keep references one level deep**: Don't nest `SKILL.md -> A.md -> B.md`; all refs should link directly from SKILL.md.
@@ -51,6 +51,7 @@ When finalizing code that has been edited in this session, polish the code by ex
 /user-jordan-polish skill at @~/.claude/skills/user-jordan-polish/SKILL.md .
 
 ## Bash tool usage
+
 - Bash permission rules support glob patterns with `*` at any position (beginning, middle, end).
   `Bash(npm run *)` matches commands starting with `npm run `; `Bash(git * main)` matches
   `git checkout main`; `Bash(* --help *)` matches any command containing `--help`.
@@ -103,11 +104,13 @@ When finalizing code that has been edited in this session, polish the code by ex
   or even three individual `Bash` tool commands.
 
 ## Searching for Source Files
+
 - When searching for code, exclude virtual environment and build tool directories (.tox, .venv, venv, node_modules, build/, dist/), as they contain copies of source code and generated artifacts that pollute search results.
 - When searching specifically for original source files (not generated code or build/runtime artifacts), strongly prefer `git ls-files` (for file discovery by directory/name/glob) or `git grep` (for searching file contents). These automatically exclude all untracked and gitignored directories without needing to explicitly list exclusions.
 - Fall back to Glob / Search / Bash(find) / Bash(rg) / Bash(grep) when there is a possibility that you need to discover untracked files, or in other cases where you deem it necessary or beneficial to use those tools instead.
 
 ## Searching via MCP tools (Slack, Notion, etc.)
+
 - When an MCP search tool advertises both keyword and natural-language semantic search modes,
   default to running both. Semantic search surfaces topically-related results that keyword misses
   (e.g., gratitude threads that don't contain "thanks", design discussions that don't contain
@@ -119,9 +122,11 @@ When finalizing code that has been edited in this session, polish the code by ex
   exact phrasing (look for "natural language" or "semantic" in the tool's description).
 
 ## Environment Constraints
+
 When working with AWS CLI or cloud provider commands, remember that Claude's sandbox does not have access to live AWS credentials or cloud APIs. Generate the commands for the user to run manually instead of attempting to execute them directly.
 
 ## Context Loading and Following Agentic Instruction Files
+
 - Start every new `claude` code chat session, as well as every `claude` code chat session resume, by reading and
   following the instructions in @AGENTS.md and all files that it references (especially if it uses @ to reference the
   file) including `*.mdc` files, and reading and following the instructions in @CLAUDE.md and all files that it
@@ -143,12 +148,14 @@ When working with AWS CLI or cloud provider commands, remember that Claude's san
   of time.
 
 ## Temporary files
+
 - Write temporary files (not plans or requested work products) to `/tmp/claude/<session-id>/`
   where `<session-id>` is the Claude Code session ID (the UUID used with `claude --resume`).
 - Use the `/user-jordan-get-session-id` skill to determine the current session ID.
 - This keeps temp files organized per-session and avoids collisions across concurrent sessions.
 
 ### Truly temporary vs. working artifacts
+
 - **Truly temporary** (raw tool output, large JSON dumps, scratch files I won't reference after the
   session): `/tmp/claude/<session-id>/`. Fine to lose. macOS `/tmp` may be purged on reboot and
   across some session disconnects.
@@ -170,6 +177,7 @@ When working with AWS CLI or cloud provider commands, remember that Claude's san
   record of what a source actually said.
 
 ### Save long multi-section drafts incrementally
+
 - When drafting a long, multi-section output for Jordan (self-review, proposal, design doc,
   plan, etc.), save each section to disk as soon as it's finalized — don't wait to write the
   whole document at the end. Use the durable location
@@ -180,6 +188,7 @@ When working with AWS CLI or cloud provider commands, remember that Claude's san
   (`bullet-1.md`, `bullet-2.md`, …) and stitch at the end.
 
 ## File Output Rules
+
 Always write output files (documentation, exports, scripts) to the current project directory, never to @/tmp or other system directories unless explicitly asked.
 
 When you wish to edit or overwrite a file outside the project working directory, first check whether it is a symlink
@@ -188,6 +197,7 @@ like to overwrite the symlink with a normal file, or whether I would like to abo
 relevant sections below (e.g. bash shell customizations).
 
 ## Output Expectations
+
 When asked to export or reproduce conversation history, provide the full content as requested—do not summarize or truncate unless the user explicitly asks for a summary.
 
 ## Writing voice checklist for prose drafted on Jordan's behalf
@@ -272,6 +282,7 @@ useful.
 I have personal customizations to `bash` in @~/.profile, @~/.bash_profile, and @~/.bashrc. In particular, I have
 defined a number of helper aliases and helper functions. Please learn those aliases and functions, and suggest using
 them when it would be worthwhile.
+
 - @~/.bash_profile is a symlink → the real file is @~/git/jmoldow/jmoldow-bash-profile/.bash_profile
 - @~/.profile is a symlink to @~/.bash_profile (which chains to the above)
 - Always edit the symlink target, never the symlink itself
@@ -283,6 +294,7 @@ them when it would be worthwhile.
 - @~/.config/git/attributes
 
 ## Git Diff Commands
+
 - When asked to inspect commit contents: use `git show [<object>...]` (eg `git show HEAD`) or `git diff <commit> <commit>` (eg `git show HEAD~1 HEAD`) to inspect commit contents.
   - Do NOT use `git diff HEAD~1` (unless asked to inspect all changes since previous commit, including uncommitted
     changes) — that compares previous commit to the working tree, including uncommitted changes.
@@ -292,6 +304,7 @@ them when it would be worthwhile.
 - Consider using my merge-base related aliases from @~/.gitconfig to compute differences from a base branch.
 
 ## Other Git Commands
+
 - Jordan's ~/.gitconfig has `log.follow = true`. This causes `git log --since=<date>` (with or
   without `--author`) to silently return zero results when no pathspec is given (git 2.47.1 bug).
   Always use `-c log.follow=false` when combining `--since`/`--after` with `git log` without a
@@ -311,6 +324,7 @@ them when it would be worthwhile.
   to suggest it, and suggest that I grant approval in @~/.claude/settings.json .
 
 ## Reading man pages and git help
+
 - `man <page>` and `git help <cmd>` output contains backspace overstriking that breaks grep/search.
 - `col -b` strips overstriking but only works on file input, not pipes.
 - Working approach:
@@ -320,13 +334,16 @@ them when it would be worthwhile.
   3. Use Grep/Read tools on the clean file.
 
 ## Pager environment variables
+
 - Common pager env vars (`PAGER`, `GIT_PAGER`, `MANPAGER`, `BAT_PAGER`, `DELTA_PAGER`,
   `SYSTEMD_PAGER`) are set to `cat` in `~/.claude/settings.json` so that commands produce
   plain output without interactive pagers.
 
 ## Programs that require caution
+
 The following common programs can perform destructive or privileged operations.
 Use them when appropriate, but be aware of the risks:
+
 - `find` — can execute arbitrary commands via `-exec`, `-execdir`, `-ok`, `-delete`
 - `env` — executes arbitrary commands with modified environment
 - `xargs` — executes arbitrary commands from stdin
@@ -340,6 +357,7 @@ Use them when appropriate, but be aware of the risks:
 - `curl`, `wget` — network access (denied in settings)
 
 ## Shell variable interpolation into re-parsed command strings
+
 - When a string is stored (env var, config file, etc.) and later re-parsed as a command line by
   another process (fzf, `git -c core.pager=...`, `ssh RemoteCommand`, etc.), bash quoting only
   protects the first (bash) parse. The receiving process does its own word-splitting on spaces,
@@ -361,10 +379,12 @@ Use them when appropriate, but be aware of the risks:
     with parameter expansion: `"${VAR//$'\n'/ }"` (replaces each newline with a space).
 
 ## Debugging and troubleshooting
+
 - When debugging root causes, state your confidence level for each hypothesis. Do not present a
   hypothesis as the definitive cause until verified.
 
 ## Debugging with environment variables
+
 - When a command misbehaves, it's fine to experiment with env var overrides on the command line
   to debug the issue (e.g. `ENVVAR=value command`).
 - But once you're confident the problem is solvable with a consistent env var setting, suggest
@@ -372,10 +392,12 @@ Use them when appropriate, but be aware of the risks:
   prefixes change the command string and can break Bash permission prefix matching.
 
 ## Pants in Claude Code Sandbox
+
 - Pants requires `excludedCommands: ["pants"]` in settings AND unsandboxed fallback (`/sandbox`) to perform `pants run`
 - The `os.chmod` on the sandboxer binary cannot be bypassed with env vars or write permissions alone
 
 ## Shared AI agent rules in referenced files
+
 - When starting or refreshing a session, read and follow the instructions in the repo's CLAUDE.md for memories, instructions, and contexts, etc.
 - Furthermore, CLAUDE.md might have references to other files or directories. If that is the case, follow those
   file/directory references, read those files, and interpret the memories, instructions, and contexts, etc. that are
@@ -392,6 +414,7 @@ Use them when appropriate, but be aware of the risks:
 - In general, always run the project's file formatters and linters before considering changes done (run twice if the first run makes changes).
 
 ## Python Exception Conventions
+
 - `ValueError`/`TypeError` are for validating inputs, not outputs from third-party libraries
 - Use `RuntimeError` for unexpected results from third-party libraries
 - Don't use `assert` for runtime validation (Python may optimize out with `-O`)
@@ -402,15 +425,19 @@ Use them when appropriate, but be aware of the risks:
 - When exception handling is necessary for API compatibility, encapsulate it in a helper function
 
 ## Python CLI Conventions
+
 - When writing CLIs that use the `click` library, use `click.echo()` instead of `print()` for output in the CLI layer. This ensures proper output handling, Unicode support, and testing compatibility. This applies only to the CLI layer — shared library code that may be called from non-CLI contexts should not depend on click.
 
 ## Python Package Entry Points
+
 - When modifying CLI entry points in Python package metadata (setup.py, setup.cfg, pyproject.toml), the package must be reinstalled (e.g., `uv pip install -e .` or `pip install -e .`) for the changes to take effect.
 
 ## Immutable Data Structures
+
 - Prefer immutable data structures with copy-on-write semantics, especially in languages where this is idiomatic (e.g., Python `@dataclass(frozen=True)`, Rust, functional languages). This reduces bugs from unintended mutation and makes code easier to reason about. However, don't be dogmatic — use mutable structures when mutability would be significantly more practical or performant.
 
 ## Libre / Free / Open Source (FLOSS) Projects
+
 In this section, when referring to files like LICENSE, README, CONTRIBUTING, or CONTRIBUTORS, the name may be uppercase or lowercase, and may have no file extension or a plaintext extension (.md, .rst, .txt).
 
 Identify projects that are Libre / Free / Open Source (FLOSS) Projects based on existence of a known license in a
@@ -456,6 +483,7 @@ If working on Dagster projects:
 /plugin install dagster-expert@dagster-skills
 
 ## Jordan's Workflow Preferences
+
 - Prefers to review batches of related edits together ("prepare all remaining changes in one patch")
 - Will make their own edits directly — watch for file modification notifications and don't revert
 - When asked to "reload settings and retry", re-read the settings file then retry the failed operation
@@ -464,10 +492,12 @@ If working on Dagster projects:
   @~/.claude/settings.json . Use the /user-jordan-suggest-improvements skill.
 
 ## Memories
+
 - Claude Code CLI supports a global, user-specific `CLAUDE.md` file (`~/.claude/CLAUDE.md`) that is loaded automatically into every session, regardless of project.
 - @~/.profile IS sourced (via Claude Code's parent process)
 
 ### Memories - Git Recovery of Unstaged/Uncommitted Files
+
 - `git fsck --dangling --no-reflogs` finds dangling blobs (files that were `git add`-ed but never committed)
 - `git fsck --lost-found` writes dangling objects to `.git/lost-found/other/` for inspection
 - `git stash list` and `git show stash@{N}:<path>` can recover files that were stashed
@@ -475,33 +505,39 @@ If working on Dagster projects:
 - Reference blog posts: josephvoss.com/post/git-fsck/ and citizen428.net/blog/git-quick-tips-3-recover-deleted-uncommited-files/
 
 ### Memories - git add -A Can Stage Untracked Files
+
 - `git add -A` stages ALL files including untracked ones (node_modules, build artifacts, etc.)
 - Always use `git add <specific-files>` when committing, never `git add -A` or `git add .`
 - This is especially dangerous in monorepos with large untracked directories
 
 ### Memories - Git Reflog for Recovering Pre-Squash Commit Messages
+
 - After `git reset --soft` for squashing, `HEAD@{1}` in reflog may not work reliably for referencing pre-squash commits
 - Instead, use `git reflog --format="%H %s"` to find the exact SHA of the pre-squash HEAD
 - Then use `git log --format="%B" <base>..<pre-squash-sha>` to recover all commit messages
 
 ### Memories - git commit --amend After User Edits
+
 - When the user makes manual edits to files between agent commits, `git commit --amend --no-edit` will include those edits in the amended commit
 - Always check `git diff --stat` before amending to confirm only expected files are staged
 - If the user says "I added a commit manually", check `git log` before assuming the branch state
 
 ### Memories - Git Stash Commands
+
 - `git stash list` — list all stashes
 - `git stash show -p stash@{N}` — show diff of a stash
 - `git show stash@{N}:<file-path>` — show a specific file from a stash
 - `git diff stash@{N} -- <file-path>` — diff a stashed file against working tree
 
 ### Memories - Python Virtualenv in Claude Code
+
 - Shell state doesn't persist between Bash tool calls — `source /path/to/.venv/bin/activate` must prefix each command that needs the venv (e.g. `make` targets that invoke Python, or commands that rely on `PATH` resolution)
 - For single commands where the binary path is known, invoking directly is simpler: `/path/to/.venv/bin/pytest`, `/path/to/.venv/bin/ruff`, etc.
 - Use `source activate &&` when: running `make` targets, chaining multiple commands, or when the command relies on environment variables set by activation
 - Use direct binary path when: running a single tool like `pytest` or `ruff` where no env vars beyond `PATH` are needed
 
 ### Memories - Sandbox .git Deny Can Block Git Binary
+
 - If a project's `.claude/settings.json` has `Read(./.git/**)` in the `deny` list, this tool-level deny can get promoted to a sandbox filesystem `read.denyOnly` rule
 - This blocks the `git` binary from reading `.git`, even if `git` is in `excludedCommands`
 - Symptom: `fatal: not a git repository` despite being in a git repo
@@ -509,6 +545,7 @@ If working on Dagster projects:
 - This appears to be a Claude Code bug — `excludedCommands` should exempt the command from sandbox filesystem restrictions
 
 ### Memories - Claude Code Bash Shell Init
+
 - Claude Code runs bash as non-interactive, non-login (`$-` = `hmtBc`, no `i`, PS1 unset)
 - @~/.profile IS sourced (via Claude Code's parent process)
 - `.bashrc` early-returns (non-interactive guard) — settings there don't affect Claude Code
